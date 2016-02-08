@@ -107,7 +107,7 @@ void Game::prepareExit()
 
 	Window::destroy();
 
-	//Event::destroy();
+	Event::destroy();
 
 	VertexArrayObject::destroyAll();
 

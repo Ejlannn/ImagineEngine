@@ -54,7 +54,7 @@ void MouseInput::update(U8 mouseButtonsState[3])
 
 void MouseInput::destroy()
 {
-	for(S16 i = 0; i < 3; i++)
+	for(S16 i = 1; i < 4; i++)
 	{
 		delete &buttonsState[i];
 	}
