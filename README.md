@@ -6,11 +6,15 @@ Supported platforms: Windows, Linux, Mac OSX
 
 # Dependencies #
 
-*C++11
-*OpenGL
-*SDL2, SDL2_image, SDL2_ttf
-*GLEW
-*GLU32
+-C++11
+
+-OpenGL
+
+-SDL2, SDL2_image, SDL2_ttf
+
+-GLEW
+
+-GLU32
 
 # Developers & Credits #
 
