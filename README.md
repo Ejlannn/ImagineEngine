@@ -14,7 +14,7 @@ Supported platforms: Windows, Linux, Mac OSX
 
 -GLEW
 
--GLU32
+-GLU
 
 # Developers & Credits #
 
