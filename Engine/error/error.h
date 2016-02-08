@@ -17,6 +17,7 @@
 #ifndef _IE_ERROR_H_
 #define _IE_ERROR_H_
 
+#include <string>
 #include "../platform/types.h"
 
 class Game;
@@ -34,7 +35,7 @@ public:
 
 private:
 	static void throwErrorCode(S16 errorCode);
-	static void throwErrorFileNotFound(char *path);
+	static void throwErrorFileNotFound(const std::string &path);
 };
 
 #endif

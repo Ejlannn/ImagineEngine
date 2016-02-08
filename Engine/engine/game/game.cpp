@@ -94,8 +94,6 @@ void Game::prepareRun()
 
 void Game::exit()
 {
-	if(!running) return;
-
 	prepareExit();
 }
 
@@ -103,15 +101,15 @@ void Game::prepareExit()
 {
 	if(running) running = false;
 
-	Event::destroy();
+	Window::destroy();
+
+	//Event::destroy();
 
 	VertexArrayObject::destroyAll();
 
-	Window::destroy();
-
-	SDL_Quit();
 	IMG_Quit();
 	TTF_Quit();
+	SDL_Quit();
 }
 
 bool Game::isRunning()
@@ -122,7 +120,7 @@ bool Game::isRunning()
 void Game::setCurrentScene(Scene *scene)
 {
 	currentScene = scene;
-	currentScene->initialize();
+	if(running) currentScene->initialize();
 }
 
 Scene *Game::getCurrentScene()

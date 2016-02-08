@@ -22,7 +22,7 @@
 
 FilePath::FilePath(const std::string &path)
 {
-	if(!exist(path)) Error::throwError("Resource file not found!");
+	if(!exist(path)) Error::throwErrorFileNotFound(path);
 	else this->path = path;
 }
 

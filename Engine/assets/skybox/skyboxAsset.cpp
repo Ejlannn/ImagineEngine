@@ -155,12 +155,12 @@ SkyboxAsset::SkyboxAsset(FilePath *path[6])
 
 	vaoID = VertexArrayObject::loadToVAO(positions, 3);
 
-	surface[0] = IMG_Load(path[1]->getPath().c_str());
-	surface[1] = IMG_Load(path[2]->getPath().c_str());
-	surface[2] = IMG_Load(path[3]->getPath().c_str());
-	surface[3] = IMG_Load(path[4]->getPath().c_str());
-	surface[4] = IMG_Load(path[5]->getPath().c_str());
-	surface[5] = IMG_Load(path[6]->getPath().c_str());
+	surface[0] = IMG_Load(path[0]->getPath().c_str());
+	surface[1] = IMG_Load(path[1]->getPath().c_str());
+	surface[2] = IMG_Load(path[2]->getPath().c_str());
+	surface[3] = IMG_Load(path[3]->getPath().c_str());
+	surface[4] = IMG_Load(path[4]->getPath().c_str());
+	surface[5] = IMG_Load(path[5]->getPath().c_str());
 
 	for(S16 i = 0; i < 6; i++)
 	{

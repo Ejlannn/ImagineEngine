@@ -59,6 +59,14 @@ void MouseInput::destroy()
 	delete &y;
 }
 
+S32 MouseInput::getMousePosition(MouseAxis axis)
+{
+	if(axis == MouseAxis::X) return x;
+	else if(axis == MouseAxis::Y) return y;
+
+	return 0;
+}
+
 bool MouseInput::isPressed(MouseButton button)
 {
 	if(buttonsState[button] == 1) return true;

@@ -306,7 +306,7 @@ void GraphicsDevice::renderSkybox(SkyboxAsset *skybox)
 
 		if(skybox->surface[i]->format->BytesPerPixel == 4) colorMode = GL_RGBA;
 
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i - 1, 0, colorMode, skybox->surface[i]->w, skybox->surface[i]->h, 0, colorMode, GL_UNSIGNED_BYTE, skybox->surface[i]->pixels);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, colorMode, skybox->surface[i]->w, skybox->surface[i]->h, 0, colorMode, GL_UNSIGNED_BYTE, skybox->surface[i]->pixels);
 	}
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

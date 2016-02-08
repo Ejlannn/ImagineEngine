@@ -16,7 +16,6 @@
 
 #include "error.h"
 
-#include <string>
 #include <SDL2/SDL_messagebox.h>
 #include "../engine/game/game.h"
 
@@ -61,7 +60,7 @@ void Error::throwErrorCode(S16 errorCode)
 	}
 }
 
-void Error::throwErrorFileNotFound(char *path)
+void Error::throwErrorFileNotFound(const std::string &path)
 {
 	exitGame();
 
