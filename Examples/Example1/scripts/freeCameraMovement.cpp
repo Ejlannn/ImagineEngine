@@ -31,7 +31,7 @@ void FreeCameraMovement::onUpdate()
 
 	F32 speed = 0.01f;
 
-	if(KeyboardInput::isPressed(KeyboardKey::KEY_ESCAPE)) Game::exit();
+	if(KeyboardInput::isPressed(KeyboardKey::KEY_ESCAPE)) Game::exit(); //Exits game on ESC
 
 	if(KeyboardInput::isPressed(KeyboardKey::KEY_W))
 	{

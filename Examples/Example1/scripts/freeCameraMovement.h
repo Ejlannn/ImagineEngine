@@ -14,15 +14,19 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_EXAMPLE_GAME_H_
-#define _IE_EXAMPLE_GAME_H_
+#ifndef _IE_FREE_CAMERA_MOVEMENT_H_
+#define _IE_FREE_CAMERA_MOVEMENT_H_
 
-#include "../Engine/engine/game/game.h"
+#include "../../../Engine/engine/script.h"
 
-class ExampleGame : public Game
+class FreeCameraMovement : public Script
 {
-private:
-	virtual void initializeGame();
+public:
+	FreeCameraMovement();
+
+	virtual void onInit();
+	virtual void onUpdate();
+	virtual void onDestroy();
 };
 
 #endif
