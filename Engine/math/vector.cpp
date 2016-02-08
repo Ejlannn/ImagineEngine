@@ -39,6 +39,12 @@ Vector2::Vector2(F32 x, F32 y)
 	this->y = y;
 }
 
+Vector2::~Vector2()
+{
+	delete &x;
+	delete &y;
+}
+
 Vector2 *Vector2::clone()
 {
 	return new Vector2(x, y);
@@ -73,6 +79,13 @@ Vector3::Vector3(F32 x, F32 y, F32 z)
 	this->x = x;
 	this->y = y;
 	this->z = z;
+}
+
+Vector3::~Vector3()
+{
+	delete &x;
+	delete &y;
+	delete &z;
 }
 
 Vector3 *Vector3::clone()

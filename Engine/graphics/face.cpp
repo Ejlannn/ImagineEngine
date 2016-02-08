@@ -67,3 +67,14 @@ Face::Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3, S32 vn)
 
 	this->vn = vn;
 }
+
+Face::~Face()
+{
+	delete &v1;
+	delete &v2;
+	delete &v3;
+	delete &vt1;
+	delete &vt2;
+	delete &vt3;
+	delete &vn;
+}

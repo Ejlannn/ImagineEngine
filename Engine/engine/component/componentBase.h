@@ -35,6 +35,8 @@ public:
 protected:
 	ComponentBase(const std::string name);
 
+	virtual ~ComponentBase();
+
 	Entity *entity;
 
 private:

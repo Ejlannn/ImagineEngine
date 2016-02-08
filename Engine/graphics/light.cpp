@@ -25,3 +25,11 @@ Light::Light(std::string type)
 	this->type = type;
 	entity = NULL;
 }
+
+Light::~Light()
+{
+	delete &color;
+	delete &intensity;
+	delete &type;
+	delete &entity;
+}

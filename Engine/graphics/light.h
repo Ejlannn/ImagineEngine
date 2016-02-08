@@ -33,6 +33,8 @@ public:
 	Color3 *color;
 	F32 intensity;
 
+	~Light();
+
 protected:
 	Light(std::string type);
 

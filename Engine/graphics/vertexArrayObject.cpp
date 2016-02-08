@@ -111,4 +111,7 @@ void VertexArrayObject::destroyAll()
 	{
 		glDeleteVertexArrays(1, &vaos.at(i));
 	}
+
+	vbos.clear();
+	vaos.clear();
 }

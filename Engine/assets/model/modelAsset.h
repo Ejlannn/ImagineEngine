@@ -31,6 +31,8 @@ class ModelAsset
 	friend class Terrain;
 
 public:
+	~ModelAsset();
+
 	U32 getVertexCount();
 
 private:

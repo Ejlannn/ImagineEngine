@@ -28,6 +28,8 @@ class CameraComponent : public ComponentBase
 public:
 	CameraComponent();
 
+	~CameraComponent();
+
 	F32 nearPlane;
 	F32 farPlane;
 	F32 fov;

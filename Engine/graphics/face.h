@@ -19,14 +19,14 @@
 
 #include "../platform/types.h"
 
-class Face
+struct Face
 {
-public:
 	Face(S32 v1, S32 v2, S32 v3);
 	Face(S32 v1, S32 v2, S32 v3, S32 vn);
 	Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3);
 	Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3, S32 vn);
 
+	~Face();
 
 	S32 v1, v2, v3;
 	S32 vt1, vt2, vt3;

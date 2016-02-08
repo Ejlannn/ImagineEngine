@@ -31,6 +31,8 @@ class SkyboxAsset
 public:
 	SkyboxAsset(FilePath *path[6]);
 
+	~SkyboxAsset();
+
 private:
 	FilePath *path[6];
 	U32 id;

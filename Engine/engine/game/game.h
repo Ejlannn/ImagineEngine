@@ -31,6 +31,8 @@
 class Game
 {
 public:
+	virtual ~Game();
+
 	void run();
 	static void exit();
 

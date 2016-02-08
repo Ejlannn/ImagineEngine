@@ -164,7 +164,23 @@ SkyboxAsset::SkyboxAsset(FilePath *path[6])
 
 	for(S16 i = 0; i < 6; i++)
 	{
-		if(!surface[i]) Error::throwError("Cannot load image file!");
+		if(!surface[i]) Error::throwError((char*) "Cannot load image file!");
+	}
+}
+
+SkyboxAsset::~SkyboxAsset()
+{
+	for(U16 i = 0; i < 6; i++)
+	{
+		delete &path[i];
+	}
+
+	delete &id;
+	delete &vaoID;
+
+	for(U16 i = 0; i < 6; i++)
+	{
+		delete &surface[i];
 	}
 }
 

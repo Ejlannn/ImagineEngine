@@ -64,6 +64,17 @@ Entity::Entity(std::string name, TransformComponent *transform)
 	else components.push_back(new TransformComponent);
 }
 
+Entity::~Entity()
+{
+	delete &name;
+	delete &tag;
+	delete &id;
+	delete &parent;
+
+	components.clear();
+	children.clear();
+}
+
 void Entity::addComponent(ComponentBase *component)
 {
 	if(component == NULL || component->entity != NULL) return;

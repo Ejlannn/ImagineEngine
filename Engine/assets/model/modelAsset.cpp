@@ -28,6 +28,17 @@ ModelAsset::ModelAsset()
 	vertexCount = 0;
 }
 
+ModelAsset::~ModelAsset()
+{
+	delete &vaoID;
+	delete &vertexCount;
+
+	vertices.clear();
+	normalVectors.clear();
+	textureVectors.clear();
+	faces.clear();
+}
+
 void ModelAsset::load()
 {
 	std::vector<U32> indices;

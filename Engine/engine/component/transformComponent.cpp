@@ -37,6 +37,13 @@ TransformComponent::TransformComponent(Vector3 *position, Vector3 *rotation, Vec
 	this->scale = scale;
 }
 
+TransformComponent::~TransformComponent()
+{
+	delete &position;
+	delete &rotation;
+	delete &scale;
+}
+
 Matrix4 *TransformComponent::createTransformationMatrix(TransformComponent *component)
 {
 	return createTransformationMatrix(component->position, component->rotation, component->scale);

@@ -31,6 +31,8 @@ class TextureAsset
 public:
 	TextureAsset(FilePath *path);
 
+	~TextureAsset();
+
 	S16 tilingX, tilingY;
 
 	void setTexture(FilePath *path);

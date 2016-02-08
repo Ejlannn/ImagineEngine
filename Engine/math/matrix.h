@@ -20,9 +20,8 @@
 #include "vector.h"
 #include "../platform/types.h"
 
-class Matrix4
+struct Matrix4
 {
-public:
 	Matrix4();
 	Matrix4(F32 m00, F32 m01, F32 m02, F32 m03,
 			F32 m10, F32 m11, F32 m12, F32 m13,
@@ -33,6 +32,8 @@ public:
 	F32 m10, m11, m12, m13;
 	F32 m20, m21, m22, m23;
 	F32 m30, m31, m32, m33;
+
+	~Matrix4();
 
 	Matrix4 *clone();
 

@@ -26,6 +26,8 @@ class MaterialAsset
 public:
 	MaterialAsset();
 
+	~MaterialAsset();
+
 	Color3 *mainColor;
 	TextureAsset *texture;
 

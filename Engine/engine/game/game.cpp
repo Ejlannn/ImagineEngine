@@ -32,6 +32,12 @@
 static bool		running = false;
 Scene			*currentScene = NULL;
 
+Game::~Game()
+{
+	delete &running;
+	delete &currentScene;
+}
+
 S16 Game::initialize()
 {
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0) return 1;

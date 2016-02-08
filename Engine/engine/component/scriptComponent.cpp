@@ -20,6 +20,11 @@
 
 ScriptComponent::ScriptComponent() : ComponentBase("ScriptComponent") {}
 
+ScriptComponent::~ScriptComponent()
+{
+	scripts.clear();
+}
+
 void ScriptComponent::addScript(Script *script)
 {
 	if(script == NULL) return;

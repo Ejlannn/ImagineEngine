@@ -30,6 +30,8 @@ class FilePath
 public:
 	FilePath(const std::string &path);
 
+	~FilePath();
+
 	static bool exist(const std::string &path);
 
 	std::string getPath() const;

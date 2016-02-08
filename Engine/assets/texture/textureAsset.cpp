@@ -29,6 +29,15 @@ TextureAsset::TextureAsset(FilePath *path)
 	surface = IMG_Load(path->getPath().c_str());
 }
 
+TextureAsset::~TextureAsset()
+{
+	delete &tilingX;
+	delete &tilingY;
+	delete &textureFile;
+	delete &textureID;
+	delete &surface;
+}
+
 void TextureAsset::setTexture(FilePath *path)
 {
 	textureFile = path;

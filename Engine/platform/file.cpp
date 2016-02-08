@@ -26,6 +26,11 @@ FilePath::FilePath(const std::string &path)
 	else this->path = path;
 }
 
+FilePath::~FilePath()
+{
+	delete &path;
+}
+
 bool FilePath::exist(const std::string &path)
 {
 	std::ifstream file(path);

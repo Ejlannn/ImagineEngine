@@ -22,12 +22,13 @@
 /******************************
  * Vector2
  *****************************/
-class Vector2
+struct Vector2
 {
-public:
 	Vector2();
 	Vector2(F32 value);
 	Vector2(F32 x, F32 y);
+
+	~Vector2();
 
 	F32 x;
 	F32 y;
@@ -38,13 +39,14 @@ public:
 /******************************
  * Vector3
  *****************************/
-class Vector3
+struct Vector3
 {
-public:
 	Vector3();
 	Vector3(F32 value);
 	Vector3(Vector2 *vector2, F32 z);
 	Vector3(F32 x, F32 y, F32 z);
+
+	~Vector3();
 
 	F32 x;
 	F32 y;
@@ -58,11 +60,9 @@ public:
 /******************************
  * Vector4
  *****************************/
-/*
-class Vector4
+struct Vector4
 {
 
 };
-*/
 
 #endif

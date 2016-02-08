@@ -22,12 +22,13 @@
 /******************************
  * Color3
  *****************************/
-class Color3
+struct Color3
 {
-public:
 	Color3();
 	Color3(F32 value);
 	Color3(F32 r, F32 g, F32 b);
+
+	~Color3();
 
 	F32 r;
 	F32 g;
@@ -39,13 +40,14 @@ public:
 /******************************
  * Color4
  *****************************/
-class Color4
+struct Color4
 {
-public:
 	Color4();
 	Color4(F32 value);
 	Color4(Color3 *color3, F32 a);
 	Color4(F32 r, F32 g, F32 b, F32 a);
+
+	~Color4();
 
 	F32 r;
 	F32 g;

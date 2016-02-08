@@ -29,6 +29,16 @@ CameraComponent::CameraComponent() : ComponentBase("CameraComponent")
 	pitch = 0.0f;
 }
 
+CameraComponent::~CameraComponent()
+{
+	delete &nearPlane;
+	delete &farPlane;
+	delete &fov;
+
+	delete &yaw;
+	delete &pitch;
+}
+
 Matrix4 *CameraComponent::createProjectionMatrix(CameraComponent *camera)
 {
 	Matrix4 *projectionMatrix = new Matrix4();

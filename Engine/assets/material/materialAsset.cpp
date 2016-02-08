@@ -22,6 +22,12 @@ MaterialAsset::MaterialAsset()
 	texture = NULL;
 }
 
+MaterialAsset::~MaterialAsset()
+{
+	delete &mainColor;
+	delete &texture;
+}
+
 Color3 *MaterialAsset::getDefaultMainColor()
 {
 	return new Color3(0.6f);

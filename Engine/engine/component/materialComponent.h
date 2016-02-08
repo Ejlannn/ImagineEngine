@@ -25,6 +25,8 @@ class MaterialComponent : public ComponentBase
 public:
 	MaterialComponent();
 
+	~MaterialComponent();
+
 	MaterialAsset *material;
 };
 

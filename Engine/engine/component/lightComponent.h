@@ -25,6 +25,8 @@ class LightComponent : public ComponentBase
 public:
 	LightComponent();
 
+	~LightComponent();
+
 	Light *light;
 };
 

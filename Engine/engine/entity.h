@@ -33,6 +33,8 @@ public:
 	Entity(std::string name);
 	Entity(std::string name, TransformComponent *transform);
 
+	~Entity();
+
 	std::string name;
 	std::string tag;
 

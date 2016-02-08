@@ -54,6 +54,16 @@ void Window::destroy()
 	SDL_DestroyWindow(window);
 
 	window = NULL;
+
+	delete &window;
+	delete &title;
+	delete &width;
+	delete &height;
+	delete &x;
+	delete &y;
+	delete &fullscreen;
+	delete &visible;
+	delete &exiting;
 }
 
 void Window::update()

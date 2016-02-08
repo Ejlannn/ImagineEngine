@@ -25,6 +25,8 @@ class MeshRendererComponent : public ComponentBase
 public:
 	MeshRendererComponent();
 
+	~MeshRendererComponent();
+
 	ModelAsset *model;
 
 	bool cullFaces;

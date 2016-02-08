@@ -31,6 +31,8 @@ class Scene
 public:
 	Scene();
 
+	~Scene();
+
 	void addEntity(Entity *entity);
 	void removeEntity(Entity *entity);
 	Entity *getEntityByName(std::string name);

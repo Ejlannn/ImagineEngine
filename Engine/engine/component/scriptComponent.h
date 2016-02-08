@@ -31,6 +31,8 @@ class ScriptComponent : public ComponentBase
 public:
 	ScriptComponent();
 
+	~ScriptComponent();
+
 	void addScript(Script *script);
 	void removeScript(Script *script);
 
