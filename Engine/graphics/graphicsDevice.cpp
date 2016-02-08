@@ -22,6 +22,7 @@
 #include "shader/baseShader.h"
 #include "shader/skyboxShader.h"
 #include "../error/error.h"
+#include "../engine/game/game.h"
 #include "../window/window.h"
 
 Matrix4 *projectionMatrix = NULL;
@@ -53,6 +54,11 @@ public:
 };
 
 static std::vector<Text2D*> textsToRender;
+
+bool isGameRunning()
+{
+	return Game::isRunning();
+}
 
 void clear(Color3 *color)
 {
@@ -95,6 +101,8 @@ void GraphicsDevice::init()
 
 void GraphicsDevice::render(Scene *scene)
 {
+	if(isGameRunning() == false) return;
+
 	if(scene == NULL) return;
 
 	if(scene->camera == NULL || scene->camera->entity == NULL) return;
@@ -182,7 +190,7 @@ void GraphicsDevice::render(Scene *scene)
 
 			TTF_Font *m_font = TTF_OpenFont(textsToRender.at(i)->file->getPath().c_str(), textsToRender.at(i)->size);
 
-			if(!m_font) Error::throwError("Cannot load font file!");
+			if(!m_font && isGameRunning() == true) Error::throwError((char*) "Cannot load font file!");
 
 			SDL_Surface *sFont = TTF_RenderText_Blended(m_font, textsToRender.at(i)->msg.c_str(), color);
 

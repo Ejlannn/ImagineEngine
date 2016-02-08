@@ -70,8 +70,6 @@ void Game::update()
 
 		if(Window::isExiting() == true) running = false;
 	}
-
-	prepareExit();
 }
 
 void Game::run()
