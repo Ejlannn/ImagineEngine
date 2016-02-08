@@ -5,8 +5,11 @@
 # Dependencies #
 
 **Imagine Engine** depends on:
+
 -OpenGL
+
 -SDL2
+
 -GLEW
 
 # Developers & Credits #
