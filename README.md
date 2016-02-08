@@ -6,6 +6,8 @@
 
 **Imagine Engine** depends on:
 
+-C++11
+
 -OpenGL
 
 -SDL2
