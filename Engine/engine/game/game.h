@@ -39,11 +39,15 @@ public:
 	static void setCurrentScene(Scene *scene);
 
 	static Scene *getCurrentScene();
+
 private:
 	S16 initialize();
 	void prepareRun();
 	static void prepareExit();
 	void update();
+
+protected:
+	virtual void initializeGame() = 0;
 };
 
 #endif

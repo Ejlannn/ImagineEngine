@@ -48,6 +48,10 @@ S16 Game::initialize()
 
 	GraphicsDevice::init();
 
+	initializeGame();
+
+	if(currentScene != NULL) currentScene->initialize();
+
 	return 0; //Returns 0 if everything is OK
 }
 
@@ -58,8 +62,9 @@ void Game::update()
 	while(running)
 	{
 		Time::update();
-
 		Event::update();
+
+		currentScene->update();
 
 		GraphicsDevice::render(currentScene);
 
@@ -117,6 +122,7 @@ bool Game::isRunning()
 void Game::setCurrentScene(Scene *scene)
 {
 	currentScene = scene;
+	currentScene->initialize();
 }
 
 Scene *Game::getCurrentScene()
