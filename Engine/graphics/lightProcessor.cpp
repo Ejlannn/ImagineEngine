@@ -30,7 +30,7 @@ void LightProcessor::clear()
 
 std::vector<Light*> LightProcessor::getLightSourcesForEntity(Entity *entity)
 {
-	std::vector<Light*> lights;
+	/*std::vector<Light*> lights;
 
 	Light *tempLight[4];
 
@@ -67,5 +67,7 @@ std::vector<Light*> LightProcessor::getLightSourcesForEntity(Entity *entity)
 		}
 	}
 
-	return lights;
+	return lights;*/
+
+	return NULL;
 }
