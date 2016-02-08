@@ -24,6 +24,8 @@ Scene::Scene()
 	ambientLightColor = new Color3(1.0f);
 	camera = NULL;
 	skybox = NULL;
+	fogDensity = 0.0f;
+	fogGradient = 1.5f;
 }
 
 void Scene::addEntity(Entity *entity)

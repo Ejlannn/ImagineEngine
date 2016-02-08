@@ -54,6 +54,9 @@ void BaseShader::getAllUniformLocations()
 
 	loc_tilingX = getUniformLocation("tilingX");
 	loc_tilingY = getUniformLocation("tilingY");
+
+	loc_density = getUniformLocation("density");
+	loc_gradient = getUniformLocation("gradient");
 }
 
 void BaseShader::loadColor(Color3 *value)
@@ -101,4 +104,10 @@ void BaseShader::loadTiling(F32 value1, F32 value2)
 {
 	loadFloat(loc_tilingX, value1);
 	loadFloat(loc_tilingY, value2);
+}
+
+void BaseShader::loadFogSettings(F32 value1, F32 value2)
+{
+	loadFloat(loc_density, value1);
+	loadFloat(loc_gradient, value2);
 }

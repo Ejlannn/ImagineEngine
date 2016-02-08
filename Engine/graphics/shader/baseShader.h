@@ -38,6 +38,8 @@ private:
 	U32 loc_ambientColor;
 	U32 loc_tilingX;
 	U32 loc_tilingY;
+	U32 loc_density;
+	U32 loc_gradient;
 
 	virtual void bindAttributes();
 	virtual void getAllUniformLocations();
@@ -50,6 +52,7 @@ private:
 	void loadBackgroundColor(Color3 *value);
 	void loadAmbientColor(Color3 *value);
 	void loadTiling(F32 value1, F32 value2);
+	void loadFogSettings(F32 value1, F32 value2);
 };
 
 #endif

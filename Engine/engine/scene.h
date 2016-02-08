@@ -42,6 +42,8 @@ public:
 	Color3 *ambientLightColor;
 	CameraComponent *camera;
 	SkyboxAsset *skybox;
+	F32 fogDensity;
+	F32 fogGradient;
 
 private:
 	std::vector<Entity*> entities;

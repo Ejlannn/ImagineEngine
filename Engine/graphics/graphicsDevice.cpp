@@ -106,6 +106,7 @@ void GraphicsDevice::render(Scene *scene)
 	baseShader->loadProjectionMatrix(projectionMatrix);
 	baseShader->loadViewMatrix(viewMatrix);
 	baseShader->loadBackgroundColor(scene->backgroundColor);
+	baseShader->loadFogSettings(scene->fogDensity, scene->fogGradient);
 	baseShader->stop();
 
 	prepare3D();
@@ -117,7 +118,7 @@ void GraphicsDevice::render(Scene *scene)
 	{
 		if(scene->entities.at(i)->children.size() > 0)
 		{
-			for(U32 j = 0; j < scene->entities.at(i)->children.size(); i++)
+			for(U32 j = 0; j < scene->entities.at(i)->children.size(); j++)
 			{
 				if(scene->entities.at(i)->children.at(j)->hasComponent("MeshRendererComponent"))
 				{
@@ -338,7 +339,7 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 
 		Vector3 *finalPos = new Vector3(parentTransformComponent->position->x + childTransformComponent->position->x, parentTransformComponent->position->y + childTransformComponent->position->y, parentTransformComponent->position->z + childTransformComponent->position->z);
 		Vector3 *finalRotation = new Vector3(parentTransformComponent->rotation->x + childTransformComponent->rotation->x, parentTransformComponent->rotation->y + childTransformComponent->rotation->y, parentTransformComponent->rotation->z + childTransformComponent->rotation->z);
-		Vector3 *finalScale = new Vector3(parentTransformComponent->scale->x + childTransformComponent->scale->x, parentTransformComponent->scale->y + childTransformComponent->scale->y, parentTransformComponent->scale->z + childTransformComponent->scale->z);
+		Vector3 *finalScale = new Vector3((1.0f - parentTransformComponent->scale->x) + childTransformComponent->scale->x, (1.0f - parentTransformComponent->scale->y) + childTransformComponent->scale->y, (1.0f - parentTransformComponent->scale->z) + childTransformComponent->scale->z);
 
 		transformComponent = new TransformComponent(finalPos, finalRotation, finalScale);
 	}

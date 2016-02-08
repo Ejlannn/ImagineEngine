@@ -114,9 +114,12 @@ void Entity::addChildren(Entity *entity)
 {
 	if(entity == NULL || entity->parent != NULL) return;
 
-	for(U16 i = 0; i < children.size(); i++)
+	if(children.size() != 0)
 	{
-		if(children.at(i)->getID() == entity->getID()) return;
+		for(U16 i = 0; i < children.size(); i++)
+		{
+			if(children.at(i)->getID() == entity->getID()) return;
+		}
 	}
 
 	entity->parent = this;
