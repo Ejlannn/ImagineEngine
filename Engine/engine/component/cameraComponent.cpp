@@ -70,7 +70,7 @@ Matrix4 *CameraComponent::create2DOrthoProjectionMatrix()
 	F32 far = 1.0f;
 
 	F32 xO = 2.0f / (right - left);
-	F32 yO = 1.0f / (top - bottom);
+	F32 yO = 2.0f / (top - bottom);
 	F32 zO = -2.0f / (far - near);
 
 	F32 tx = -(right + left) / (right - left);
