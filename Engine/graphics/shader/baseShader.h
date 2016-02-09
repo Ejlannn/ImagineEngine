@@ -25,7 +25,6 @@ class BaseShader : public ShaderProgram
 {
 	friend class GraphicsDevice;
 
-private:
 	BaseShader();
 
 	U32 loc_mainColor;

@@ -73,6 +73,18 @@ U32 VertexArrayObject::loadToVAO(std::vector<F32> positions, S16 dimension)
 	return vaoID;
 }
 
+U32 VertexArrayObject::loadToVAO(std::vector<F32> positions, std::vector<F32> textureVectors)
+{
+	U32 vaoID = createVAO();
+
+	storeF32(0, 2, positions);
+	storeF32(1, 2, textureVectors);
+
+	glBindVertexArray(0);
+
+	return vaoID;
+}
+
 U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> normals, std::vector<U32> indices)
 {
 	U32 vaoID = createVAO();

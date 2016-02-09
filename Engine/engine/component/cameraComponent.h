@@ -39,6 +39,7 @@ public:
 
 private:
 	static Matrix4 *createProjectionMatrix(CameraComponent *camera);
+	static Matrix4 *create2DOrthoProjectionMatrix();
 	static Matrix4 *createViewMatrix(CameraComponent *camera);
 };
 

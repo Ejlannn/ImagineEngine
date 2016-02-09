@@ -24,15 +24,17 @@
 class ModelAsset;
 class Game;
 class SkyboxAsset;
+class GraphicsDevice;
 
 class VertexArrayObject
 {
 	friend class ModelAsset;
 	friend class Game;
 	friend class SkyboxAsset;
+	friend class GraphicsDevice;
 
-private:
 	static U32 loadToVAO(std::vector<F32> positions, S16 dimension);
+	static U32 loadToVAO(std::vector<F32> positions, std::vector<F32> textureVectors);
 	static U32 loadToVAO(std::vector<F32> vertices, std::vector<F32> normals, std::vector<U32> indices);
 	static U32 loadToVAO(std::vector<F32> vertices, std::vector<F32> textureVectors, std::vector<F32> normals, std::vector<U32> indices);
 	static void destroyAll();

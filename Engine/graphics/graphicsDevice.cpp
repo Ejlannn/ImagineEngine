@@ -19,20 +19,26 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <GL/glew.h>
-#include "shader/baseShader.h"
-#include "shader/skyboxShader.h"
+#include "vertexArrayObject.h"
 #include "../error/error.h"
 #include "../engine/game/game.h"
 #include "../window/window.h"
 
+/* Shaders */
+#include "shader/baseShader.h"
+#include "shader/skyboxShader.h"
+#include "shader/uiShader.h"
+
 Matrix4 *projectionMatrix = NULL;
 Matrix4 *viewMatrix = NULL;
+Matrix4 *projectionMatrix2DOrtho = NULL;
 
 #include <iostream> //TODO remove after testing
 
 /* Shaders */
-BaseShader *baseShader = NULL;
-SkyboxShader *skyboxShader = NULL;
+BaseShader		*baseShader = NULL;
+SkyboxShader	*skyboxShader = NULL;
+UIShader		*uiShader = NULL;
 
 struct Text2D
 {
@@ -46,11 +52,37 @@ public:
 		color = new Color3(255.0f);
 	}
 
+	~Text2D()
+	{
+		delete &file;
+		delete &size;
+		delete &pos;
+		delete &color;
+	}
+
 	std::string msg;
 	FilePath *file;
 	S16 size;
 	Vector2 *pos;
 	Color3 *color;
+};
+
+struct UIElement
+{
+	UIElement(Vector2 *pos, SDL_Surface *surf)
+	{
+		position = pos;
+		surface = surf;
+	}
+
+	~UIElement()
+	{
+		delete &position;
+		delete &surface;
+	}
+
+	Vector2 	*position;
+	SDL_Surface *surface;
 };
 
 static std::vector<Text2D*> textsToRender;
@@ -93,6 +125,7 @@ void GraphicsDevice::init()
 {
 	baseShader = getBaseShader();
 	skyboxShader = getSkyboxShader();
+	uiShader = getUIShader();
 
 	clear();
 
@@ -108,6 +141,7 @@ void GraphicsDevice::render(Scene *scene)
 	if(scene->camera == NULL || scene->camera->entity == NULL) return;
 
 	projectionMatrix = CameraComponent::createProjectionMatrix(scene->camera);
+	projectionMatrix2DOrtho = CameraComponent::create2DOrthoProjectionMatrix();
 	viewMatrix = CameraComponent::createViewMatrix(scene->camera);
 
 	baseShader->start();
@@ -172,50 +206,102 @@ void GraphicsDevice::render(Scene *scene)
 		{
 			SDL_Color color = { (U8)textsToRender.at(i)->color->r, (U8)textsToRender.at(i)->color->g, (U8)textsToRender.at(i)->color->b };
 
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
+			TTF_Font *font = TTF_OpenFont(textsToRender.at(i)->file->getPath().c_str(), textsToRender.at(i)->size);
 
-			gluOrtho2D(0, Window::getWidth(), Window::getHeight(), 0);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
+			if(!font && isGameRunning() == true) Error::throwError((char*) "Cannot load font file!");
 
-			glDisable(GL_DEPTH_TEST);
-			glEnable(GL_TEXTURE_2D);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			SDL_Surface *fontSurface = TTF_RenderText_Blended(font, textsToRender.at(i)->msg.c_str(), color);
 
-			GLuint texture;
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
+			startUIShader();
 
-			TTF_Font *m_font = TTF_OpenFont(textsToRender.at(i)->file->getPath().c_str(), textsToRender.at(i)->size);
+			renderUIElement(new UIElement(textsToRender.at(i)->pos, fontSurface));
 
-			if(!m_font && isGameRunning() == true) Error::throwError((char*) "Cannot load font file!");
+			TTF_CloseFont(font);
 
-			SDL_Surface *sFont = TTF_RenderText_Blended(m_font, textsToRender.at(i)->msg.c_str(), color);
+			stopUIShader();
+
+/*
+			std::vector<F32> positions;
+
+			positions.push_back(textsToRender.at(i)->pos->x);
+			positions.push_back(textsToRender.at(i)->pos->y);
+			positions.push_back(textsToRender.at(i)->pos->x + sFont->w);
+			positions.push_back(textsToRender.at(i)->pos->y);
+			positions.push_back(textsToRender.at(i)->pos->x + sFont->w);
+			positions.push_back(textsToRender.at(i)->pos->y + sFont->h);
+			positions.push_back(textsToRender.at(i)->pos->x);
+			positions.push_back(textsToRender.at(i)->pos->y + sFont->h);
+
+			std::vector<F32> textureVectors;
+
+			textureVectors.push_back(0.0f);
+			textureVectors.push_back(0.0f);
+			textureVectors.push_back(1.0f);
+			textureVectors.push_back(0.0f);
+			textureVectors.push_back(1.0f);
+			textureVectors.push_back(1.0f);
+			textureVectors.push_back(0.0f);
+			textureVectors.push_back(1.0f);
+
+			U32 vaoID = VertexArrayObject::loadToVAO(positions, textureVectors);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sFont->w, sFont->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, sFont->pixels);
 
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(0.0f, 0.0f); glVertex2f(textsToRender.at(i)->pos->x, textsToRender.at(i)->pos->y);
-				glTexCoord2f(1.0f, 0.0f); glVertex2f(textsToRender.at(i)->pos->x + sFont->w, textsToRender.at(i)->pos->y);
-				glTexCoord2f(1.0f, 1.0f); glVertex2f(textsToRender.at(i)->pos->x + sFont->w, textsToRender.at(i)->pos->y + sFont->h);
-				glTexCoord2f(0.0f, 1.0f); glVertex2f(textsToRender.at(i)->pos->x, textsToRender.at(i)->pos->y + sFont->h);
-			}
-			glEnd();
+			Matrix4 *projMatrix = new Matrix4();
+			F32 aspectRatio = (F32) Window::getWidth() / (F32) Window::getHeight();
+
+			F32 zNear = -1.0f;
+			F32 zFar = 1.0f;
+			F32 invZ = 1.0f / (zFar - zNear);
+			F32 invY = 1.0f / (0.0f - 720.0f);
+			F32 invX = 1.0f / (1280.0f - 0.0f);
+
+			projMatrix->m00 = (2.0f * invX);
+			projMatrix->m01 = (0.0f);
+			projMatrix->m02 = (0.0f);
+			projMatrix->m03 = (-(1280.0f + 0.0f)*invX);
+			projMatrix->m10 = (0.0f);
+			projMatrix->m11 = (2.0f * invY);
+			projMatrix->m12 = (0.0f);
+			projMatrix->m13 = (-(0.0f + 720.0f) * invY);
+			projMatrix->m20 = (0.0f);
+			projMatrix->m21 = (0.0f);
+			projMatrix->m22 = (-2.0f * invZ);
+			projMatrix->m23 = (-(zFar + zNear) * invZ);
+			projMatrix->m30 = (0.0f);
+			projMatrix->m31 = (0.0f);
+			projMatrix->m32 = (0.0f);
+			projMatrix->m33 = (1.0f);
+
+			glActiveTexture(GL_TEXTURE0);
+
+			uiShader->start();
+
+			//uiShader->loadProjectionMatrix(projMatrix);
+
+			glBindVertexArray(vaoID);
+			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(1);
+
+			glActiveTexture(GL_TEXTURE0);
+
+			glDrawArrays(GL_QUADS, 0, 4);
+
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
+			glBindVertexArray(0);
+
+			uiShader->stop();
 
 			glDisable(GL_BLEND);
 			glDisable(GL_TEXTURE_2D);
 			glEnable(GL_DEPTH_TEST);
 
-			glMatrixMode(GL_PROJECTION);
-
 			glDeleteTextures(1, &texture);
 			TTF_CloseFont(m_font);
-			SDL_FreeSurface(sFont);
+			SDL_FreeSurface(sFont);*/
 		}
 
 		textsToRender.clear();
@@ -309,7 +395,7 @@ void GraphicsDevice::renderSkybox(SkyboxAsset *skybox)
 
 	for(U32 i = 0; i < 6; i++)
 	{
-		if(!skybox->surface[i]) Error::throwError("Cannot load skybox!");
+		if(!skybox->surface[i]) Error::throwError((char*) "Cannot load skybox!");
 
 		S32 colorMode = GL_RGB;
 
@@ -331,6 +417,68 @@ void GraphicsDevice::renderSkybox(SkyboxAsset *skybox)
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
+}
+
+void GraphicsDevice::renderUIElement(UIElement *element)
+{
+	U32 texture;
+	glGenTextures(1, &texture);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	std::vector<F32> positions;
+
+	positions.push_back(element->position->x);
+	positions.push_back(element->position->y);
+	positions.push_back(element->position->x + element->surface->w);
+	positions.push_back(element->position->y);
+	positions.push_back(element->position->x + element->surface->w);
+	positions.push_back(element->position->y + element->surface->h);
+	positions.push_back(element->position->x);
+	positions.push_back(element->position->y + element->surface->h);
+
+	std::vector<F32> textureCoords;
+
+	textureCoords.push_back(0.0f);
+	textureCoords.push_back(0.0f);
+	textureCoords.push_back(1.0f);
+	textureCoords.push_back(0.0f);
+	textureCoords.push_back(1.0f);
+	textureCoords.push_back(1.0f);
+	textureCoords.push_back(0.0f);
+	textureCoords.push_back(1.0f);
+
+	U32 vaoID = VertexArrayObject::loadToVAO(positions, textureCoords);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, element->surface->w, element->surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, element->surface->pixels);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glBindVertexArray(vaoID);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glDrawArrays(GL_QUADS, 0, 4);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glBindVertexArray(0);
+
+	SDL_FreeSurface(element->surface);
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+
+	delete &vaoID;
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDeleteTextures(1, &texture);
+	delete &texture;
 }
 
 void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
@@ -406,151 +554,17 @@ void GraphicsDevice::stopSkyboxShader()
 	skyboxShader->stop();
 }
 
-/*
-void GraphicsDevice::render(Scene *scene)
+void GraphicsDevice::startUIShader()
 {
-	if(scene->camera == NULL || scene->camera->entity == NULL) return;
+	uiShader->start();
 
-	prepare3D();
-
-	if(scene->backgroundColor == NULL) clear(new Color3(0.0f));
-	else clear(scene->backgroundColor);
-
-	//TransformComponent *cameraTransformComponent = (TransformComponent*) scene->camera->entity->getComponent("TransformComponent");
-
-	for(U32 i = 0; i < scene->entities.size(); i++)
-	{
-		TransformComponent *transformComponent = (TransformComponent*) scene->entities.at(i)->getComponent("TransformComponent");
-
-		if(scene->entities.at(i)->hasComponent("MeshRendererComponent"))
-		{
-			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) scene->entities.at(i)->getComponent("MeshRendererComponent");
-
-			if(meshRendererComponent->model != NULL)
-			{
-				baseShader->start();
-
-				bool modelHasTexture = hasTexture(scene->entities.at(i));
-
-				baseShader->loadTextureState(modelHasTexture);
-
-				baseShader->loadColor(getColor(scene->entities.at(i)));
-				baseShader->loadAmbientColor(scene->ambientLightColor);
-
-				baseShader->loadTransformationMatrix(TransformComponent::createTransformationMatrix(transformComponent));
-				baseShader->loadProjectionMatrix(CameraComponent::createProjectionMatrix(scene->camera));
-				baseShader->loadViewMatrix(CameraComponent::createViewMatrix(scene->camera));
-
-				renderElements(meshRendererComponent, modelHasTexture);
-
-				baseShader->stop();
-			}
-		}
-
-		if(scene->entities.at(i)->children.size() > 1)
-		{
-			renderChildren(scene->entities.at(i)->children, transformComponent, scene);
-		}
-	}
-
-	Window::update();
+	uiShader->loadProjectionMatrix(projectionMatrix2DOrtho);
 }
 
-void GraphicsDevice::renderChildren(std::vector<Entity*> children, TransformComponent *parentTransform, Scene *scene)
+void GraphicsDevice::stopUIShader()
 {
-	for(U32 i = 0; i < children.size(); i++)
-	{
-		TransformComponent *childrenTransform = (TransformComponent*) children.at(i)->getComponent("TransformComponent");
-
-		if(children.at(i)->hasComponent("MeshRendererComponent"))
-		{
-			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) children.at(i)->getComponent("MeshRendererComponent");
-
-			if(meshRendererComponent->model != NULL)
-			{
-				baseShader->start();
-
-				bool modelHasTexture = hasTexture(children.at(i));
-
-				baseShader->loadTextureState(modelHasTexture);
-
-				Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(parentTransform);
-				transformationMatrix->translate(childrenTransform->position);
-				transformationMatrix->rotate(new Vector3(1.0f, 0.0f, 0.0f), MathUtil::degToRad(childrenTransform->rotation->x));
-				transformationMatrix->rotate(new Vector3(0.0f, 1.0f, 0.0f), MathUtil::degToRad(childrenTransform->rotation->y));
-				transformationMatrix->rotate(new Vector3(0.0f, 0.0f, 1.0f), MathUtil::degToRad(childrenTransform->rotation->z));
-				transformationMatrix->scale(childrenTransform->scale);
-
-				baseShader->loadColor(getColor(children.at(i)));
-				baseShader->loadAmbientColor(scene->ambientLightColor);
-
-				baseShader->loadTransformationMatrix(transformationMatrix);
-				baseShader->loadProjectionMatrix(CameraComponent::createProjectionMatrix(scene->camera));
-				baseShader->loadViewMatrix(CameraComponent::createViewMatrix(scene->camera));
-
-				renderElements(meshRendererComponent, modelHasTexture);
-
-				baseShader->stop();
-			}
-		}
-
-		if(children.at(i)->children.size() > 1)
-		{
-			renderChildren(children.at(i)->children, childrenTransform, scene);
-		}
-	}
+	uiShader->stop();
 }
-
-void GraphicsDevice::renderElements(MeshRendererComponent *meshRendererComponent, bool textured)
-{
-	if(meshRendererComponent->cullFaces)
-	{
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-	}
-
-	glBindVertexArray(meshRendererComponent->model->vaoID);
-	glEnableVertexAttribArray(0);
-	if(textured) glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	if(textured)
-	{
-		glActiveTexture(GL_TEXTURE0);
-		MaterialComponent *materialComponent = (MaterialComponent*) meshRendererComponent->entity->getComponent("MaterialComponent");
-		glBindTexture(GL_TEXTURE_2D, materialComponent->material->texture->textureID);
-	}
-
-	glDrawElements(GL_TRIANGLES, meshRendererComponent->model->vertexCount, GL_UNSIGNED_INT, 0);
-	glDisableVertexAttribArray(0);
-	if(textured) glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-	glBindVertexArray(0);
-
-	if(meshRendererComponent->cullFaces)
-	{
-		glDisable(GL_CULL_FACE);
-	}
-
-}
-
-Color3 *GraphicsDevice::getColor(Entity *entity)
-{
-	Color3 *color = new Color3(0.6f);
-
-	if(entity->hasComponent("MaterialComponent"))
-	{
-		MaterialComponent *materialC = (MaterialComponent*) entity->getComponent("MaterialComponent");
-
-		if(materialC->material == NULL) return color;
-
-		if(materialC->material->mainColor == NULL) return color;
-
-		color = materialC->material->mainColor;
-	}
-
-	return color;
-}*/
 
 void GraphicsDevice::addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 *position)
 {
@@ -565,4 +579,9 @@ BaseShader *GraphicsDevice::getBaseShader()
 SkyboxShader *GraphicsDevice::getSkyboxShader()
 {
 	return new SkyboxShader();
+}
+
+UIShader *GraphicsDevice::getUIShader()
+{
+	return new UIShader();
 }
