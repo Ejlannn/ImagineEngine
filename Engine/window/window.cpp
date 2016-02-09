@@ -36,13 +36,15 @@ S16 Window::create()
 
 	if(window == NULL) return 1;
 
-	if(fullscreen) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-
-	if(!visible) SDL_HideWindow(window);
-
 	SDL_GL_CreateContext(window);
 
 	return 0;
+}
+
+void Window::firstUpdate()
+{
+	if(fullscreen) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	if(!visible) SDL_HideWindow(window);
 }
 
 void Window::destroy()

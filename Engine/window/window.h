@@ -52,6 +52,7 @@ public:
 
 private:
 	static S16 create();
+	static void firstUpdate();
 	static void destroy();
 	static void update();
 	static void shouldExit();

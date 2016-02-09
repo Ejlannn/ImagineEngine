@@ -56,6 +56,8 @@ S16 Game::initialize()
 
 	initializeGame();
 
+	Window::firstUpdate();
+
 	if(currentScene != NULL) currentScene->initialize();
 
 	return 0; //Returns 0 if everything is OK
