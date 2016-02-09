@@ -33,8 +33,6 @@ Matrix4 *projectionMatrix = NULL;
 Matrix4 *viewMatrix = NULL;
 Matrix4 *projectionMatrix2DOrtho = NULL;
 
-#include <iostream> //TODO remove after testing
-
 /* Shaders */
 BaseShader		*baseShader = NULL;
 SkyboxShader	*skyboxShader = NULL;
@@ -216,92 +214,9 @@ void GraphicsDevice::render(Scene *scene)
 
 			renderUIElement(new UIElement(textsToRender.at(i)->pos, fontSurface));
 
-			TTF_CloseFont(font);
-
 			stopUIShader();
 
-/*
-			std::vector<F32> positions;
-
-			positions.push_back(textsToRender.at(i)->pos->x);
-			positions.push_back(textsToRender.at(i)->pos->y);
-			positions.push_back(textsToRender.at(i)->pos->x + sFont->w);
-			positions.push_back(textsToRender.at(i)->pos->y);
-			positions.push_back(textsToRender.at(i)->pos->x + sFont->w);
-			positions.push_back(textsToRender.at(i)->pos->y + sFont->h);
-			positions.push_back(textsToRender.at(i)->pos->x);
-			positions.push_back(textsToRender.at(i)->pos->y + sFont->h);
-
-			std::vector<F32> textureVectors;
-
-			textureVectors.push_back(0.0f);
-			textureVectors.push_back(0.0f);
-			textureVectors.push_back(1.0f);
-			textureVectors.push_back(0.0f);
-			textureVectors.push_back(1.0f);
-			textureVectors.push_back(1.0f);
-			textureVectors.push_back(0.0f);
-			textureVectors.push_back(1.0f);
-
-			U32 vaoID = VertexArrayObject::loadToVAO(positions, textureVectors);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sFont->w, sFont->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, sFont->pixels);
-
-			Matrix4 *projMatrix = new Matrix4();
-			F32 aspectRatio = (F32) Window::getWidth() / (F32) Window::getHeight();
-
-			F32 zNear = -1.0f;
-			F32 zFar = 1.0f;
-			F32 invZ = 1.0f / (zFar - zNear);
-			F32 invY = 1.0f / (0.0f - 720.0f);
-			F32 invX = 1.0f / (1280.0f - 0.0f);
-
-			projMatrix->m00 = (2.0f * invX);
-			projMatrix->m01 = (0.0f);
-			projMatrix->m02 = (0.0f);
-			projMatrix->m03 = (-(1280.0f + 0.0f)*invX);
-			projMatrix->m10 = (0.0f);
-			projMatrix->m11 = (2.0f * invY);
-			projMatrix->m12 = (0.0f);
-			projMatrix->m13 = (-(0.0f + 720.0f) * invY);
-			projMatrix->m20 = (0.0f);
-			projMatrix->m21 = (0.0f);
-			projMatrix->m22 = (-2.0f * invZ);
-			projMatrix->m23 = (-(zFar + zNear) * invZ);
-			projMatrix->m30 = (0.0f);
-			projMatrix->m31 = (0.0f);
-			projMatrix->m32 = (0.0f);
-			projMatrix->m33 = (1.0f);
-
-			glActiveTexture(GL_TEXTURE0);
-
-			uiShader->start();
-
-			//uiShader->loadProjectionMatrix(projMatrix);
-
-			glBindVertexArray(vaoID);
-			glEnableVertexAttribArray(0);
-			glEnableVertexAttribArray(1);
-
-			glActiveTexture(GL_TEXTURE0);
-
-			glDrawArrays(GL_QUADS, 0, 4);
-
-			glDisableVertexAttribArray(0);
-			glDisableVertexAttribArray(1);
-			glBindVertexArray(0);
-
-			uiShader->stop();
-
-			glDisable(GL_BLEND);
-			glDisable(GL_TEXTURE_2D);
-			glEnable(GL_DEPTH_TEST);
-
-			glDeleteTextures(1, &texture);
-			TTF_CloseFont(m_font);
-			SDL_FreeSurface(sFont);*/
+			TTF_CloseFont(font);
 		}
 
 		textsToRender.clear();
@@ -455,15 +370,16 @@ void GraphicsDevice::renderUIElement(UIElement *element)
 
 	U32 vaoID = VertexArrayObject::loadToVAO(positions, textureCoords);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, element->surface->w, element->surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, element->surface->pixels);
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, element->surface->w, element->surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, element->surface->pixels);
 
 	glBindVertexArray(vaoID);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glDrawArrays(GL_QUADS, 0, 4);
+	glEnd();
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glBindVertexArray(0);

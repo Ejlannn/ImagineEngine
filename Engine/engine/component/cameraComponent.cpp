@@ -63,14 +63,14 @@ Matrix4 *CameraComponent::create2DOrthoProjectionMatrix()
 	Matrix4 *projectionMatrix = new Matrix4();
 
 	F32 left = 0.0f;
-	F32 right = Window::getWidth();
-	F32 bottom = Window::getHeight();
+	F32 right = (F32) Window::getWidth();
+	F32 bottom = (F32) Window::getHeight();
 	F32 top = 0.0f;
 	F32 near = -1.0f;
 	F32 far = 1.0f;
 
 	F32 xO = 2.0f / (right - left);
-	F32 yO = 2.0f / (top - bottom);
+	F32 yO = 1.0f / (top - bottom);
 	F32 zO = -2.0f / (far - near);
 
 	F32 tx = -(right + left) / (right - left);
