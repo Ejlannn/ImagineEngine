@@ -69,7 +69,7 @@ Entity::~Entity()
 	delete &name;
 	delete &tag;
 	delete &id;
-	delete &parent;
+	delete parent;
 
 	components.clear();
 	children.clear();

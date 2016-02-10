@@ -28,8 +28,8 @@ Light::Light(std::string type)
 
 Light::~Light()
 {
-	delete &color;
+	delete color;
 	delete &intensity;
 	delete &type;
-	delete &entity;
+	delete entity;
 }

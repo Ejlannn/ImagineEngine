@@ -30,10 +30,10 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	delete &backgroundColor;
-	delete &ambientLightColor;
-	delete &camera;
-	delete &skybox;
+	delete backgroundColor;
+	delete ambientLightColor;
+	delete camera;
+	delete skybox;
 	delete &fogDensity;
 	delete &fogGradient;
 }

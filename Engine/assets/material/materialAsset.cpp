@@ -24,8 +24,8 @@ MaterialAsset::MaterialAsset()
 
 MaterialAsset::~MaterialAsset()
 {
-	delete &mainColor;
-	delete &texture;
+	delete mainColor;
+	delete texture;
 }
 
 Color3 *MaterialAsset::getDefaultMainColor()

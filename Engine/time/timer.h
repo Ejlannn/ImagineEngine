@@ -14,24 +14,26 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_TIME_H_
-#define _IE_TIME_H_
+#ifndef _IE_TIMER_H_
+#define _IE_TIMER_H_
 
-#include "timer.h"
+#include "../platform/types.h"
 
-class Game;
-
-class Time
+class Timer
 {
-	friend class Game;
-
 public:
-	static F32 getDeltaTime();
-	static U64 getElapsedTime();
+	Timer();
+	~Timer();
+
+	void start();
+	void stop();
+	void reset();
+
+	U32 getElapsedTime();
 
 private:
-	static void start();
-	static void update();
+	U32 elapsedTime;
+	U64 previousTime;
 };
 
 #endif

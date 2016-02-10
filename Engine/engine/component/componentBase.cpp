@@ -25,7 +25,7 @@ ComponentBase::ComponentBase(const std::string name)
 ComponentBase::~ComponentBase()
 {
 	delete &name;
-	delete &entity;
+	delete entity;
 }
 
 std::string ComponentBase::getName()

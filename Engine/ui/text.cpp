@@ -71,11 +71,11 @@ UIText::~UIText()
 	SDL_FreeSurface(element->surface);
 
 	delete &message;
-	delete &fontFile;
-	delete &position;
+	delete fontFile;
+	delete position;
 	delete &size;
-	delete &color;
-	delete &element;
+	delete color;
+	delete element;
 }
 
 void UIText::changeMessage(std::string newMessage)

@@ -35,9 +35,8 @@ TextureAsset::~TextureAsset()
 
 	delete &tilingX;
 	delete &tilingY;
-	delete &textureFile;
+	delete textureFile;
 	delete &textureID;
-	delete &surface;
 }
 
 void TextureAsset::setTexture(FilePath *path)

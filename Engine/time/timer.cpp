@@ -14,24 +14,43 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_TIME_H_
-#define _IE_TIME_H_
-
 #include "timer.h"
 
-class Game;
+#include <SDL2/SDL_timer.h>
 
-class Time
+Timer::Timer()
 {
-	friend class Game;
+	previousTime = 0;
+	elapsedTime = 0;
+}
 
-public:
-	static F32 getDeltaTime();
-	static U64 getElapsedTime();
+Timer::~Timer()
+{
+	delete &previousTime;
+	delete &elapsedTime;
+}
 
-private:
-	static void start();
-	static void update();
-};
+void Timer::start()
+{
+	elapsedTime = 0;
+	previousTime = SDL_GetTicks();
+}
 
-#endif
+void Timer::stop()
+{
+	previousTime = 0;
+	elapsedTime = (SDL_GetTicks() - previousTime) / 1000;
+}
+
+void Timer::reset()
+{
+	elapsedTime = 0;
+	previousTime = 0;
+}
+
+U32 Timer::getElapsedTime()
+{
+	if(previousTime == 0) return elapsedTime;
+
+	return (U32) (SDL_GetTicks() - previousTime) / 1000;
+}

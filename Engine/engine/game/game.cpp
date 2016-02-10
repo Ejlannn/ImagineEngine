@@ -35,7 +35,7 @@ Scene			*currentScene = NULL;
 Game::~Game()
 {
 	delete &running;
-	delete &currentScene;
+	delete currentScene;
 }
 
 S16 Game::initialize()
@@ -107,6 +107,8 @@ void Game::prepareExit()
 {
 	if(running) running = false;
 
+	currentScene->destroy();
+
 	Window::destroy();
 
 	Event::destroy();
@@ -125,7 +127,10 @@ bool Game::isRunning()
 
 void Game::setCurrentScene(Scene *scene)
 {
+	if(running) currentScene->destroy();
+
 	currentScene = scene;
+
 	if(running) currentScene->initialize();
 }
 

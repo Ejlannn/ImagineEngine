@@ -23,5 +23,5 @@ MaterialComponent::MaterialComponent() : ComponentBase("MaterialComponent")
 
 MaterialComponent::~MaterialComponent()
 {
-	delete &material;
+	delete material;
 }

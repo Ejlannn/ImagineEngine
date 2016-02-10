@@ -23,5 +23,5 @@ LightComponent::LightComponent() : ComponentBase("LightComponent")
 
 LightComponent::~LightComponent()
 {
-	delete &light;
+	delete light;
 }

@@ -49,6 +49,6 @@ UITexture::~UITexture()
 
 	SDL_FreeSurface(element->surface);
 
-	delete &texturePath;
-	delete &position;
+	delete texturePath;
+	delete position;
 }
