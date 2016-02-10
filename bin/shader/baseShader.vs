@@ -63,9 +63,9 @@ void main(void)
 				
 				vec3 toAdd = vec3(lightColor[i].x + toAdd1 * lightIntensity[i] - 0.8, lightColor[i].y + toAdd1 * lightIntensity[i] - 0.8, lightColor[i].z + toAdd1 * lightIntensity[i] - 0.8);
 				
-				float tX = clamp(toAdd.x,0.0,0.9);
-				float tY = clamp(toAdd.y,0.0,0.9);
-				float tZ = clamp(toAdd.z,0.0,0.9);
+				float tX = clamp(toAdd.x,0.0,lightColor[i].x);
+				float tY = clamp(toAdd.y,0.0,lightColor[i].y);
+				float tZ = clamp(toAdd.z,0.0,lightColor[i].z);
 				
 				vec3 toAddFinal = vec3(tX, tY, tZ);
 				
