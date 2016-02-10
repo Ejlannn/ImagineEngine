@@ -27,6 +27,8 @@ class SkyboxShader : public ShaderProgram
 
 	SkyboxShader();
 
+	~SkyboxShader();
+
 	U32 loc_projectionMatrix;
 	U32 loc_viewMatrix;
 

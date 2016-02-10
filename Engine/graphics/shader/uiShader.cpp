@@ -30,6 +30,11 @@ std::string fsPathFull3 = binFolder3 + fsPath3;
 UIShader::UIShader() : ShaderProgram(new FilePath(vsPathFull3), new FilePath(fsPathFull3))
 {}
 
+UIShader::~UIShader()
+{
+	delete &loc_projectionMatrix;
+}
+
 void UIShader::bindAttributes()
 {
 	bindAttribute(0, "position");

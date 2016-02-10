@@ -30,6 +30,23 @@ std::string fsPathFull = binFolder + fsPath;
 BaseShader::BaseShader() : ShaderProgram(new FilePath(vsPathFull), new FilePath(fsPathFull))
 {}
 
+BaseShader::~BaseShader()
+{
+	delete &loc_mainColor;
+	delete &loc_transformationMatrix;
+	delete &loc_projectionMatrix;
+	delete &loc_viewMatrix;
+	delete &loc_mainColor;
+	delete &loc_textured;
+	delete &loc_sampler;
+	delete &loc_bgColor;
+	delete &loc_ambientColor;
+	delete &loc_tilingX;
+	delete &loc_tilingY;
+	delete &loc_density;
+	delete &loc_gradient;
+}
+
 void BaseShader::bindAttributes()
 {
 	bindAttribute(0, "position");

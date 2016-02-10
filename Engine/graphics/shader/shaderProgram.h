@@ -37,6 +37,8 @@ class ShaderProgram
 protected:
 	ShaderProgram(FilePath *vertexShader, FilePath *fragmentShader);
 
+	virtual ~ShaderProgram();
+
 	virtual void bindAttributes() = 0;
 	virtual void getAllUniformLocations() = 0;
 

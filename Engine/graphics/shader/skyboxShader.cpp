@@ -30,6 +30,12 @@ std::string fsPathFull2 = binFolder2 + fsPath2;
 SkyboxShader::SkyboxShader() : ShaderProgram(new FilePath(vsPathFull2), new FilePath(fsPathFull2))
 {}
 
+SkyboxShader::~SkyboxShader()
+{
+	delete &loc_projectionMatrix;
+	delete &loc_viewMatrix;
+}
+
 void SkyboxShader::bindAttributes()
 {
 	bindAttribute(0, "position");

@@ -27,6 +27,8 @@ class BaseShader : public ShaderProgram
 
 	BaseShader();
 
+	~BaseShader();
+
 	U32 loc_mainColor;
 	U32 loc_transformationMatrix;
 	U32 loc_projectionMatrix;

@@ -30,6 +30,18 @@ ShaderProgram::ShaderProgram(FilePath *vertexShader, FilePath *fragmentShader)
 	this->fragmentFile = fragmentShader;
 }
 
+ShaderProgram::~ShaderProgram()
+{
+	deleteShaderProgram();
+
+	delete &shaderProgramID;
+	delete &vertexShaderID;
+	delete &fragmentShaderID;
+
+	delete vertexFile;
+	delete fragmentFile;
+}
+
 void ShaderProgram::start()
 {
 	if(shaderProgramID == 0) createShaderProgram();

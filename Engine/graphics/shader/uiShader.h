@@ -25,6 +25,8 @@ class UIShader : public ShaderProgram
 
 	UIShader();
 
+	~UIShader();
+
 	U32 loc_projectionMatrix;
 
 	virtual void bindAttributes();
