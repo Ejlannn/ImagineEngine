@@ -78,20 +78,11 @@ Matrix4 *CameraComponent::create2DOrthoProjectionMatrix()
 	F32 tz = -(far + near) / (far - near);
 
 	projectionMatrix->m00 = xO;
-	projectionMatrix->m10 = 0.0f;
-	projectionMatrix->m20 = 0.0f;
-	projectionMatrix->m30 = 0.0f;
-	projectionMatrix->m01 = 0.0f;
 	projectionMatrix->m11 = yO;
-	projectionMatrix->m21 = 0.0f;
-	projectionMatrix->m31 = 0.0f;
-	projectionMatrix->m02 = 0.0f;
-	projectionMatrix->m12 = 0.0f;
 	projectionMatrix->m22 = zO;
-	projectionMatrix->m32 = 0.0f;
-	projectionMatrix->m03 = tx;
-	projectionMatrix->m13 = ty;
-	projectionMatrix->m23 = tz;
+	projectionMatrix->m30 = tx;
+	projectionMatrix->m31 = ty;
+	projectionMatrix->m32 = tz;
 	projectionMatrix->m33 = 1.0f;
 
 	return projectionMatrix;
