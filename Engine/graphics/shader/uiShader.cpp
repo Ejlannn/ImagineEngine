@@ -43,7 +43,7 @@ void UIShader::bindAttributes()
 
 void UIShader::getAllUniformLocations()
 {
-	loc_projectionMatrix = getUniformLocation("projectionMatrix");
+	loc_projectionMatrix = getUniformLocation((char*) "projectionMatrix");
 }
 
 void UIShader::loadProjectionMatrix(Matrix4 *value)

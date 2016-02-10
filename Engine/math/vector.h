@@ -19,6 +19,8 @@
 
 #include "../platform/types.h"
 
+class Matrix4;
+
 /******************************
  * Vector2
  *****************************/
@@ -62,7 +64,23 @@ struct Vector3
  *****************************/
 struct Vector4
 {
+	Vector4();
+	Vector4(F32 value);
+	Vector4(Vector2 *vector2, F32 z, F32 w);
+	Vector4(Vector3 *vector3, F32 w);
+	Vector4(F32 x, F32 y, F32 z, F32 w);
 
+	~Vector4();
+
+	F32 x;
+	F32 y;
+	F32 z;
+	F32 w;
+
+	Vector4 *clone();
+
+	static F32 distance(Vector4 *value1, Vector4 *value2);
+	static Vector4 *transform(Vector4 *vector4, Matrix4 *matrix);
 };
 
 #endif

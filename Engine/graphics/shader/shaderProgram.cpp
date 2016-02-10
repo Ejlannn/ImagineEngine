@@ -147,6 +147,11 @@ void ShaderProgram::loadVector3(U32 location, Vector3 *value)
 	glUniform3f(location, value->x, value->y, value->z);
 }
 
+void ShaderProgram::loadVector4(U32 location, Vector4 *value)
+{
+	glUniform4f(location, value->x, value->y, value->z, value->w);
+}
+
 void ShaderProgram::loadBoolean(U32 location, bool value)
 {
 	U32 toLoad = 0;

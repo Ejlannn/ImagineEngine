@@ -3,6 +3,7 @@
 in vec3 color;
 in vec2 textureCoords;
 in float visibility;
+in vec3 lightToAdd;
 
 out vec4 out_Color;
 
@@ -29,4 +30,5 @@ void main(void)
 	vec3 convAmbientColor = vec3(1.0,1.0,1.0) - ambientColor;
 	
 	out_Color = out_Color - vec4(convAmbientColor,1.0);
+	out_Color = out_Color + vec4(lightToAdd,1.0);
 }

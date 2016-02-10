@@ -43,8 +43,8 @@ void SkyboxShader::bindAttributes()
 
 void SkyboxShader::getAllUniformLocations()
 {
-	loc_projectionMatrix = getUniformLocation("projectionMatrix");
-	loc_viewMatrix = getUniformLocation("viewMatrix");
+	loc_projectionMatrix = getUniformLocation((char*) "projectionMatrix");
+	loc_viewMatrix = getUniformLocation((char*) "viewMatrix");
 }
 
 void SkyboxShader::loadProjectionMatrix(Matrix4 *value)

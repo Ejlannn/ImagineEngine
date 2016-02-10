@@ -14,35 +14,11 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_LIGHT_H_
-#define _IE_LIGHT_H_
+#ifndef _IE_LIGHTS_H_
+#define _IE_LIGHTS_H_
 
-#include <string>
-#include "../math/math.h"
-
-class Entity;
-class LightProcessor;
-class Scene;
-class BaseShader;
-
-class Light
-{
-	friend class LightProcessor;
-	friend class Scene;
-	friend class BaseShader;
-
-public:
-	Color3 *color;
-	F32 intensity;
-
-	~Light();
-
-protected:
-	Light(std::string type);
-
-private:
-	std::string type;
-	Entity *entity;
-};
+#include "directionalLight.h"
+#include "pointLight.h"
+#include "spotLight.h"
 
 #endif

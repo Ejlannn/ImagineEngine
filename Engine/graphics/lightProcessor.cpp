@@ -15,6 +15,7 @@
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "lightProcessor.h"
+#include "../engine/light/light.h"
 
 std::vector<Light*> lightSources;
 
@@ -28,46 +29,60 @@ void LightProcessor::clear()
 	lightSources.clear();
 }
 
-std::vector<Light*> LightProcessor::getLightSourcesForEntity(Entity *entity)
+std::vector<Light*> LightProcessor::getLightSourcesForEntity(std::vector<Vector4*> vertices)
 {
-	std::vector<Light*> lights;
+	std::vector<Light*> lightSourcesForEntity;
 
-	/*
 	Light *tempLight[4];
 
+	tempLight[0] = NULL;
 	tempLight[1] = NULL;
 	tempLight[2] = NULL;
 	tempLight[3] = NULL;
-	tempLight[4] = NULL;
 
 	for(U16 i = 0; i < lightSources.size(); i++)
 	{
 		if(lightSources.at(i)->type == "DirectionalLight")
 		{
-			tempLight[4] = tempLight[3];
 			tempLight[3] = tempLight[2];
 			tempLight[2] = tempLight[1];
-			tempLight[1] = lightSources.at(i);
+			tempLight[1] = tempLight[0];
+			tempLight[0] = lightSources.at(i);
 		}
-		else
+		else if(lightSources.at(i)->type == "PointLight")
 		{
-			TransformComponent *transform = (TransformComponent*) entity->getComponent("TransformComponent");
-			TransformComponent *lightTransform = (TransformComponent*) lightSources.at(i)->entity->getComponent("TransformComponent");
-			TransformComponent *light2Transform = (TransformComponent*) lightSources.at(i)->entity->getComponent("TransformComponent");
-
-			F32 distance = Vector3::distance(transform->position, lightTransform->position);
-			F32 distance2 = Vector3::distance(transform->position, light2Transform->position);
-
-			if(distance < distance2)
+			for(U32 j = 0; j < vertices.size(); j++)
 			{
-				tempLight[4] = tempLight[3];
-				tempLight[3] = tempLight[2];
-				tempLight[2] = tempLight[1];
-				tempLight[1] = lightSources.at(i);
+				TransformComponent *transformComponent = (TransformComponent*) lightSources.at(i)->entity->getComponent("TransformComponent");
+
+				F32 distance = Vector4::distance(vertices.at(j), new Vector4(transformComponent->position, 1.0f));
+
+				PointLight *pointLight = (PointLight*) lightSources.at(i);
+
+				if(distance <= pointLight->range)
+				{
+					tempLight[4] = tempLight[3];
+					tempLight[3] = tempLight[2];
+					tempLight[2] = tempLight[1];
+					tempLight[1] = lightSources.at(i);
+					break;
+				}
+			}
+		}
+		else if(lightSources.at(i)->type == "SpotLight")
+		{
+			for(U32 j = 0; j < vertices.size(); j++)
+			{
+				//TODO
 			}
 		}
 	}
 
-*/
-	return lights;
+	for(U16 i = 0; i < 4; i++)
+	{
+		if(tempLight[i] != NULL) lightSourcesForEntity.push_back(tempLight[i]);
+		else lightSourcesForEntity.push_back(NULL);
+	}
+
+	return lightSourcesForEntity;
 }

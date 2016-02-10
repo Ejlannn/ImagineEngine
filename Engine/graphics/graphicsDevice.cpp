@@ -19,6 +19,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <GL/glew.h>
+#include "lightProcessor.h"
 #include "vertexArrayObject.h"
 #include "../error/error.h"
 #include "../engine/game/game.h"
@@ -426,13 +427,38 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 		TransformComponent *childTransformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
 		TransformComponent *parentTransformComponent = (TransformComponent*) entity->parent->getComponent("TransformComponent");
 
-		Vector3 *finalPos = new Vector3(parentTransformComponent->position->x + childTransformComponent->position->x, parentTransformComponent->position->y + childTransformComponent->position->y, parentTransformComponent->position->z + childTransformComponent->position->z);
-		Vector3 *finalRotation = new Vector3(parentTransformComponent->rotation->x + childTransformComponent->rotation->x, parentTransformComponent->rotation->y + childTransformComponent->rotation->y, parentTransformComponent->rotation->z + childTransformComponent->rotation->z);
-		Vector3 *finalScale = new Vector3((1.0f - parentTransformComponent->scale->x) + childTransformComponent->scale->x, (1.0f - parentTransformComponent->scale->y) + childTransformComponent->scale->y, (1.0f - parentTransformComponent->scale->z) + childTransformComponent->scale->z);
+		Vector3 *finalPos = new Vector3(parentTransformComponent->position->x + childTransformComponent->position->x,
+				parentTransformComponent->position->y + childTransformComponent->position->y,
+				parentTransformComponent->position->z + childTransformComponent->position->z);
+		Vector3 *finalRotation = new Vector3(parentTransformComponent->rotation->x + childTransformComponent->rotation->x,
+				parentTransformComponent->rotation->y + childTransformComponent->rotation->y,
+				parentTransformComponent->rotation->z + childTransformComponent->rotation->z);
+		Vector3 *finalScale = new Vector3((1.0f - parentTransformComponent->scale->x) + childTransformComponent->scale->x,
+				(1.0f - parentTransformComponent->scale->y) + childTransformComponent->scale->y,
+				(1.0f - parentTransformComponent->scale->z) + childTransformComponent->scale->z);
 
 		transformComponent = new TransformComponent(finalPos, finalRotation, finalScale);
 	}
 
+	Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+
+	MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) entity->getComponent("MeshRendererComponent");
+
+	std::vector<Vector4*> processedVertices;
+
+	for(U32 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
+	{
+		Vector4 *vertex = new Vector4(meshRendererComponent->model->vertices.at(i)->x,
+				meshRendererComponent->model->vertices.at(i)->y,
+				meshRendererComponent->model->vertices.at(i)->z, 1.0);
+
+
+		Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+
+		processedVertices.push_back(result);
+	}
+
+	std::vector<Light*> lightSourcesForEntity = LightProcessor::getLightSourcesForEntity(processedVertices);
 
 	if(entity->hasComponent("MaterialComponent"))
 	{
@@ -459,7 +485,15 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 		baseShader->loadTiling(1.0f, 1.0f);
 	}
 
-	baseShader->loadTransformationMatrix(TransformComponent::createTransformationMatrix(transformComponent));
+	Light *tempLightSources[4];
+
+	for(U16 i = 0; i < 4; i++)
+	{
+		tempLightSources[i] = lightSourcesForEntity.at(i);
+	}
+
+	baseShader->loadLightSources(tempLightSources);
+	baseShader->loadTransformationMatrix(transformationMatrix);
 	baseShader->loadAmbientColor(scene->ambientLightColor);
 
 }

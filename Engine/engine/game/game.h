@@ -20,6 +20,7 @@
 #if defined(_WIN32) || defined(_WIN64) || defined(__APPLE__) || defined (__linux__)
 
 #include "../scene.h"
+#include "../light/light.h"
 #include "../../assets/assets.h"
 #include "../../error/error.h"
 #include "../../input/input.h"

@@ -32,7 +32,7 @@ class LightProcessor
 public:
 	static void addLightSource(Light *light);
 	static void clear();
-	static std::vector<Light*> getLightSourcesForEntity(Entity *entity);
+	static std::vector<Light*> getLightSourcesForEntity(std::vector<Vector4*> vertices);
 };
 
 #endif

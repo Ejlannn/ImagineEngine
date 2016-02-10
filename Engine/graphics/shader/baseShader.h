@@ -18,6 +18,7 @@
 #define _IE_BASE_SHADER_H_
 
 #include "shaderProgram.h"
+#include "../light.h"
 
 class GraphicsDevice;
 
@@ -42,6 +43,12 @@ class BaseShader : public ShaderProgram
 	U32 loc_density;
 	U32 loc_gradient;
 
+	U32 loc_lightType[4];
+	U32 loc_lightColor[4];
+	U32 loc_lightIntensity[4];
+	U32 loc_lightPosition[4];
+	U32 loc_lightRange[4];
+
 	virtual void bindAttributes();
 	virtual void getAllUniformLocations();
 
@@ -54,6 +61,7 @@ class BaseShader : public ShaderProgram
 	void loadAmbientColor(Color3 *value);
 	void loadTiling(F32 value1, F32 value2);
 	void loadFogSettings(F32 value1, F32 value2);
+	void loadLightSources(Light *lightSources[4]);
 };
 
 #endif
