@@ -14,39 +14,25 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_TEXT_H_
-#define _IE_TEXT_H_
+#ifndef _IE_TEXTURE_H_
+#define _IE_TEXTURE_H_
 
 #include "../math/math.h"
 #include "../platform/file.h"
 
 class UIElement;
 
-class UIText
+class UITexture
 {
 public:
-	UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size);
-	UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size, Color3 *color);
+	UITexture(FilePath *texturePath, Vector2 *position);
 
-	~UIText();
-
-	void changeMessage(std::string newMessage);
-	void changeFontFile(FilePath *newFontFile);
-	void changePosition(Vector2 *newPosition);
-	void changeSize(U16 newSize);
-	void changeTextColor(Color3 *newColor);
-
-	static void renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 *position);
+	~UITexture();
 
 private:
-	std::string message;
-	FilePath *fontFile;
+	FilePath *texturePath;
 	Vector2 *position;
-	U16 size;
-	Color3 *color;
 	UIElement *element;
-
-	void recreate();
 };
 
 #endif

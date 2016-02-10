@@ -14,10 +14,24 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_UI_H_
-#define _IE_UI_H_
+#include "uiElementsHandler.h"
 
-#include "text.h"
-#include "texture.h"
+std::vector<UIElement*> elements;
 
-#endif
+void UIElementsHandler::addUIElement(UIElement *element)
+{
+	elements.push_back(element);
+}
+
+void UIElementsHandler::removeUIElement(UIElement *element)
+{
+	for(U16 i = 0; i < elements.size(); i++)
+	{
+		if(elements.at(i) == element) elements.erase(elements.begin() + i);
+	}
+}
+
+std::vector<UIElement*> UIElementsHandler::getElements()
+{
+	return elements;
+}

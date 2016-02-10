@@ -17,9 +17,114 @@
 #include "text.h"
 
 #include <SDL2/SDL_ttf.h>
+#include "uiElementsHandler.h"
+#include "../error/error.h"
 #include "../graphics/graphicsDevice.h"
 
-void Text::renderText(const std::string &message, FilePath *fontFile, S16 size, Vector2 *position)
+SDL_Surface *getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 *color)
+{
+	SDL_Color txtColor = { (U8)color->r, (U8)color->g, (U8)color->b };
+
+	TTF_Font *font = TTF_OpenFont(fontFile->getPath().c_str(), size);
+
+	if(!font) Error::throwError((char*) "Cannot load font file!");
+
+	SDL_Surface *fontSurface = TTF_RenderText_Blended(font, message.c_str(), txtColor);
+
+	return fontSurface;
+}
+
+UIText::UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size)
+{
+	this->message = message;
+	this->fontFile = fontFile;
+	this->position = position;
+	this->size = size;
+	color = new Color3(1.0f);
+
+	SDL_Surface *surface = getTextSurface(message, fontFile, size, color);
+
+	element = new UIElement(position, surface);
+
+	UIElementsHandler::addUIElement(element);
+}
+
+UIText::UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size, Color3 *color)
+{
+	this->message = message;
+	this->fontFile = fontFile;
+	this->position = position;
+	this->size = size;
+	this->color = color;
+
+	SDL_Surface *surface = getTextSurface(message, fontFile, size, color);
+
+	element = new UIElement(position, surface);
+
+	UIElementsHandler::addUIElement(element);
+}
+
+UIText::~UIText()
+{
+	UIElementsHandler::removeUIElement(element);
+
+	SDL_FreeSurface(element->surface);
+
+	delete &message;
+	delete &fontFile;
+	delete &position;
+	delete &size;
+	delete &color;
+	delete &element;
+}
+
+void UIText::changeMessage(std::string newMessage)
+{
+	message = newMessage;
+
+	recreate();
+}
+
+void UIText::changeFontFile(FilePath *newFontFile)
+{
+	fontFile = newFontFile;
+
+	recreate();
+}
+
+void UIText::changePosition(Vector2 *newPosition)
+{
+	position = newPosition;
+
+	recreate();
+}
+
+void UIText::changeSize(U16 newSize)
+{
+	size = newSize;
+
+	recreate();
+}
+
+void UIText::changeTextColor(Color3 *newColor)
+{
+	color = newColor;
+
+	recreate();
+}
+
+void UIText::renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 *position)
 {
 	GraphicsDevice::addTextToRender(message, fontFile, size, position);
+}
+
+void UIText::recreate()
+{
+	SDL_Surface *surface;
+
+	UIElementsHandler::removeUIElement(element);
+
+	element = new UIElement(position, surface);
+
+	UIElementsHandler::addUIElement(element);
 }

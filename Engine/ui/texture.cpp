@@ -14,36 +14,41 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "textureAsset.h"
+#include "texture.h"
 
+#include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_image.h>
+#include "uiElementsHandler.h"
+#include "../error/error.h"
 
-TextureAsset::TextureAsset(FilePath *path)
+SDL_Surface *getTextureSurface(FilePath *texturePath)
 {
-	tilingX = 1;
-	tilingY = 1;
+	SDL_Surface *surface = IMG_Load(texturePath->getPath().c_str());
 
-	textureFile = path;
-	textureID = 0;
+	if(!surface) Error::throwError((char*) "Couldn't load img!");
 
-	surface = IMG_Load(path->getPath().c_str());
+	return surface;
 }
 
-TextureAsset::~TextureAsset()
+UITexture::UITexture(FilePath *texturePath, Vector2 *position)
 {
-	SDL_FreeSurface(surface);
+	this->texturePath = texturePath;
+	this->position = position;
 
-	delete &tilingX;
-	delete &tilingY;
-	delete &textureFile;
-	delete &textureID;
-	delete &surface;
+	SDL_Surface *surface = getTextureSurface(texturePath);
+
+	element = new UIElement(position, surface);
+
+	UIElementsHandler::addUIElement(element);
 }
 
-void TextureAsset::setTexture(FilePath *path)
-{
-	textureFile = path;
-	textureID = 0;
 
-	surface = IMG_Load(path->getPath().c_str());
+UITexture::~UITexture()
+{
+	UIElementsHandler::removeUIElement(element);
+
+	SDL_FreeSurface(element->surface);
+
+	delete &texturePath;
+	delete &position;
 }

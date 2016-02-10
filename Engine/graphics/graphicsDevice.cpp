@@ -22,6 +22,7 @@
 #include "vertexArrayObject.h"
 #include "../error/error.h"
 #include "../engine/game/game.h"
+#include "../ui/uiElementsHandler.h"
 #include "../window/window.h"
 
 /* Shaders */
@@ -32,6 +33,8 @@
 Matrix4 *projectionMatrix = NULL;
 Matrix4 *viewMatrix = NULL;
 Matrix4 *projectionMatrix2DOrtho = NULL;
+
+std::vector<UIElement*> elementsToRender;
 
 /* Shaders */
 BaseShader		*baseShader = NULL;
@@ -63,24 +66,6 @@ public:
 	S16 size;
 	Vector2 *pos;
 	Color3 *color;
-};
-
-struct UIElement
-{
-	UIElement(Vector2 *pos, SDL_Surface *surf)
-	{
-		position = pos;
-		surface = surf;
-	}
-
-	~UIElement()
-	{
-		delete &position;
-		delete &surface;
-	}
-
-	Vector2 	*position;
-	SDL_Surface *surface;
 };
 
 static std::vector<Text2D*> textsToRender;
@@ -198,6 +183,22 @@ void GraphicsDevice::render(Scene *scene)
 		stopSkyboxShader();
 	}
 
+	elementsToRender = UIElementsHandler::getElements();
+
+	if(elementsToRender.size() > 0)
+	{
+		for(U32 i = 0; i < elementsToRender.size(); i++)
+		{
+			startUIShader();
+
+			renderUIElement(elementsToRender.at(i));
+
+			stopUIShader();
+		}
+	}
+
+	elementsToRender.clear();
+
 	if(textsToRender.size() > 0)
 	{
 		for(U32 i = 0; i < textsToRender.size(); i++)
@@ -215,6 +216,8 @@ void GraphicsDevice::render(Scene *scene)
 			renderUIElement(new UIElement(textsToRender.at(i)->pos, fontSurface));
 
 			stopUIShader();
+
+			SDL_FreeSurface(fontSurface);
 
 			TTF_CloseFont(font);
 		}
@@ -259,7 +262,7 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 
 		glBindTexture(GL_TEXTURE_2D, materialComponent->material->texture->textureID);
 
-		if(!materialComponent->material->texture->surface) Error::throwError("Cannot load texture file!");
+		if(!materialComponent->material->texture->surface) Error::throwError((char*) "Cannot load texture file!");
 
 		S32 colorMode = GL_RGB;
 
@@ -373,28 +376,42 @@ void GraphicsDevice::renderUIElement(UIElement *element)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, element->surface->w, element->surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, element->surface->pixels);
+	GLenum textureFormat;
+
+	switch (element->surface->format->BytesPerPixel)
+	{
+	case 4:
+		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+		textureFormat = GL_BGRA;
+		else
+		textureFormat = GL_RGBA;
+		break;
+	case 3:
+		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+		textureFormat = GL_BGR;
+		else
+		textureFormat = GL_RGB;
+		break;
+	}
+
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, element->surface->w, element->surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, element->surface->pixels);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, element->surface->format->BytesPerPixel, element->surface->w, element->surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, element->surface->pixels);
 
 	glBindVertexArray(vaoID);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glDrawArrays(GL_QUADS, 0, 4);
-	glEnd();
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glBindVertexArray(0);
-
-	SDL_FreeSurface(element->surface);
 
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 
-	delete &vaoID;
-
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteTextures(1, &texture);
-	delete &texture;
 }
 
 void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)

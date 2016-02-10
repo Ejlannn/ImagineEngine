@@ -20,16 +20,16 @@
 #include "../engine/scene.h"
 
 class Game;
-class Text;
+class UIText;
 class BaseShader;
 class SkyboxShader;
 class UIShader;
-struct UIElement;
+class UIElement;
 
 class GraphicsDevice
 {
 	friend class Game;
-	friend class Text;
+	friend class UIText;
 
 private:
 	static BaseShader *getBaseShader();
