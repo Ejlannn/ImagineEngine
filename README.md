@@ -10,7 +10,7 @@ Supported platforms: Windows, Linux, Mac OSX
 
 -OpenGL
 
--SDL2, SDL2_image, SDL2_ttf
+-SDL2, SDL2_image, SDL2_ttf, SDL_mixer **(From Pre-alpha 1.0.6)**
 
 -GLEW
 
