@@ -22,6 +22,7 @@
 #include "../scene.h"
 #include "../light/light.h"
 #include "../../assets/assets.h"
+#include "../../audio/audio.h"
 #include "../../error/error.h"
 #include "../../input/input.h"
 #include "../../platform/types.h"

@@ -113,7 +113,7 @@ void ModelAsset::load()
     {
 		for(U32 i = 0; i < faces.size(); i++)
 		{
-			for(U32 j = 0; j < 3; j++)
+			for(U32 j = 0; j < 4; j++)
 			{
 				U32 currentVertexPointer = 0;
 
@@ -124,14 +124,13 @@ void ModelAsset::load()
 				Vector3 *currentNormal = normalVectors.at(faces.at(i)->vn - 1);
 
 				normalArray[currentVertexPointer * 2] = currentNormal->x;
-				normalArray[currentVertexPointer * 2 + 1] = 1.0f - currentNormal->y;
+				normalArray[currentVertexPointer * 2 + 1] = currentNormal->y;
+				normalArray[currentVertexPointer * 2 + 2] = currentNormal->z;
 			}
 		}
 
 		for(U32 i = 0; i < faces.size() * 3 * 3; i++)
 		{
-			if(normalArray[i] > 1.0f || normalArray[i] < 0.0f) normalArray[i] = 0.0f;
-
 			norms.push_back(normalArray[i]);
 		}
     }

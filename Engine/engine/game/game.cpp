@@ -22,6 +22,7 @@
 #endif
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <GL/glew.h>
 #include "../../event/event.h"
 #include "../../graphics/graphicsDevice.h"
@@ -45,6 +46,10 @@ S16 Game::initialize()
 	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
 	TTF_Init();
+
+	Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_FLAC);
+
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) Error::throwError("Cannot open audio");
 
 	if(Window::create() == 1) return 3;
 
@@ -117,6 +122,7 @@ void Game::prepareExit()
 
 	IMG_Quit();
 	TTF_Quit();
+	Mix_Quit();
 	SDL_Quit();
 }
 

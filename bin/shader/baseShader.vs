@@ -69,7 +69,22 @@ void main(void)
 				
 				vec3 toAddFinal = vec3(tX, tY, tZ);
 				
-				lightToAdd = lightToAdd + toAddFinal;
+				vec3 surfaceNormal = (transformationMatrix * vec4(normalVector,0.0)).xyz;
+				vec3 toLightVector = lightPosition[i] - worldPosition.xyz;
+				
+				vec3 unitNormal = normalize(surfaceNormal);
+				vec3 unitLightVector = normalize(toLightVector);
+				
+				float lightDotProd = dot(unitNormal,unitLightVector);
+				float toSubst = max(lightDotProd,0.0);
+				
+				vec3 diffuse = toSubst * lightColor[i];
+				
+				//toAddFinal.x = toAddFinal.x - toSubstInv;
+				//toAddFinal.y = toAddFinal.y - toSubstInv;
+				//toAddFinal.z = toAddFinal.z - toSubstInv;
+				
+				lightToAdd = diffuse * lightToAdd + toAddFinal;
 			}
 		}
 		
