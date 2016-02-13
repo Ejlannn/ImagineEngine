@@ -29,6 +29,7 @@
 #include "../../platform/types.h"
 #include "../../time/time.h"
 #include "../../ui/ui.h"
+#include "../../ui/console/console.h"
 #include "../../window/window.h"
 
 class Game

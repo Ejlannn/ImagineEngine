@@ -65,6 +65,8 @@ S16 Game::initialize()
 
 	if(currentScene != NULL) currentScene->initialize();
 
+	//Console::sendMessage("Test message");
+
 	return 0; //Returns 0 if everything is OK
 }
 
