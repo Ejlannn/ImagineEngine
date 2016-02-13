@@ -50,7 +50,7 @@ void storeF32(U32 attributeNumber, U16 size, std::vector<F32> data)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void storeIndices(std::vector<U32> data)
+void storeIndices(std::vector<U64> data)
 {
 	U32 vbo;
 
@@ -59,7 +59,7 @@ void storeIndices(std::vector<U32> data)
 	vbos.push_back(vbo);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.size() * sizeof(U32), &data[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.size() * sizeof(U64), &data[0], GL_STATIC_DRAW);
 }
 
 U32 VertexArrayObject::loadToVAO(std::vector<F32> positions, S16 dimension)
@@ -85,7 +85,7 @@ U32 VertexArrayObject::loadToVAO(std::vector<F32> positions, std::vector<F32> te
 	return vaoID;
 }
 
-U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> normals, std::vector<U32> indices)
+U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> normals, std::vector<U64> indices)
 {
 	U32 vaoID = createVAO();
 
@@ -98,7 +98,7 @@ U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> nor
 	return vaoID;
 }
 
-U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> textureVectors, std::vector<F32> normals, std::vector<U32> indices)
+U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> textureVectors, std::vector<F32> normals, std::vector<U64> indices)
 {
 	U32 vaoID = createVAO();
 

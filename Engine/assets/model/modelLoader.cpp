@@ -41,20 +41,20 @@ ModelAsset *ModelLoader::loadOBJModel(FilePath *objFile)
 		else if((*lines[i])[0] == 'v' && (*lines[i])[1] == ' ')
 		{
 			F32 tempX, tempY, tempZ;
-			sscanf(lines[i]->c_str(), "v %f %f %f %f", &tempX, &tempY, &tempZ);
+			sscanf(lines[i]->c_str(), "v %f %f %f", &tempX, &tempY, &tempZ);
 
 			modelAsset->vertices.push_back(new Vector3(tempX, tempY, tempZ));
 		}
 		else if((*lines[i])[0] == 'v' && (*lines[i])[1] == 'n')
 		{
 			F32 tempX, tempY, tempZ;
-			sscanf(lines[i]->c_str(), "vn %f %f %f %f", &tempX, &tempY, &tempZ);
+			sscanf(lines[i]->c_str(), "vn %f %f %f", &tempX, &tempY, &tempZ);
 
 			modelAsset->normalVectors.push_back(new Vector3(tempX, tempY, tempZ));
 		}
 		else if((*lines[i])[0] == 'v' && (*lines[i])[1] == 't')
 		{
-			F32 tempX, tempY;
+			F64 tempX, tempY;
 			sscanf(lines[i]->c_str(), "vt %f %f", &tempX, &tempY);
 
 			modelAsset->textureVectors.push_back(new Vector2(tempX, tempY));
@@ -65,16 +65,16 @@ ModelAsset *ModelLoader::loadOBJModel(FilePath *objFile)
 
 			if(counter == 0)
 			{
-				S32 v1, v2, v3;
-				sscanf(lines[i]->c_str(), "f %d %d %d", &v1, &v2, &v3);
+				U64 v1, v2, v3;
+				sscanf(lines[i]->c_str(), "f %ld %ld %ld", &v1, &v2, &v3);
 
 				modelAsset->faces.push_back(new Face(v1, v2, v3));
 			}
 			else if(counter == 3)
 			{
-				S32 v1, v2, v3;
-				S32 vt1, vt2, vt3;
-				sscanf(lines[i]->c_str(), "f %d/%d %d/%d %d/%d", &v1, &vt1, &v2, &vt2, &v3, &vt3);
+				U64 v1, v2, v3;
+				U64 vt1, vt2, vt3;
+				sscanf(lines[i]->c_str(), "f %ld/%ld %ld/%ld %ld/%ld", &v1, &vt1, &v2, &vt2, &v3, &vt3);
 
 				modelAsset->faces.push_back(new Face(v1, v2, v3, vt1, vt2, vt3));
 			}
@@ -82,18 +82,18 @@ ModelAsset *ModelLoader::loadOBJModel(FilePath *objFile)
 			{
 				if(lines[i]->find("//") != std::string::npos)
 				{
-					S32 v1, v2, v3;
-					S32 vn;
-					sscanf(lines[i]->c_str(), "f %d//%d %d//%d %d//%d", &v1, &vn, &v2, &vn, &v3, &vn);
+					U64 v1, v2, v3;
+					U64 vn;
+					sscanf(lines[i]->c_str(), "f %ld//%ld %ld//%ld %ld//%ld", &v1, &vn, &v2, &vn, &v3, &vn);
 
 					modelAsset->faces.push_back(new Face(v1, v2, v3, vn));
 				}
 				else
 				{
-					S32 v1, v2, v3;
-					S32 vn;
-					S32 vt1, vt2, vt3;
-					sscanf(lines[i]->c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &v1, &vt1, &vn, &v2, &vt2, &vn, &v3, &vt3, &vn);
+					U64 v1, v2, v3;
+					U64 vn;
+					U64 vt1, vt2, vt3;
+					sscanf(lines[i]->c_str(), "f %ld/%ld/%ld %ld/%ld/%ld %ld/%ld/%ld", &v1, &vt1, &vn, &v2, &vt2, &vn, &v3, &vt3, &vn);
 
 					modelAsset->faces.push_back(new Face(v1, v2, v3, vt1, vt2, vt3, vn));
 				}

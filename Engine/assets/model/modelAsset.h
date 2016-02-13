@@ -22,24 +22,22 @@
 
 class ModelLoader;
 class GraphicsDevice;
-class Terrain;
 
 class ModelAsset
 {
 	friend class ModelLoader;
 	friend class GraphicsDevice;
-	friend class Terrain;
 
 public:
 	~ModelAsset();
 
-	U32 getVertexCount();
+	U64 getVertexCount();
 
 private:
 	ModelAsset();
 
 	U32 vaoID;
-	U32 vertexCount;
+	U64 vertexCount;
 
 	std::vector<Vector3*> vertices;
 	std::vector<Vector3*> normalVectors;

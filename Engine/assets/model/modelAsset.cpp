@@ -41,22 +41,22 @@ ModelAsset::~ModelAsset()
 
 void ModelAsset::load()
 {
-	std::vector<U32> indices;
+	std::vector<U64> indices;
 
 	std::vector<F32> verts;
 	std::vector<F32> texts;
 	std::vector<F32> norms;
 
-	for(U32 i = 0; i < faces.size(); i++)
+	for(U64 i = 0; i < faces.size(); i++)
 	{
-	    indices.push_back(U32(faces.at(i)->v1 - 1));
-	    indices.push_back(U32(faces.at(i)->v2 - 1));
-	    indices.push_back(U32(faces.at(i)->v3 - 1));
+	    indices.push_back(U64(faces.at(i)->v1 - 1));
+	    indices.push_back(U64(faces.at(i)->v2 - 1));
+	    indices.push_back(U64(faces.at(i)->v3 - 1));
 	}
 
 	vertexCount = indices.size();
 
-	for(U32 i = 0; i < vertices.size(); i++)
+	for(U64 i = 0; i < vertices.size(); i++)
 	{
 	    verts.push_back(vertices.at(i)->x);
 	    verts.push_back(vertices.at(i)->y);
@@ -67,9 +67,9 @@ void ModelAsset::load()
 
     if(textureVectors.size() > 0)
     {
-		for(U32 i = 0; i < faces.size(); i++)
+		for(U64 i = 0; i < faces.size(); i++)
 		{
-			for(U32 j = 0; j < 3; j++)
+			for(U16 j = 0; j < 3; j++)
 			{
 				U32 currentVertexPointer = 0;
 
@@ -94,7 +94,7 @@ void ModelAsset::load()
 			}
 		}
 
-		for(U32 i = 0; i < faces.size() * 2 * 3; i++)
+		for(U64 i = 0; i < faces.size() * 2 * 3; i++)
 		{
 			//if(textureArray[i] > 1.0f || textureArray[i] < 0.0f) textureArray[i] = 0.0f;
 
@@ -102,20 +102,20 @@ void ModelAsset::load()
 		}
     }
 
-    F32 normalArray[faces.size() * 3 * 3];
-
     if(normalVectors.size() == 0)
     {
     	//TODO: Generate normals
     }
 
+    F32 normalArray[faces.size() * 3 * 3];
+
     if(normalVectors.size() > 0)
     {
-		for(U32 i = 0; i < faces.size(); i++)
+		for(U64 i = 0; i < faces.size(); i++)
 		{
-			for(U32 j = 0; j < 4; j++)
+			for(U16 j = 0; j < 4; j++)
 			{
-				U32 currentVertexPointer = 0;
+				U64 currentVertexPointer = 0;
 
 				if(j == 0) currentVertexPointer = faces.at(i)->v1 - 1;
 				else if(j == 1) currentVertexPointer = faces.at(i)->v2 - 1;
@@ -129,7 +129,7 @@ void ModelAsset::load()
 			}
 		}
 
-		for(U32 i = 0; i < faces.size() * 3 * 3; i++)
+		for(U64 i = 0; i < faces.size() * 3 * 3; i++)
 		{
 			norms.push_back(normalArray[i]);
 		}
@@ -139,7 +139,7 @@ void ModelAsset::load()
 	else vaoID = VertexArrayObject::loadToVAO(verts, texts, norms, indices);
 }
 
-U32 ModelAsset::getVertexCount()
+U64 ModelAsset::getVertexCount()
 {
 	return vertexCount;
 }

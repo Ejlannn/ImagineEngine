@@ -57,7 +57,7 @@ void Window::destroy()
 
 	window = NULL;
 
-	delete &window;
+	delete window;
 	delete &title;
 	delete &width;
 	delete &height;

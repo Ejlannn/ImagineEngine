@@ -49,7 +49,7 @@ S16 Game::initialize()
 
 	Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_FLAC);
 
-	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) Error::throwError("Cannot open audio");
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) Error::throwError((char*) "Cannot open audio");
 
 	if(Window::create() == 1) return 3;
 
@@ -116,11 +116,11 @@ void Game::prepareExit()
 
 	currentScene->destroy();
 
-	Window::destroy();
-
 	Event::destroy();
 
 	VertexArrayObject::destroyAll();
+
+	Window::destroy();
 
 	IMG_Quit();
 	TTF_Quit();

@@ -28,7 +28,7 @@ void KeyboardInput::update()
 
 void KeyboardInput::destroy()
 {
-	delete &keys;
+	delete keys;
 }
 
 bool KeyboardInput::isPressed(KeyboardKey key)

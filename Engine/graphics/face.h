@@ -21,16 +21,16 @@
 
 struct Face
 {
-	Face(S32 v1, S32 v2, S32 v3);
-	Face(S32 v1, S32 v2, S32 v3, S32 vn);
-	Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3);
-	Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3, S32 vn);
+	Face(U64 v1, U64 v2, U64 v3);
+	Face(U64 v1, U64 v2, U64 v3, U64 vn);
+	Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3);
+	Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3, U64 vn);
 
 	~Face();
 
-	S32 v1, v2, v3;
-	S32 vt1, vt2, vt3;
-	S32 vn;
+	U64 v1, v2, v3;
+	U64 vt1, vt2, vt3;
+	U64 vn;
 };
 
 #endif

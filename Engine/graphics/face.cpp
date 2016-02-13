@@ -16,7 +16,7 @@
 
 #include "face.h"
 
-Face::Face(S32 v1, S32 v2, S32 v3)
+Face::Face(U64 v1, U64 v2, U64 v3)
 {
 	this->v1 = v1;
 	this->v2 = v2;
@@ -29,7 +29,7 @@ Face::Face(S32 v1, S32 v2, S32 v3)
 	this->vn = 0.0f;
 }
 
-Face::Face(S32 v1, S32 v2, S32 v3, S32 vn)
+Face::Face(U64 v1, U64 v2, U64 v3, U64 vn)
 {
 	this->v1 = v1;
 	this->v2 = v2;
@@ -42,7 +42,7 @@ Face::Face(S32 v1, S32 v2, S32 v3, S32 vn)
 	this->vn = vn;
 }
 
-Face::Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3)
+Face::Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3)
 {
 	this->v1 = v1;
 	this->v2 = v2;
@@ -55,7 +55,7 @@ Face::Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3)
 	this->vn = 0.0f;
 }
 
-Face::Face(S32 v1, S32 v2, S32 v3, S32 vt1, S32 vt2, S32 vt3, S32 vn)
+Face::Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3, U64 vn)
 {
 	this->v1 = v1;
 	this->v2 = v2;
