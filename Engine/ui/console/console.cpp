@@ -162,7 +162,7 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 			break;
 		case KeyboardKey::KEY_EQUALS:
 			if(big) tempCurrentLine += "+";
-			else tempCurrentLine += "1";
+			else tempCurrentLine += "=";
 			break;
 		case KeyboardKey::KEY_Q:
 			if(big) tempCurrentLine += "Q";
