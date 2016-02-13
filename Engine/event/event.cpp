@@ -18,9 +18,24 @@
 
 #include <SDL2/SDL_events.h>
 #include "../input/input.h"
+#include "../math/math.h"
+#include "../ui/console/console.h"
 #include "../window/window.h"
 
-static SDL_Event event; //Handles events
+#include <iostream>
+
+static SDL_Event				event; //Handles events
+std::vector <EventHandler*> 	eventHandlers;
+
+void Event::registerEventHandler(EventHandler *eventHandler)
+{
+	for(U16 i = 0; i < eventHandlers.size(); i++)
+	{
+		if(eventHandlers.at(i) == eventHandler) return;
+	}
+
+	eventHandlers.push_back(eventHandler);
+}
 
 void Event::init()
 {
@@ -44,6 +59,26 @@ void Event::update()
 			if(event.button.button == SDL_BUTTON_LEFT) buttonsState[BUTTON_LEFT] = 1;
 			else if(event.button.button == SDL_BUTTON_MIDDLE) buttonsState[BUTTON_MIDDLE] = 1;
 			else if(event.button.button == SDL_BUTTON_RIGHT) buttonsState[BUTTON_RIGHT] = 1;
+			break;
+		case SDL_KEYDOWN:
+			if(event.key.keysym.scancode == KeyboardKey::KEY_GRAVE) Console::switchVis();
+			if(!Console::isVisible())
+			{
+				for(U16 i = 0; i < eventHandlers.size(); i++)
+				{
+					eventHandlers.at(i)->onKeyboardKeyDown(KeyboardKey(event.key.keysym.scancode));
+				}
+			}
+			else
+			{
+				static const U8 *keys = SDL_GetKeyboardState(NULL);
+
+				bool big = false;
+
+				if(keys[KeyboardKey::KEY_LSHIFT] || keys[KeyboardKey::KEY_RSHIFT]) big = true;
+
+				Console::onConsoleKeyDown(KeyboardKey(event.key.keysym.scancode), big);
+			}
 			break;
 		}
 	}

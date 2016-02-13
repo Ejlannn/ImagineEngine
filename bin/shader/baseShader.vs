@@ -27,6 +27,8 @@ uniform float lightIntensity[4];
 uniform vec3 lightPosition[4];
 uniform float lightRange[4];
 
+vec3 finalLight[4];
+
 void main(void)
 {
 	color = mainColor;
@@ -47,6 +49,11 @@ void main(void)
 	
 	for(int i=0;i<4;i++)
 	{
+		if(lightType[i] == 0)
+		{
+			finalLight[i] = vec3(0.0,0.0,0.0);
+		}
+		
 		if(lightType[i] == 1)
 		{
 		}
@@ -84,7 +91,9 @@ void main(void)
 				//toAddFinal.y = toAddFinal.y - toSubstInv;
 				//toAddFinal.z = toAddFinal.z - toSubstInv;
 				
-				lightToAdd = diffuse * lightToAdd + toAddFinal;
+				finalLight[i] = diffuse * lightToAdd + toAddFinal;
+				
+				lightToAdd = lightToAdd + finalLight[i];
 			}
 		}
 		

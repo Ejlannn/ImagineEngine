@@ -28,10 +28,12 @@ public:
 	static void pauseMusic();
 	static void resumeMusic();
 	static void stopMusic();
+	static void setMusicVolume(U16 volume);
 	static bool isMusicPlaying();
 	static void playSoundEffect(FilePath *soundFile, U16 channel);
 	static void playSoundEffect(FilePath *soundFile, U16 channel, U16 loops);
 	static void stopSoundEffect(U16 channel);
+	static void setChannelVolume(U16 channel, U16 volume);
 	static bool isSoundEffectPlaying(U16 channel);
 };
 

@@ -14,27 +14,27 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_UI_SHADER_H_
-#define _IE_UI_SHADER_H_
+#ifndef _IE_UIN_SHADER_H_
+#define _IE_UIN_SHADER_H_
 
 #include "shaderProgram.h"
 
 class GraphicsDevice;
 
-class UIShader : public ShaderProgram
+class UINShader : public ShaderProgram
 {
 	friend class GraphicsDevice;
 
-	UIShader();
+	UINShader();
 
-	~UIShader();
+	~UINShader();
 
-	U32 loc_projectionMatrix;
+	U32 loc_color;
 
 	virtual void bindAttributes();
 	virtual void getAllUniformLocations();
 
-	void loadProjectionMatrix(Matrix4 *value);
+	void loadColor(Color3 *value);
 };
 
 #endif

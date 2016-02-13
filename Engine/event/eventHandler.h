@@ -14,27 +14,19 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_UI_SHADER_H_
-#define _IE_UI_SHADER_H_
+#ifndef _IE_EVENT_HANDLER_H_
+#define _IE_EVENT_HANDLER_H_
 
-#include "shaderProgram.h"
+#include "../input/input.h"
 
-class GraphicsDevice;
+class Event;
 
-class UIShader : public ShaderProgram
+class EventHandler
 {
-	friend class GraphicsDevice;
+	friend class Event;
 
-	UIShader();
-
-	~UIShader();
-
-	U32 loc_projectionMatrix;
-
-	virtual void bindAttributes();
-	virtual void getAllUniformLocations();
-
-	void loadProjectionMatrix(Matrix4 *value);
+protected:
+	virtual void onKeyboardKeyDown(KeyboardKey key);
 };
 
 #endif

@@ -21,8 +21,6 @@
 #include "../../engine/entity.h"
 #include "../../engine/light/light.h"
 
-#include <iostream>
-
 char *binFolder = FilePath::getGamePath();
 
 std::string vsPath = "bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "baseShader.vs";
@@ -175,8 +173,6 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 			loadInt(loc_lightType[i], 0);
 			continue;
 		}
-
-		std::cout << lightSources[i]->type << std::endl;
 
 		U16 type;
 

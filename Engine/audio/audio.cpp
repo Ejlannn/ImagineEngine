@@ -52,6 +52,13 @@ void Audio::stopMusic()
 	Mix_HaltMusic();
 }
 
+void Audio::setMusicVolume(U16 volume)
+{
+	if(!Mix_PlayingMusic()) return;
+
+	Mix_VolumeMusic(volume);
+}
+
 bool Audio::isMusicPlaying()
 {
 	if(Mix_PlayingMusic()) return true;
@@ -80,6 +87,13 @@ void Audio::stopSoundEffect(U16 channel)
 	if(!Mix_Playing(channel)) return;
 
 	Mix_HaltChannel(channel);
+}
+
+void Audio::setChannelVolume(U16 channel, U16 volume)
+{
+	if(!Mix_Playing(channel)) return;
+
+	Mix_Volume(channel, volume);
 }
 
 bool Audio::isSoundEffectPlaying(U16 channel)

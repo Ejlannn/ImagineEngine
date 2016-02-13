@@ -24,6 +24,7 @@ class UIText;
 class BaseShader;
 class SkyboxShader;
 class UIShader;
+class UINShader;
 class UIElement;
 
 class GraphicsDevice
@@ -35,18 +36,22 @@ private:
 	static BaseShader *getBaseShader();
 	static SkyboxShader *getSkyboxShader();
 	static UIShader *getUIShader();
+	static UINShader *getUINShader();
 
 	static void init();
 	static void render(Scene *scene);
 	static void renderEntity(Entity *entity, MeshRendererComponent *mesh);
 	static void renderSkybox(SkyboxAsset *skybox);
 	static void renderUIElement(UIElement *element);
+	static void renderConsole();
 	static void startBaseShader(Entity *entity, Scene *scene);
 	static void stopBaseShader();
 	static void startSkyboxShader(Scene *scene);
 	static void stopSkyboxShader();
 	static void startUIShader();
 	static void stopUIShader();
+	static void startUINShader(Color3 *color);
+	static void stopUINShader();
 	//static void render(Scene *scene);
 	//static void renderChildren(std::vector<Entity*> children, TransformComponent *parentTransform, Scene *scene);
 	//static void renderElements(MeshRendererComponent *meshRendererComponent, bool textured);

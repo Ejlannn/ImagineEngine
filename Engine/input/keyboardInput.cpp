@@ -17,6 +17,7 @@
 #include "keyboardInput.h"
 
 #include <SDL2/SDL_keyboard.h>
+#include "../ui/console/console.h"
 
 static const U8 *keys; //Handles keyboard keys state
 
@@ -32,6 +33,8 @@ void KeyboardInput::destroy()
 
 bool KeyboardInput::isPressed(KeyboardKey key)
 {
+	if(Console::isVisible()) return false;
+
 	if(keys[key]) return true;
 
 	return false;
@@ -39,6 +42,8 @@ bool KeyboardInput::isPressed(KeyboardKey key)
 
 bool KeyboardInput::isReleased(KeyboardKey key)
 {
+	if(Console::isVisible()) return true;
+
 	if(!isPressed(key)) return true;
 
 	return false;

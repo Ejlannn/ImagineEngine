@@ -14,27 +14,19 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_UI_SHADER_H_
-#define _IE_UI_SHADER_H_
+#ifndef _IE_COMMAND_EXECUTOR_H_
+#define _IE_COMMAND_EXECUTOR_H_
 
-#include "shaderProgram.h"
+#include <string>
 
-class GraphicsDevice;
+class Console;
 
-class UIShader : public ShaderProgram
+class CommandExecutor
 {
-	friend class GraphicsDevice;
+	friend class Console;
 
-	UIShader();
-
-	~UIShader();
-
-	U32 loc_projectionMatrix;
-
-	virtual void bindAttributes();
-	virtual void getAllUniformLocations();
-
-	void loadProjectionMatrix(Matrix4 *value);
+protected:
+	virtual void onCommand(std::string command, std::string args[]);
 };
 
 #endif

@@ -14,27 +14,32 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_UI_SHADER_H_
-#define _IE_UI_SHADER_H_
+#ifndef _IE_CONSOLE_H_
+#define _IE_CONSOLE_H_
 
-#include "shaderProgram.h"
+#include "commandExecutor.h"
+#include "../../math/math.h"
+#include "../../input/keyboardInput.h"
 
 class GraphicsDevice;
+class Event;
 
-class UIShader : public ShaderProgram
+class Console
 {
 	friend class GraphicsDevice;
+	friend class Event;
 
-	UIShader();
+public:
+	static void registerCommandExecutor(CommandExecutor *commandExecutor);
 
-	~UIShader();
+	static bool isVisible();
 
-	U32 loc_projectionMatrix;
-
-	virtual void bindAttributes();
-	virtual void getAllUniformLocations();
-
-	void loadProjectionMatrix(Matrix4 *value);
+private:
+	static std::vector<std::string> getLines();
+	static std::string getCurrentLine();
+	static void setVisibility(bool vis);
+	static void switchVis();
+	static void onConsoleKeyDown(KeyboardKey key, bool big);
 };
 
 #endif

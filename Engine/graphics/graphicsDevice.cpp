@@ -24,12 +24,14 @@
 #include "../error/error.h"
 #include "../engine/game/game.h"
 #include "../ui/uiElementsHandler.h"
+#include "../ui/console/console.h"
 #include "../window/window.h"
 
 /* Shaders */
 #include "shader/baseShader.h"
 #include "shader/skyboxShader.h"
 #include "shader/uiShader.h"
+#include "shader/uinShader.h"
 
 Matrix4 *projectionMatrix = NULL;
 Matrix4 *viewMatrix = NULL;
@@ -41,6 +43,7 @@ std::vector<UIElement*> elementsToRender;
 BaseShader		*baseShader = NULL;
 SkyboxShader	*skyboxShader = NULL;
 UIShader		*uiShader = NULL;
+UINShader		*uinShader = NULL;
 
 struct Text2D
 {
@@ -89,15 +92,6 @@ void clear()
 
 void prepare3D()
 {
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POINT_SMOOTH);
-	glEnable(GL_POLYGON_SMOOTH);
-
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -110,6 +104,7 @@ void GraphicsDevice::init()
 	baseShader = getBaseShader();
 	skyboxShader = getSkyboxShader();
 	uiShader = getUIShader();
+	uinShader = getUINShader();
 
 	clear();
 
@@ -139,6 +134,13 @@ void GraphicsDevice::render(Scene *scene)
 
 	if(scene->backgroundColor == NULL) clear(new Color3());
 	else clear(scene->backgroundColor);
+
+	if(scene->skybox != NULL)
+	{
+		startSkyboxShader(scene);
+		renderSkybox(scene->skybox);
+		stopSkyboxShader();
+	}
 
 	for(U32 i = 0; i < scene->entities.size(); i++)
 	{
@@ -175,13 +177,6 @@ void GraphicsDevice::render(Scene *scene)
 				stopBaseShader();
 			}
 		}
-	}
-
-	if(scene->skybox != NULL)
-	{
-		startSkyboxShader(scene);
-		renderSkybox(scene->skybox);
-		stopSkyboxShader();
 	}
 
 	elementsToRender = UIElementsHandler::getElements();
@@ -224,6 +219,60 @@ void GraphicsDevice::render(Scene *scene)
 		}
 
 		textsToRender.clear();
+	}
+
+	if(Console::isVisible())
+	{
+		renderConsole();
+
+		SDL_Color color = { 255.0,255.0, 255.0 };
+
+		char *binFolder = FilePath::getGamePath();
+
+		std::string fontPth = "bin" + std::string(PATH_SEPARATOR) + "font" + std::string(PATH_SEPARATOR) + "Consolas.ttf";
+
+		std::string fontPathFull = binFolder + fontPth;
+
+		FilePath *fontPath = new FilePath(fontPathFull);
+
+		TTF_Font *font = TTF_OpenFont(fontPath->getPath().c_str(), 12);
+
+		std::vector<std::string> consoleLines = Console::getLines();
+
+		for(U16 i = 0; i < consoleLines.size(); i++)
+		{
+			if(i > 22) break;
+
+			if(!font && isGameRunning() == true) Error::throwError((char*) "Cannot load font file!");
+
+			SDL_Surface *fontSurface = TTF_RenderText_Blended(font, consoleLines.at(consoleLines.size() - 1 - i).c_str(), color);
+
+			startUIShader();
+
+			renderUIElement(new UIElement(new Vector2(3.0f, (F32) (14 * (consoleLines.size() - 1 - i) + 3)), fontSurface));
+
+			stopUIShader();
+
+			SDL_FreeSurface(fontSurface);
+		}
+
+		consoleLines.clear();
+
+		if(Console::getCurrentLine().size() > 0)
+		{
+			SDL_Surface *fontSurface = TTF_RenderText_Blended(font, Console::getCurrentLine().c_str(), color);
+
+			startUIShader();
+
+			renderUIElement(new UIElement(new Vector2(3.0f, 328.0f), fontSurface));
+
+			stopUIShader();
+
+			SDL_FreeSurface(fontSurface);
+
+			TTF_CloseFont(font);
+		}
+
 	}
 
 	Window::update();
@@ -415,6 +464,101 @@ void GraphicsDevice::renderUIElement(UIElement *element)
 	glDeleteTextures(1, &texture);
 }
 
+void GraphicsDevice::renderConsole()
+{
+	startUINShader(new Color3(0.1f,0.1f,0.1f));
+
+	std::vector<F32> positions;
+
+
+	/*positions.push_back(0.0f);
+	positions.push_back(0.0f);
+	positions.push_back((F32)Window::getWidth());
+	positions.push_back(0.0f);
+	positions.push_back((F32)Window::getWidth());
+	positions.push_back((F32) Console::getHeight());
+	positions.push_back(0.0f);
+	positions.push_back((F32) Console::getHeight());
+*/
+
+	positions.push_back(-1.0f);
+	positions.push_back(1.0f);
+	positions.push_back(1.0f);
+	positions.push_back(1.0f);
+	positions.push_back(1.0f);
+	positions.push_back(0.1f);
+
+	positions.push_back(-1.0f);
+	positions.push_back(0.1f);
+	positions.push_back(-1.0f);
+	positions.push_back(1.0f);
+	positions.push_back(1.0f);
+	positions.push_back(0.1f);
+
+	/*
+	positions.push_back(-1.0f);
+	positions.push_back(0.1f);
+	positions.push_back(1.0f);
+	positions.push_back(0.1f);
+	positions.push_back(1.0f);
+	positions.push_back(0.1f - 0.05f);
+
+	positions.push_back(-1.0f);
+	positions.push_back(0.1f - 0.05f);
+	positions.push_back(-1.0f);
+	positions.push_back(0.1f);
+	positions.push_back(1.0f);
+	positions.push_back(0.1f - 0.05f);*/
+
+	U32 vaoID = VertexArrayObject::loadToVAO(positions, 2);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glBindVertexArray(vaoID);
+	glEnableVertexAttribArray(0);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(0);
+	glBindVertexArray(0);
+
+	glDisable(GL_BLEND);
+
+	stopUINShader();
+
+	startUINShader(new Color3(0.05f,0.05f,0.05f));
+
+	std::vector<F32> positions2;
+
+	positions2.push_back(-1.0f);
+	positions2.push_back(0.1f);
+	positions2.push_back(1.0f);
+	positions2.push_back(0.1f);
+	positions2.push_back(1.0f);
+	positions2.push_back(0.1f - 0.05f);
+
+	positions2.push_back(-1.0f);
+	positions2.push_back(0.1f - 0.05f);
+	positions2.push_back(-1.0f);
+	positions2.push_back(0.1f);
+	positions2.push_back(1.0f);
+	positions2.push_back(0.1f - 0.05f);
+
+	U32 vaoID2 = VertexArrayObject::loadToVAO(positions2, 2);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glBindVertexArray(vaoID2);
+	glEnableVertexAttribArray(0);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(0);
+	glBindVertexArray(0);
+
+	glDisable(GL_BLEND);
+
+	stopUINShader();
+}
+
 void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 {
 	baseShader->start();
@@ -533,6 +677,18 @@ void GraphicsDevice::stopUIShader()
 	uiShader->stop();
 }
 
+void GraphicsDevice::startUINShader(Color3 *color)
+{
+	uinShader->start();
+
+	uinShader->loadColor(color);
+}
+
+void GraphicsDevice::stopUINShader()
+{
+	uinShader->stop();
+}
+
 void GraphicsDevice::addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 *position)
 {
 	textsToRender.push_back(new Text2D(message, fontFile, size, position));
@@ -551,4 +707,9 @@ SkyboxShader *GraphicsDevice::getSkyboxShader()
 UIShader *GraphicsDevice::getUIShader()
 {
 	return new UIShader();
+}
+
+UINShader *GraphicsDevice::getUINShader()
+{
+	return new UINShader();
 }
