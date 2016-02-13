@@ -14,8 +14,6 @@ Supported platforms: Windows, Linux, Mac OSX
 
 -GLEW
 
--GLU **(Only Pre-alpha 1.0.0 - Pre-alpha 1.0.2_01)**
-
 # Developers & Credits #
 
 **Lead Developer:** skprime
