@@ -22,7 +22,7 @@ static SDL_Window	*window = NULL; //Handles game window
 static char			*title = (char*) "Imagine Engine Game"; //Handles game window title
 static U16			width = 1280; //Handles game window width
 static U16			height = 720; //Handles game window height
-static S16			x = 300; //Handles game window X position
+static S16			x = 400; //Handles game window X position
 static S16			y = 300; //Handles game window Y position
 static bool			fullscreen = true; //Handles game window fullscreen state
 static bool			visible = true; //Handles game window visibility state
@@ -58,7 +58,7 @@ void Window::destroy()
 	window = NULL;
 
 	delete window;
-	delete &title;
+	delete title;
 	delete &width;
 	delete &height;
 	delete &x;
