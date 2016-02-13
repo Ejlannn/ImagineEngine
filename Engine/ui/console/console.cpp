@@ -128,6 +128,9 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 		currentLineBuf.push_back(tempCurrentLine);
 		tempCurrentLine = "";
 		break;
+	case KeyboardKey::KEY_LCTRL:
+		currentLineBuf.clear();
+		tempCurrentLine = "";
 	default:
 		switch(key)
 		{
@@ -160,6 +163,9 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 			break;
 		case KeyboardKey::KEY_0:
 			tempCurrentLine += "0";
+			break;
+		case KeyboardKey::KEY_PERIOD:
+			tempCurrentLine += ".";
 			break;
 		case KeyboardKey::KEY_MINUS:
 			if(big) tempCurrentLine += "_";
