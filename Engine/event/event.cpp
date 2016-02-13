@@ -17,6 +17,8 @@
 #include "event.h"
 
 #include <SDL2/SDL_events.h>
+#include "../engine/game/game.h"
+#include "../engine/script.h"
 #include "../input/input.h"
 #include "../math/math.h"
 #include "../ui/console/console.h"
@@ -25,17 +27,6 @@
 #include <iostream>
 
 static SDL_Event				event; //Handles events
-std::vector <EventHandler*> 	eventHandlers;
-
-void Event::registerEventHandler(EventHandler *eventHandler)
-{
-	for(U16 i = 0; i < eventHandlers.size(); i++)
-	{
-		if(eventHandlers.at(i) == eventHandler) return;
-	}
-
-	eventHandlers.push_back(eventHandler);
-}
 
 void Event::init()
 {
@@ -50,6 +41,8 @@ void Event::update()
 
 	while(SDL_PollEvent(&event))
 	{
+		Scene *currentScene = Game::getCurrentScene();
+
 		switch(event.type)
 		{
 		case SDL_QUIT:
@@ -59,14 +52,60 @@ void Event::update()
 			if(event.button.button == SDL_BUTTON_LEFT) buttonsState[BUTTON_LEFT] = 1;
 			else if(event.button.button == SDL_BUTTON_MIDDLE) buttonsState[BUTTON_MIDDLE] = 1;
 			else if(event.button.button == SDL_BUTTON_RIGHT) buttonsState[BUTTON_RIGHT] = 1;
+
+			if(currentScene == NULL) break;
+
+			if(currentScene->entities.size() > 0)
+			{
+				for(U16 i = 0; i < currentScene->entities.size(); i++)
+				{
+					if(currentScene->entities.at(i)->hasComponent("ScriptComponent"))
+					{
+						ScriptComponent *scriptComponent = (ScriptComponent*) currentScene->entities.at(i)->getComponent("ScriptComponent");
+
+						if(scriptComponent->scripts.size() > 0)
+						{
+							for(U16 j = 0; j < scriptComponent->scripts.size(); j++)
+							{
+								MouseButton button;
+
+								if(event.button.button == SDL_BUTTON_LEFT) button = MouseButton::BUTTON_LEFT;
+								else if(event.button.button == SDL_BUTTON_MIDDLE) button = MouseButton::BUTTON_MIDDLE;
+								else if(event.button.button == SDL_BUTTON_RIGHT) button = MouseButton::BUTTON_RIGHT;
+								else break;
+
+								scriptComponent->scripts.at(j)->onMouseButtonDown(button);
+							}
+						}
+					}
+				}
+			}
 			break;
 		case SDL_KEYDOWN:
-			if(event.key.keysym.scancode == KeyboardKey::KEY_GRAVE) Console::switchVis();
+			if((KeyboardKey) event.key.keysym.scancode == KeyboardKey::KEY_GRAVE) Console::switchVis();
 			if(!Console::isVisible())
 			{
-				for(U16 i = 0; i < eventHandlers.size(); i++)
+				Scene *currentScene = Game::getCurrentScene();
+
+				if(currentScene == NULL) break;
+
+				if(currentScene->entities.size() > 0)
 				{
-					eventHandlers.at(i)->onKeyboardKeyDown(KeyboardKey(event.key.keysym.scancode));
+					for(U16 i = 0; i < currentScene->entities.size(); i++)
+					{
+						if(currentScene->entities.at(i)->hasComponent("ScriptComponent"))
+						{
+							ScriptComponent *scriptComponent = (ScriptComponent*) currentScene->entities.at(i)->getComponent("ScriptComponent");
+
+							if(scriptComponent->scripts.size() > 0)
+							{
+								for(U16 j = 0; j < scriptComponent->scripts.size(); j++)
+								{
+									scriptComponent->scripts.at(j)->onKeyboardKeyDown(KeyboardKey(event.key.keysym.scancode));
+								}
+							}
+						}
+					}
 				}
 			}
 			else

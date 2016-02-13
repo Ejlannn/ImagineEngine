@@ -20,23 +20,27 @@
 #include "game/game.h"
 
 class ScriptComponent;
+class Event;
 
 class Script
 {
 	friend class ScriptComponent;
+	friend class Event;
+
+public:
+	virtual ~Script();
 
 private:
 	Entity *entity;
-	U32 id;
 
 protected:
-	Script();
-
 	Entity *getEntity();
 
 	virtual void onInit() = 0;
 	virtual void onUpdate() = 0;
 	virtual void onDestroy() = 0;
+	virtual void onKeyboardKeyDown(KeyboardKey key);
+	virtual void onMouseButtonDown(MouseButton button);
 };
 
 #endif

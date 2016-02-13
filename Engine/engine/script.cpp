@@ -16,15 +16,15 @@
 
 #include "script.h"
 
-U32 scriptID = 0;
-
-Script::Script()
+Script::~Script()
 {
-	id = scriptID;
-	scriptID++;
+	delete entity;
 }
 
 Entity *Script::getEntity()
 {
 	return entity;
 }
+
+void Script::onKeyboardKeyDown(KeyboardKey key) {}
+void Script::onMouseButtonDown(MouseButton button) {}

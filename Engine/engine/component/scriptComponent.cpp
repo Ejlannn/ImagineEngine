@@ -25,25 +25,25 @@ ScriptComponent::~ScriptComponent()
 	scripts.clear();
 }
 
-void ScriptComponent::addScript(Script *script)
+void ScriptComponent::addScript(Script *scriptToAdd)
 {
-	if(script == NULL) return;
+	if(scriptToAdd == NULL) return;
 
 	for(U32 i = 0; i < scripts.size(); i++)
 	{
-		if(scripts.at(i)->id == script->id) return;
+		if(scripts.at(i) == scriptToAdd) return;
 	}
 
-	scripts.push_back(script);
+	scripts.push_back(scriptToAdd);
 }
 
-void ScriptComponent::removeScript(Script *script)
+void ScriptComponent::removeScript(Script *scriptToRemove)
 {
-	if(script == NULL) return;
+	if(scriptToRemove == NULL) return;
 
 	for(U32 i = 0; i < scripts.size(); i++)
 	{
-		if(scripts.at(i)->id == script->id) scripts.erase(scripts.begin() + i);
+		if(scripts.at(i) == scriptToRemove) scripts.erase(scripts.begin() + i);
 	}
 }
 

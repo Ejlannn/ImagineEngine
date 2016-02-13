@@ -22,11 +22,13 @@
 
 class GraphicsDevice;
 class Game;
+class Event;
 
 class Scene
 {
 	friend class GraphicsDevice;
 	friend class Game;
+	friend class Event;
 
 public:
 	Scene();

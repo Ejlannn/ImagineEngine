@@ -22,19 +22,21 @@
 class Game;
 class Scene;
 class Script;
+class Event;
 
 class ScriptComponent : public ComponentBase
 {
 	friend class Game;
 	friend class Scene;
+	friend class Event;
 
 public:
 	ScriptComponent();
 
 	~ScriptComponent();
 
-	void addScript(Script *script);
-	void removeScript(Script *script);
+	void addScript(Script *scriptToAdd);
+	void removeScript(Script *scriptToRemove);
 
 private:
 	std::vector<Script*> scripts;

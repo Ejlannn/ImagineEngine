@@ -17,17 +17,13 @@
 #ifndef _IE_EVENT_H_
 #define _IE_EVENT_H_
 
-#include "eventHandler.h"
-
 class Game;
-class EventHandler;
+class Scene;
 
 class Event
 {
 	friend class Game;
-
-public:
-	static void registerEventHandler(EventHandler *eventHandler);
+	friend class Scene;
 
 private:
 	static void init();
