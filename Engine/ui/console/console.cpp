@@ -32,6 +32,11 @@ void Console::registerCommandExecutor(CommandExecutor *commandExecutor)
 	commandExecutors.push_back(commandExecutor);
 }
 
+void Console::sendMessage(std::string message)
+{
+	lines.push_back(message);
+}
+
 bool Console::isVisible()
 {
 	return shown;

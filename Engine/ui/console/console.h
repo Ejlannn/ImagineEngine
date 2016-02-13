@@ -31,6 +31,7 @@ class Console
 
 public:
 	static void registerCommandExecutor(CommandExecutor *commandExecutor);
+	static void sendMessage(std::string message);
 
 	static bool isVisible();
 
