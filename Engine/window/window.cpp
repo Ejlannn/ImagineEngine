@@ -63,9 +63,6 @@ void Window::destroy()
 	delete &height;
 	delete &x;
 	delete &y;
-	delete &fullscreen;
-	delete &visible;
-	delete &exiting;
 }
 
 void Window::update()

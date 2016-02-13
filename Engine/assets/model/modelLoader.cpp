@@ -54,7 +54,7 @@ ModelAsset *ModelLoader::loadOBJModel(FilePath *objFile)
 		}
 		else if((*lines[i])[0] == 'v' && (*lines[i])[1] == 't')
 		{
-			F64 tempX, tempY;
+			F32 tempX, tempY;
 			sscanf(lines[i]->c_str(), "vt %f %f", &tempX, &tempY);
 
 			modelAsset->textureVectors.push_back(new Vector2(tempX, tempY));
