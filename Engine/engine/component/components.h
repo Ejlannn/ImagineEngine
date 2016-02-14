@@ -20,6 +20,7 @@
 #include "cameraComponent.h"
 #include "lightComponent.h"
 #include "materialComponent.h"
+#include "meshColliderComponent.h"
 #include "meshRendererComponent.h"
 #include "scriptComponent.h"
 #include "transformComponent.h"

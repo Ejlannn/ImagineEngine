@@ -590,7 +590,7 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 
 	std::vector<Vector4*> processedVertices;
 
-	for(U32 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
+	for(U64 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
 	{
 		Vector4 *vertex = new Vector4(meshRendererComponent->model->vertices.at(i)->x,
 				meshRendererComponent->model->vertices.at(i)->y,

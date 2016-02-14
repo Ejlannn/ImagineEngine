@@ -20,10 +20,12 @@
 #include "componentBase.h"
 
 class GraphicsDevice;
+class Scene;
 
 class TransformComponent : public ComponentBase
 {
 	friend class GraphicsDevice;
+	friend class Scene;
 
 public:
 	TransformComponent();

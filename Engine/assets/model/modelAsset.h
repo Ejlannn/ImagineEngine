@@ -22,11 +22,15 @@
 
 class ModelLoader;
 class GraphicsDevice;
+class MeshColliderComponent;
+class Scene;
 
 class ModelAsset
 {
 	friend class ModelLoader;
 	friend class GraphicsDevice;
+	friend class MeshColliderComponent;
+	friend class Scene;
 
 public:
 	~ModelAsset();

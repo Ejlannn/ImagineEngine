@@ -16,6 +16,7 @@
 
 #include "scene.h"
 
+#include "script.h"
 #include "../graphics/lightProcessor.h"
 
 Scene::Scene()
@@ -118,6 +119,36 @@ void Scene::initialize()
 			initializeChildren(entities.at(i)->children);
 		}
 
+		if(entities.at(i)->hasComponent("MeshRendererComponent") && entities.at(i)->hasComponent("MeshColliderComponent"))
+		{
+			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) entities.at(i)->getComponent("MeshRendererComponent");
+
+			if(meshRendererComponent->model != NULL)
+			{
+				TransformComponent *transformComponent = (TransformComponent*) entities.at(i)->getComponent("TransformComponent");
+
+				Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+
+				std::vector<Vector4*> processedVertices;
+
+				for(U64 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
+				{
+					Vector4 *vertex = new Vector4(meshRendererComponent->model->vertices.at(i)->x,
+							meshRendererComponent->model->vertices.at(i)->y,
+							meshRendererComponent->model->vertices.at(i)->z, 1.0);
+
+
+					Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+
+					processedVertices.push_back(result);
+				}
+
+				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
+
+				if(meshColComponent->obb[0] == NULL) meshColComponent->createOOB(processedVertices);
+			}
+		}
+
 		if(entities.at(i)->hasComponent("ScriptComponent"))
 		{
 			ScriptComponent *scriptComponent = (ScriptComponent*) entities.at(i)->getComponent("ScriptComponent");
@@ -136,6 +167,107 @@ void Scene::update()
 
 	for(U32 i = 0; i < entities.size(); i++)
 	{
+		if(entities.at(i)->hasComponent("MeshRendererComponent") && entities.at(i)->hasComponent("MeshColliderComponent"))
+		{
+			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) entities.at(i)->getComponent("MeshRendererComponent");
+
+			if(meshRendererComponent->model != NULL)
+			{
+				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
+
+				if(meshColComponent->staticCollider == false)
+				{
+					TransformComponent *transformComponent = (TransformComponent*) entities.at(i)->getComponent("TransformComponent");
+
+					Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+
+					std::vector<Vector4*> processedVertices;
+
+					for(U64 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
+					{
+						Vector4 *vertex = new Vector4(meshRendererComponent->model->vertices.at(i)->x,
+								meshRendererComponent->model->vertices.at(i)->y,
+								meshRendererComponent->model->vertices.at(i)->z, 1.0);
+
+
+						Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+
+						processedVertices.push_back(result);
+					}
+
+					MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
+
+					meshColComponent->createOOB(processedVertices);
+				}
+			}
+		}
+		if(entities.at(i)->hasComponent("MeshRendererComponent") && entities.at(i)->hasComponent("MeshColliderComponent") && entities.at(i)->hasComponent("ScriptComponent"))
+		{
+			ScriptComponent *scriptComponent = (ScriptComponent*) entities.at(i)->getComponent("ScriptComponent");
+
+			MeshRendererComponent *meshRendererComponent1 = (MeshRendererComponent*) entities.at(i)->getComponent("MeshRendererComponent");
+
+			if(meshRendererComponent1->model != NULL && scriptComponent->scripts.size() > 0)
+			{
+				for(U32 j = 0; j < entities.size(); j++)
+				{
+					if(entities.at(j)->hasComponent("MeshRendererComponent") && entities.at(j)->hasComponent("MeshColliderComponent") && entities.at(j)->getID() != entities.at(i)->getID())
+					{
+						MeshRendererComponent *meshRendererComponent2 = (MeshRendererComponent*) entities.at(j)->getComponent("MeshRendererComponent");
+
+						TransformComponent *transformComponent1 = (TransformComponent*) entities.at(i)->getComponent("TransformComponent");
+
+						Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent1);
+
+						TransformComponent *transformComponent2 = (TransformComponent*) entities.at(j)->getComponent("TransformComponent");
+
+						Matrix4 *transformationMatrix2 = TransformComponent::createTransformationMatrix(transformComponent2);
+
+						std::vector<Vector4*> processedVertices1;
+
+						for(U64 k = 0; k < meshRendererComponent1->model->vertices.size(); k++)
+						{
+							Vector4 *vertex = new Vector4(meshRendererComponent1->model->vertices.at(k)->x,
+									meshRendererComponent1->model->vertices.at(k)->y,
+									meshRendererComponent1->model->vertices.at(k)->z, 1.0);
+
+
+							Vector4 *result = Vector4::transform(vertex, transformationMatrix1);
+
+							processedVertices1.push_back(result);
+						}
+
+						std::vector<Vector4*> processedVertices2;
+
+						for(U64 k = 0; k < meshRendererComponent2->model->vertices.size(); k++)
+						{
+							Vector4 *vertex = new Vector4(meshRendererComponent2->model->vertices.at(k)->x,
+									meshRendererComponent2->model->vertices.at(k)->y,
+									meshRendererComponent2->model->vertices.at(k)->z, 1.0);
+
+
+							Vector4 *result = Vector4::transform(vertex, transformationMatrix2);
+
+							processedVertices2.push_back(result);
+						}
+
+						MeshColliderComponent *meshCol1 = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
+						MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entities.at(j)->getComponent("MeshColliderComponent");
+
+						if(MeshColliderComponent::areColliding(meshCol1->obb, meshCol2->obb, processedVertices1, processedVertices2))
+						{
+							for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
+							{
+								Collision *collision = new Collision(entities.at(j));
+								scriptComponent->scripts.at(m)->onCollision(collision);
+							}
+						}
+
+					}
+				}
+			}
+		}
+
 		if(entities.at(i)->children.size() > 0)
 		{
 			updateChildren(entities.at(i)->children);
@@ -189,6 +321,36 @@ void Scene::initializeChildren(std::vector<Entity*> children)
 {
 	for(U32 i = 0; i < children.size(); i++)
 	{
+		if(children.at(i)->hasComponent("MeshRendererComponent") && children.at(i)->hasComponent("MeshColliderComponent"))
+		{
+			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) children.at(i)->getComponent("MeshRendererComponent");
+
+			if(meshRendererComponent->model != NULL)
+			{
+				TransformComponent *transformComponent = (TransformComponent*) children.at(i)->getComponent("TransformComponent");
+
+				Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+
+				std::vector<Vector4*> processedVertices;
+
+				for(U64 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
+				{
+					Vector4 *vertex = new Vector4(meshRendererComponent->model->vertices.at(i)->x,
+							meshRendererComponent->model->vertices.at(i)->y,
+							meshRendererComponent->model->vertices.at(i)->z, 1.0);
+
+
+					Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+
+					processedVertices.push_back(result);
+				}
+
+				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
+
+				if(meshColComponent->obb[0] == NULL) meshColComponent->createOOB(processedVertices);
+			}
+		}
+
 		if(children.at(i)->hasComponent("ScriptComponent"))
 		{
 			ScriptComponent *scriptComponent = (ScriptComponent*) children.at(i)->getComponent("ScriptComponent");
@@ -207,6 +369,108 @@ void Scene::updateChildren(std::vector<Entity*> children)
 {
 	for(U32 i = 0; i < children.size(); i++)
 	{
+		if(children.at(i)->hasComponent("MeshRendererComponent") && children.at(i)->hasComponent("MeshColliderComponent"))
+		{
+			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) children.at(i)->getComponent("MeshRendererComponent");
+
+			if(meshRendererComponent->model != NULL)
+			{
+				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
+
+				if(meshColComponent->staticCollider == false)
+				{
+					TransformComponent *transformComponent = (TransformComponent*) children.at(i)->getComponent("TransformComponent");
+
+					Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+
+					std::vector<Vector4*> processedVertices;
+
+					for(U64 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
+					{
+						Vector4 *vertex = new Vector4(meshRendererComponent->model->vertices.at(i)->x,
+								meshRendererComponent->model->vertices.at(i)->y,
+								meshRendererComponent->model->vertices.at(i)->z, 1.0);
+
+
+						Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+
+						processedVertices.push_back(result);
+					}
+
+					MeshColliderComponent *meshColComponent = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
+
+					meshColComponent->createOOB(processedVertices);
+				}
+			}
+		}
+
+		if(children.at(i)->hasComponent("MeshRendererComponent") && children.at(i)->hasComponent("MeshColliderComponent") && children.at(i)->hasComponent("ScriptComponent"))
+		{
+			ScriptComponent *scriptComponent = (ScriptComponent*) children.at(i)->getComponent("ScriptComponent");
+
+			MeshRendererComponent *meshRendererComponent1 = (MeshRendererComponent*) children.at(i)->getComponent("MeshRendererComponent");
+
+			if(meshRendererComponent1->model != NULL && scriptComponent->scripts.size() > 0)
+			{
+				for(U32 j = 0; j < entities.size(); j++)
+				{
+					if(entities.at(j)->hasComponent("MeshRendererComponent") && entities.at(j)->hasComponent("MeshColliderComponent") && entities.at(j)->getID() != children.at(i)->getID())
+					{
+						MeshRendererComponent *meshRendererComponent2 = (MeshRendererComponent*) entities.at(j)->getComponent("MeshRendererComponent");
+
+						TransformComponent *transformComponent1 = (TransformComponent*) children.at(i)->getComponent("TransformComponent");
+
+						Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent1);
+
+						TransformComponent *transformComponent2 = (TransformComponent*) entities.at(j)->getComponent("TransformComponent");
+
+						Matrix4 *transformationMatrix2 = TransformComponent::createTransformationMatrix(transformComponent2);
+
+						std::vector<Vector4*> processedVertices1;
+
+						for(U64 k = 0; k < meshRendererComponent1->model->vertices.size(); k++)
+						{
+							Vector4 *vertex = new Vector4(meshRendererComponent1->model->vertices.at(k)->x,
+									meshRendererComponent1->model->vertices.at(k)->y,
+									meshRendererComponent1->model->vertices.at(k)->z, 1.0);
+
+
+							Vector4 *result = Vector4::transform(vertex, transformationMatrix1);
+
+							processedVertices1.push_back(result);
+						}
+
+						std::vector<Vector4*> processedVertices2;
+
+						for(U64 k = 0; k < meshRendererComponent2->model->vertices.size(); k++)
+						{
+							Vector4 *vertex = new Vector4(meshRendererComponent2->model->vertices.at(k)->x,
+									meshRendererComponent2->model->vertices.at(k)->y,
+									meshRendererComponent2->model->vertices.at(k)->z, 1.0);
+
+
+							Vector4 *result = Vector4::transform(vertex, transformationMatrix2);
+
+							processedVertices2.push_back(result);
+						}
+
+						MeshColliderComponent *meshCol1 = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
+						MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entities.at(j)->getComponent("MeshColliderComponent");
+
+						if(MeshColliderComponent::areColliding(meshCol1->obb, meshCol2->obb, processedVertices1, processedVertices2))
+						{
+							for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
+							{
+								Collision *collision = new Collision(entities.at(j));
+								scriptComponent->scripts.at(m)->onCollision(collision);
+							}
+						}
+
+					}
+				}
+			}
+		}
+
 		if(children.at(i)->hasComponent("ScriptComponent"))
 		{
 			ScriptComponent *scriptComponent = (ScriptComponent*) children.at(i)->getComponent("ScriptComponent");

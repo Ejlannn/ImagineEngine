@@ -14,36 +14,48 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IE_SCRIPT_H_
-#define _IE_SCRIPT_H_
+#ifndef _IE_MESH_COLLIDER_COMPONENT_H_
+#define _IE_MESH_COLLIDER_COMPONENT_H_
 
-#include "game/game.h"
+#include "componentBase.h"
+#include "../../assets/model/modelAsset.h"
 
-class ScriptComponent;
-class Event;
 class Scene;
 
-class Script
+class Collision
 {
-	friend class ScriptComponent;
-	friend class Event;
 	friend class Scene;
-
 public:
-	virtual ~Script();
+	Entity *getCollider();
 
 private:
-	Entity *entity;
+	Collision(Entity *entity)
+	{
+		collider = entity;
+	}
 
-protected:
-	Entity *getEntity();
+	Entity *collider;
+};
 
-	virtual void onInit() = 0;
-	virtual void onUpdate() = 0;
-	virtual void onDestroy() = 0;
-	virtual void onKeyboardKeyDown(KeyboardKey key);
-	virtual void onMouseButtonDown(MouseButton button);
-	virtual void onCollision(Collision *collision);
+class GraphicsDevice;
+
+class MeshColliderComponent : public ComponentBase
+{
+	friend class Scene;
+	friend class GraphicsDevice;
+
+public:
+	MeshColliderComponent();
+
+	~MeshColliderComponent();
+
+	bool staticCollider;
+
+private:
+	Vector3 *obb[8];
+
+	void createOOB(std::vector<Vector4*> vertices);
+	static bool areColliding(Vector3 *obb1[8], Vector3 *obb2[8], std::vector<Vector4*> vertices1, std::vector<Vector4*> vertices2);
 };
 
 #endif
