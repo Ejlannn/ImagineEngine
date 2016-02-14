@@ -24,7 +24,7 @@ static U16			width = 1280; //Handles game window width
 static U16			height = 720; //Handles game window height
 static S16			x = 500; //Handles game window X position
 static S16			y = 200; //Handles game window Y position
-static bool			fullscreen = false; //Handles game window fullscreen state
+static bool			fullscreen = true; //Handles game window fullscreen state
 static bool			visible = true; //Handles game window visibility state
 static bool			exiting = false; //Handles game window state
 
