@@ -30,6 +30,7 @@ public:
 
 	Color3 *mainColor;
 	TextureAsset *texture;
+	S16 tilingX, tilingY;
 
 	static Color3 *getDefaultMainColor();
 };

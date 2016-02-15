@@ -20,9 +20,6 @@
 
 TextureAsset::TextureAsset(FilePath *path)
 {
-	tilingX = 1;
-	tilingY = 1;
-
 	textureFile = path;
 	textureID = 0;
 
@@ -33,8 +30,6 @@ TextureAsset::~TextureAsset()
 {
 	SDL_FreeSurface(surface);
 
-	delete &tilingX;
-	delete &tilingY;
 	delete textureFile;
 	delete &textureID;
 }

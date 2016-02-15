@@ -20,12 +20,16 @@ MaterialAsset::MaterialAsset()
 {
 	mainColor = getDefaultMainColor();
 	texture = NULL;
+	tilingX = 1;
+	tilingY = 1;
 }
 
 MaterialAsset::~MaterialAsset()
 {
 	delete mainColor;
 	delete texture;
+	delete &tilingX;
+	delete &tilingY;
 }
 
 Color3 *MaterialAsset::getDefaultMainColor()

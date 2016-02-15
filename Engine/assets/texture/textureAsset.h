@@ -33,8 +33,6 @@ public:
 
 	~TextureAsset();
 
-	S16 tilingX, tilingY;
-
 	void setTexture(FilePath *path);
 
 private:

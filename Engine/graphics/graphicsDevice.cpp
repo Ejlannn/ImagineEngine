@@ -225,7 +225,7 @@ void GraphicsDevice::render(Scene *scene)
 	{
 		renderConsole();
 
-		SDL_Color color = { 255.0,255.0, 255.0 };
+		SDL_Color color = { 255, 255, 255 };
 
 		char *binFolder = FilePath::getGamePath();
 
@@ -614,7 +614,7 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 		if(materialComponent->material != NULL && materialComponent->material->texture != NULL)
 		{
 			baseShader->loadTextured(true);
-			baseShader->loadTiling(materialComponent->material->texture->tilingX, materialComponent->material->texture->tilingY);
+			baseShader->loadTiling(materialComponent->material->tilingX, materialComponent->material->tilingY);
 		}
 		else
 		{
