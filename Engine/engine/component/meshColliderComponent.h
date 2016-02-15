@@ -39,6 +39,9 @@ private:
 
 class GraphicsDevice;
 
+/*
+ * IMPORTANT: MeshColliderComponent is incomplete, it detects collisions only for 2 Oriented Bounding Boxes (Not detailed collision for mesh yet)
+ */
 class MeshColliderComponent : public ComponentBase
 {
 	friend class Scene;

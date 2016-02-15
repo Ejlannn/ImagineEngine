@@ -176,5 +176,5 @@ void ShaderProgram::loadMatrix4(U32 location, Matrix4 *value)
 
 U32 ShaderProgram::getUniformLocation(char *name)
 {
-	glGetUniformLocation(shaderProgramID, name);
+	return glGetUniformLocation(shaderProgramID, name);
 }
