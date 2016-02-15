@@ -7,7 +7,7 @@ in vec3 normalVector;
 out vec3 color;
 out vec2 textureCoords;
 out float visibility;
-out vec3 lightToAdd;
+out vec3 finalLightToAdd[4];
 
 uniform vec3 mainColor;
 
@@ -45,13 +45,12 @@ void main(void)
 	visibility = exp(-pow((distance1 * density), gradient));
 	visibility = clamp(visibility,0.0,1.0);
 	
-	lightToAdd = vec3(0.0,0.0,0.0);
-	
 	for(int i=0;i<4;i++)
 	{
 		if(lightType[i] == 0)
 		{
 			finalLight[i] = vec3(0.0,0.0,0.0);
+			finalLightToAdd[i] = finalLight[i];
 		}
 		
 		if(lightType[i] == 1)
@@ -91,9 +90,13 @@ void main(void)
 				//toAddFinal.y = toAddFinal.y - toSubstInv;
 				//toAddFinal.z = toAddFinal.z - toSubstInv;
 				
-				finalLight[i] = diffuse * lightToAdd + toAddFinal;
+				finalLight[i] = diffuse * vec3(0.0,0.0,0.0) + toAddFinal;
 				
-				lightToAdd = lightToAdd + finalLight[i];
+				finalLight[i].x = clamp(finalLight[i].x,0.0,0.9);
+				finalLight[i].y = clamp(finalLight[i].y,0.0,0.9);
+				finalLight[i].z = clamp(finalLight[i].z,0.0,0.9);
+				
+				finalLightToAdd[i] = finalLight[i];
 			}
 		}
 		
@@ -101,10 +104,6 @@ void main(void)
 		{
 		}
 	}
-	
-	lightToAdd.x = clamp(lightToAdd.x,0.0,0.9);
-	lightToAdd.y = clamp(lightToAdd.y,0.0,0.9);
-	lightToAdd.z = clamp(lightToAdd.z,0.0,0.9);
 	
 	gl_Position = projectionMatrix * positionRelativeToCam;
 }
