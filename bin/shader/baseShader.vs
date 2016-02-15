@@ -26,6 +26,7 @@ uniform vec3 lightColor[4];
 uniform float lightIntensity[4];
 uniform vec3 lightPosition[4];
 uniform float lightRange[4];
+uniform vec3 lightDir[4];
 
 vec3 finalLight[4];
 
@@ -55,6 +56,28 @@ void main(void)
 		
 		if(lightType[i] == 1)
 		{
+			vec3 toLightVector = normalize(lightDir[i]);
+			
+			vec3 toAdd = vec3(lightColor[i].x * lightIntensity[i] - 0.8, lightColor[i].y * lightIntensity[i] - 0.8, lightColor[i].z * lightIntensity[i] - 0.8);
+			
+			toAdd.x = clamp(toAdd.x,0.0,0.9);
+			toAdd.y = clamp(toAdd.y,0.0,0.9);
+			toAdd.z = clamp(toAdd.z,0.0,0.9);
+			
+			vec3 surfaceNormal = (transformationMatrix * vec4(normalVector,0.0)).xyz;
+			
+			vec3 unitNormal = normalize(surfaceNormal);
+			
+			float lightDotProd = dot(unitNormal,toLightVector);
+			float toSubst = max(lightDotProd,0.0);
+			
+			finalLight[i] = toAdd + vec3(toSubst,toSubst,toSubst);
+			
+			finalLight[i].x = clamp(finalLight[i].x,0.0,0.9);
+			finalLight[i].y = clamp(finalLight[i].y,0.0,0.9);
+			finalLight[i].z = clamp(finalLight[i].z,0.0,0.9);
+				
+			finalLightToAdd[i] = finalLight[i];
 		}
 		
 		if(lightType[i] == 2)

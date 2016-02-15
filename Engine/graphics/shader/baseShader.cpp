@@ -54,6 +54,7 @@ BaseShader::~BaseShader()
 		delete &loc_lightColor[i];
 		delete &loc_lightIntensity[i];
 		delete &loc_lightPosition[i];
+		delete &loc_lightDir[i];
 	}
 }
 
@@ -109,6 +110,11 @@ void BaseShader::getAllUniformLocations()
 	loc_lightRange[1] = getUniformLocation((char*) "lightRange[1]");
 	loc_lightRange[2] = getUniformLocation((char*) "lightRange[2]");
 	loc_lightRange[3] = getUniformLocation((char*) "lightRange[3]");
+
+	loc_lightDir[0] = getUniformLocation((char*) "lightDir[0]");
+	loc_lightDir[1] = getUniformLocation((char*) "lightDir[1]");
+	loc_lightDir[2] = getUniformLocation((char*) "lightDir[2]");
+	loc_lightDir[3] = getUniformLocation((char*) "lightDir[3]");
 }
 
 void BaseShader::loadColor(Color3 *value)
@@ -164,6 +170,17 @@ void BaseShader::loadFogSettings(F32 value1, F32 value2)
 	loadFloat(loc_gradient, value2);
 }
 
+Vector3 *getLightDirection(Vector3 *lightRotation)
+{
+	Vector3 *lightDirection = new Vector3();
+
+	lightDirection->x = cosf(lightRotation->y - 180.0f) * cosf(lightRotation->x - 180.0f);
+	lightDirection->y = sinf(lightRotation->y - 180.0f) * cosf(lightRotation->x - 180.0f);
+	lightDirection->z = sinf(lightRotation->x - 180.0f);
+
+	return lightDirection;
+}
+
 void BaseShader::loadLightSources(Light *lightSources[4])
 {
 	for(U16 i = 0; i < 4; i++)
@@ -198,16 +215,33 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 		if(type == 2 || type == 3) loadVector3(loc_lightPosition[i], transformComponent->position);
 		else loadVector3(loc_lightPosition[i], new Vector3());
 
+		if(type == 1)
+		{
+			DirectionalLight *directionalLight = (DirectionalLight*) lightSources[i];
+
+			TransformComponent *transformComponent = (TransformComponent*) directionalLight->entity->getComponent("TransformComponent");
+
+			loadVector3(loc_lightDir[i], getLightDirection(transformComponent->rotation));
+		}
 		if(type == 2)
 		{
 			PointLight *pointLight = (PointLight*) lightSources[i];
 			loadFloat(loc_lightRange[i], pointLight->range);
+			loadVector3(loc_lightDir[i], new Vector3());
 		}
 		else if(type == 3)
 		{
 			SpotLight *spotLight = (SpotLight*) lightSources[i];
 			loadFloat(loc_lightRange[i], spotLight->range);
+
+			TransformComponent *transformComponent = (TransformComponent*) spotLight->entity->getComponent("TransformComponent");
+
+			loadVector3(loc_lightDir[i], getLightDirection(transformComponent->rotation));
 		}
-		else loadFloat(loc_lightRange[i], 0.0f);
+		else
+		{
+			loadFloat(loc_lightRange[i], 0.0f);
+			loadVector3(loc_lightDir[i], new Vector3());
+		}
 	}
 }
