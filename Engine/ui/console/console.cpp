@@ -132,13 +132,15 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 		currentLineBuf.clear();
 		tempCurrentLine = "";
 	default:
-		switch(key)
+		switch(KeyboardKey(key))
 		{
 		case KeyboardKey::KEY_1:
-			tempCurrentLine += "1";
+			if(big) tempCurrentLine += "!";
+			else tempCurrentLine += "1";
 			break;
 		case KeyboardKey::KEY_2:
-			tempCurrentLine += "2";
+			if(big) tempCurrentLine += "@";
+			else tempCurrentLine += "2";
 			break;
 		case KeyboardKey::KEY_3:
 			tempCurrentLine += "3";
@@ -159,13 +161,20 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 			tempCurrentLine += "8";
 			break;
 		case KeyboardKey::KEY_9:
-			tempCurrentLine += "9";
+			if(big) tempCurrentLine += "(";
+			else tempCurrentLine += "9";
 			break;
 		case KeyboardKey::KEY_0:
-			tempCurrentLine += "0";
+			if(big) tempCurrentLine += ")";
+			else tempCurrentLine += "0";
+			break;
+		case KeyboardKey::KEY_COMMA:
+			if(big) tempCurrentLine += "<";
+			else tempCurrentLine += ",";
 			break;
 		case KeyboardKey::KEY_PERIOD:
-			tempCurrentLine += ".";
+			if(big) tempCurrentLine += ">";
+			else tempCurrentLine += ".";
 			break;
 		case KeyboardKey::KEY_MINUS:
 			if(big) tempCurrentLine += "_";
@@ -278,6 +287,17 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 		case KeyboardKey::KEY_M:
 			if(big) tempCurrentLine += "M";
 			else tempCurrentLine += "m";
+			break;
+		case KeyboardKey::KEY_SLASH:
+			if(big) tempCurrentLine += "?";
+			else tempCurrentLine += "/";
+			break;
+		case KeyboardKey::KEY_BACKSLASH:
+			tempCurrentLine += "\\";
+			break;
+		case KeyboardKey::KEY_SEMICOLON:
+			if(big) tempCurrentLine += ":";
+			else tempCurrentLine += ";";
 			break;
 		}
 	}
