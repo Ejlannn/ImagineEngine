@@ -19,15 +19,7 @@
 #include <string>
 #include "../../platform/types.h"
 
-char *binFolder2 = FilePath::getGamePath();
-
-std::string vsPath2 = "bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "skyboxShader.vs";
-std::string fsPath2 = "bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "skyboxShader.fs";
-
-std::string vsPathFull2 = binFolder2 + vsPath2;
-std::string fsPathFull2 = binFolder2 + fsPath2;
-
-SkyboxShader::SkyboxShader() : ShaderProgram(new FilePath(vsPathFull2), new FilePath(fsPathFull2))
+SkyboxShader::SkyboxShader() : ShaderProgram(FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "skyboxShader.vs"), FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "skyboxShader.fs"))
 {}
 
 SkyboxShader::~SkyboxShader()

@@ -21,15 +21,7 @@
 #include "../../engine/entity.h"
 #include "../../engine/light/light.h"
 
-char *binFolder = FilePath::getGamePath();
-
-std::string vsPath = "bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "baseShader.vs";
-std::string fsPath = "bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "baseShader.fs";
-
-std::string vsPathFull = binFolder + vsPath;
-std::string fsPathFull = binFolder + fsPath;
-
-BaseShader::BaseShader() : ShaderProgram(new FilePath(vsPathFull), new FilePath(fsPathFull))
+BaseShader::BaseShader() : ShaderProgram(FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "baseShader.vs"), FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "baseShader.fs"))
 {}
 
 BaseShader::~BaseShader()

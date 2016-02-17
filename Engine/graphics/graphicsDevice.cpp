@@ -227,13 +227,7 @@ void GraphicsDevice::render(Scene *scene)
 
 		SDL_Color color = { 255, 255, 255 };
 
-		char *binFolder = FilePath::getGamePath();
-
-		std::string fontPth = "bin" + std::string(PATH_SEPARATOR) + "font" + std::string(PATH_SEPARATOR) + "Consolas.ttf";
-
-		std::string fontPathFull = binFolder + fontPth;
-
-		FilePath *fontPath = new FilePath(fontPathFull);
+		FilePath *fontPath = FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "font" + std::string(PATH_SEPARATOR) + "Consolas.ttf");
 
 		TTF_Font *font = TTF_OpenFont(fontPath->getPath().c_str(), 12);
 

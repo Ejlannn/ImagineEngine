@@ -32,6 +32,8 @@ public:
 
 	~FilePath();
 
+	static FilePath *getFileFromGamePath(const std::string &file);
+
 	static bool exist(const std::string &path);
 
 	std::string getPath() const;

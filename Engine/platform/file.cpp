@@ -31,6 +31,18 @@ FilePath::~FilePath()
 	delete &path;
 }
 
+FilePath *FilePath::getFileFromGamePath(const std::string &file)
+{
+	char *exePath = FilePath::getGamePath();
+
+	std::string fullPath;
+
+	fullPath += exePath;
+	fullPath += file;
+
+	return new FilePath(fullPath);
+}
+
 bool FilePath::exist(const std::string &path)
 {
 	std::ifstream file(path);

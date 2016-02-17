@@ -19,15 +19,7 @@
 #include <string>
 #include "../../platform/types.h"
 
-char *binFolder4 = FilePath::getGamePath();
-
-std::string vsPath4 = "bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uinShader.vs";
-std::string fsPath4 = "bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uinShader.fs";
-
-std::string vsPathFull4 = binFolder4 + vsPath4;
-std::string fsPathFull4 = binFolder4 + fsPath4;
-
-UINShader::UINShader() : ShaderProgram(new FilePath(vsPathFull4), new FilePath(fsPathFull4))
+UINShader::UINShader() : ShaderProgram(FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uinShader.vs"), FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uinShader.fs"))
 {}
 
 UINShader::~UINShader()
