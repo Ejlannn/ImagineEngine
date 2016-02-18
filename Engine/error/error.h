@@ -34,6 +34,7 @@ public:
 	static void throwError(char *message);
 
 private:
+	static void showMessageBox(char *message);
 	static void throwErrorCode(S16 errorCode);
 	static void throwErrorFileNotFound(const std::string &path);
 };

@@ -21,26 +21,19 @@
 
 char *title = (char*) "Imagine Engine";
 
-void showMessageBox(char *message)
+void Error::showMessageBox(char *message)
 {
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, message, NULL);
 }
 
-void exitGame()
-{
-	Game::exit();
-}
-
 void Error::throwError(char *message)
 {
-	exitGame();
 	showMessageBox(message);
+	Game::exit();
 }
 
 void Error::throwErrorCode(S16 errorCode)
 {
-	exitGame();
-
 	switch(errorCode)
 	{
 	case 1:
@@ -58,12 +51,12 @@ void Error::throwErrorCode(S16 errorCode)
 	default:
 		return;
 	}
+
+	Game::exit();
 }
 
 void Error::throwErrorFileNotFound(const std::string &path)
 {
-	exitGame();
-
 	char *line1 = (char*) "File not found:\n"; //1st line
 	//path = 2nd line
 
@@ -74,4 +67,5 @@ void Error::throwErrorFileNotFound(const std::string &path)
 	char *message = &msgTemp[0u];
 
 	showMessageBox(message);
+	Game::exit();
 }
