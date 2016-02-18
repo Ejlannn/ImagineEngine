@@ -16,6 +16,7 @@
 
 #include "game.h"
 
+#include <cstdlib>
 #include <SDL2/SDL.h>
 #if defined(WIN32) || defined(_WIN64)
 #undef main
@@ -132,6 +133,8 @@ void Game::prepareExit()
 	TTF_Quit();
 	Mix_Quit();
 	SDL_Quit();
+
+	std::exit(0);
 }
 
 bool Game::isRunning()
