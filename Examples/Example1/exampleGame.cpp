@@ -32,6 +32,7 @@ void ExampleGame::initializeGame()
 	/*
 	 * W, A, S, D to move camera
 	 * ESC to exit
+	 * Left mouse button to play sound effect
 	 */
 
 	/* Scenes */
@@ -39,35 +40,19 @@ void ExampleGame::initializeGame()
 
 	/* scene1 Settings */
 	scene1->backgroundColor = new Color3(0.2f, 0.2f, 0.2f);
-	scene1->fogDensity = 0.05f;
-	scene1->fogGradient = 1.4f;
-
-	/* Pathes */
-	std::string exePath;
-	exePath += FilePath::getGamePath();
-
-	std::string skyFolder;
-	std::string texturesFolder;
-	std::string modelsFolder;
-
-	skyFolder += exePath;
-	skyFolder += "resources\\skybox\\";
-
-	texturesFolder += exePath;
-	texturesFolder += "resources\\texture\\";
-
-	modelsFolder += exePath;
-	modelsFolder += "resources\\model\\";
+	scene1->ambientLightColor = new Color3(0.0f);
+	//scene1->fogDensity = 0.05f;
+	//scene1->fogGradient = 1.4f;
 
 	/* Skybox */
 	FilePath *pathes[6];
 
-	pathes[0] = new FilePath(skyFolder + "right2.png");
-	pathes[1] = new FilePath(skyFolder + "left2.png");
-	pathes[2] = new FilePath(skyFolder + "up2.png");
-	pathes[3] = new FilePath(skyFolder + "down2.png");
-	pathes[4] = new FilePath(skyFolder + "back2.png");
-	pathes[5] = new FilePath(skyFolder + "front2.png");
+	pathes[0] = FilePath::getFileFromGamePath("resources\\skybox\\right.png");
+	pathes[1] = FilePath::getFileFromGamePath("resources\\skybox\\left.png");
+	pathes[2] = FilePath::getFileFromGamePath("resources\\skybox\\up.png");
+	pathes[3] = FilePath::getFileFromGamePath("resources\\skybox\\down.png");
+	pathes[4] = FilePath::getFileFromGamePath("resources\\skybox\\back.png");
+	pathes[5] = FilePath::getFileFromGamePath("resources\\skybox\\front.png");
 
 	SkyboxAsset *skybox = new SkyboxAsset(pathes);
 	scene1->skybox = skybox; //Apply skybox
@@ -86,28 +71,33 @@ void ExampleGame::initializeGame()
 	scene1->camera = cameraComponent; //Sets our camera as current camera
 
 	TransformComponent *cameraTransform = (TransformComponent*) cameraEntity->getComponent("TransformComponent");
-	cameraTransform->position->z = 5.0f;
+	cameraTransform->position->z = 2.0f;
 
 	ScriptComponent *scriptComponent = new ScriptComponent();
 	scriptComponent->addScript(freeCameraMovement);
 	cameraEntity->addComponent(scriptComponent);
 
+	LightComponent *lightComponent = new LightComponent();
+	lightComponent->light = new PointLight();
+	lightComponent->light->color = new Color3(0.9f, 0.9f, 0.9f);
+	cameraEntity->addComponent(lightComponent);
+
 	//----CUBE----//
 	Entity *cubeEntity = new Entity("Cube");
 
 	MeshRendererComponent *meshComponent = new MeshRendererComponent();
-	meshComponent->model = ModelLoader::loadOBJModel(new FilePath(modelsFolder + "cube.obj")); //Loads cube.obj model
+	meshComponent->model = ModelLoader::loadOBJModel(FilePath::getFileFromGamePath("resources\\model\\cube.obj")); //Loads cube.obj model
 	cubeEntity->addComponent(meshComponent);
 
 	//----CAT----//
 	Entity *catEntity = new Entity("Cat");
 
 	MeshRendererComponent *meshComponent2 = new MeshRendererComponent();
-	meshComponent2->model = ModelLoader::loadOBJModel(new FilePath(modelsFolder + "cat.obj")); //Loads cat.obj model
+	meshComponent2->model = ModelLoader::loadOBJModel(FilePath::getFileFromGamePath("resources\\model\\cat.obj")); //Loads cat.obj model
 	catEntity->addComponent(meshComponent2);
 
 	MaterialComponent *materialComponent = new MaterialComponent();
-	materialComponent->material->texture = new TextureAsset(new FilePath(texturesFolder + "cat.png")); //Loads texture for cat
+	materialComponent->material->texture = new TextureAsset(FilePath::getFileFromGamePath("resources\\texture\\cat.png")); //Loads texture for cat
 	catEntity->addComponent(materialComponent);
 
 	TransformComponent *catTransform = (TransformComponent*) catEntity->getComponent("TransformComponent");

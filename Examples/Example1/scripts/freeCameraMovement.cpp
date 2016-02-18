@@ -29,7 +29,14 @@ void FreeCameraMovement::onUpdate()
 
 	TransformComponent *cameraTransform = (TransformComponent*) scene->camera->getEntity()->getComponent("TransformComponent");
 
-	F32 speed = 0.01f;
+	F32 speed = 0.002f;
+
+	if(MouseInput::isPressed(MouseButton::BUTTON_LEFT))
+	{
+		if(!Audio::isSoundEffectPlaying(1)) Audio::playSoundEffect(FilePath::getFileFromGamePath("resources\\audio\\shot.wav"), 1);
+	}
+
+	if(Audio::isSoundEffectPlaying(1)) UIText::renderSimpleText("Sound effect is playing!", FilePath::getFileFromGamePath("resources\\font\\font1.ttf"), 12, new Vector2(1.0f, 1.0f));
 
 	if(KeyboardInput::isPressed(KeyboardKey::KEY_ESCAPE)) Game::exit(); //Exits game on ESC
 
