@@ -22,7 +22,18 @@
 
 FilePath::FilePath(const std::string &path)
 {
-	if(!exist(path)) Error::throwErrorFileNotFound(path);
+	if(!exist(path.c_str()))
+	{
+		char *line1 = (char*) "File not found:\n";
+
+		std::string msgTemp;
+		msgTemp += line1;
+		msgTemp += path;
+
+		char *message = &msgTemp[0u];
+
+		Error::throwError(message);
+	}
 	else this->path = path;
 }
 
@@ -40,30 +51,19 @@ FilePath *FilePath::getFileFromGamePath(const std::string &file)
 	fullPath += exePath;
 	fullPath += file;
 
-	return new FilePath(fullPath);
+	return new FilePath(fullPath.c_str());
 }
 
 bool FilePath::exist(const std::string &path)
 {
-	std::ifstream file(path);
+	std::ifstream file(path.c_str());
 
-	if(file.good())
-	{
-		file.close();
-
-		return true;
-	}
-	else
-	{
-		file.close();
-
-		return false;
-	}
+	return file;
 }
 
 std::string FilePath::getPath() const
 {
-	return path;
+	return path.c_str();
 }
 
 char *FilePath::getGamePath()

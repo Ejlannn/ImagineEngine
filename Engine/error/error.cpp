@@ -54,18 +54,3 @@ void Error::throwErrorCode(S16 errorCode)
 
 	Game::exit();
 }
-
-void Error::throwErrorFileNotFound(const std::string &path)
-{
-	char *line1 = (char*) "File not found:\n"; //1st line
-	//path = 2nd line
-
-	std::string msgTemp;
-	msgTemp += line1;
-	msgTemp += path;
-
-	char *message = &msgTemp[0u];
-
-	showMessageBox(message);
-	Game::exit();
-}

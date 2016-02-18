@@ -17,24 +17,24 @@
 #ifndef _IE_TYPES_H_
 #define _IE_TYPES_H_
 
-typedef signed char			S8;
-typedef unsigned char		U8;
+typedef signed char				S8;
+typedef unsigned char			U8;
 
-typedef signed short		S16;
-typedef unsigned short		U16;
+typedef signed short			S16;
+typedef unsigned short			U16;
 
-typedef signed int			S32;
-typedef unsigned int		U32;
+typedef signed int				S32;
+typedef unsigned int			U32;
 
 #if defined(IMAGINEENGINE_X86)
-typedef signed long long	S64;
-typedef unsigned long long	U64;
+typedef signed long long		S64;
+typedef unsigned long long		U64;
 #else
-typedef signed long			S64;
-typedef unsigned long		U64;
+typedef signed long				S64;
+typedef unsigned long			U64;
 #endif
 
-typedef float				F32;
-typedef double				F64;
+typedef float					F32;
+typedef double					F64;
 
 #endif
