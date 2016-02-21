@@ -50,32 +50,32 @@ void Scene::removeEntity(Entity *entity)
 
 	for(U16 i = 0; i < entities.size(); i++)
 	{
-		if(entities.at(i)->getID() == entity->getID()) entities.erase(entities.begin() + i);
+		if(entities.at(i)->getID() == entity->getID())
+		{
+			entities.erase(entities.begin() + i);
+			break;
+		}
 	}
 }
 
 Entity *Scene::getEntityByName(std::string name)
 {
-	Entity *entity = NULL;
-
 	for(U16 i = 0; i < entities.size(); i++)
 	{
-		if(entities.at(i)->name == name) entity = entities.at(i);
+		if(entities.at(i)->name == name) return entities.at(i);
 	}
 
-	return entity;
+	return NULL;
 }
 
 Entity *Scene::getEntityByID(U32 id)
 {
-	Entity *entity = NULL;
-
 	for(U16 i = 0; i < entities.size(); i++)
 	{
-		if(entities.at(i)->getID() == id) entity = entities.at(i);
+		if(entities.at(i)->getID() == id) return entities.at(i);
 	}
 
-	return entity;
+	return NULL;
 }
 
 std::vector<Entity*> Scene::getEntitiesWithName(std::string name)

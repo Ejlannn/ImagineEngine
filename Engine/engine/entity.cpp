@@ -89,8 +89,12 @@ void Entity::removeComponent(ComponentBase *component)
 
 	for(U16 i = 0; i < components.size(); i++)
 	{
-		component->entity = NULL;
-		if(components.at(i)->name == component->name) components.erase(components.begin() + i);
+		if(components.at(i)->name == component->name)
+		{
+			component->entity = NULL;
+			components.erase(components.begin() + i);
+			break;
+		}
 	}
 }
 
@@ -106,14 +110,12 @@ ComponentBase *Entity::getComponent(std::string name)
 
 bool Entity::hasComponent(std::string name)
 {
-	bool result = false;
-
 	for(U16 i = 0; i < components.size(); i++)
 	{
-		if(components.at(i)->name == name) result = true;
+		if(components.at(i)->name == name) return true;
 	}
 
-	return result;
+	return false;
 }
 
 void Entity::addChildren(Entity *entity)
@@ -139,7 +141,11 @@ void Entity::removeChildren(Entity *entity)
 	for(U16 i = 0; i < children.size(); i++)
 	{
 		entity->parent = NULL;
-		if(children.at(i)->getID() == entity->getID()) children.erase(children.begin() + i);
+		if(children.at(i)->getID() == entity->getID())
+		{
+			children.erase(children.begin() + i);
+			break;
+		}
 	}
 }
 
