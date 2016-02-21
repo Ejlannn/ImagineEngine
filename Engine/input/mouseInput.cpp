@@ -18,9 +18,9 @@
 
 #include <SDL2/SDL_mouse.h>
 
-U8		buttonsState[3] = {0, 0, 0};
-S32		x = 0;
-S32		y = 0;
+static U8		buttonsState[3] = {0, 0, 0};
+static S32		x = 0;
+static S32		y = 0;
 
 void MouseInput::init()
 {

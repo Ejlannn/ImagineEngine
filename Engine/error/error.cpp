@@ -19,7 +19,7 @@
 #include <SDL2/SDL_messagebox.h>
 #include "../engine/game/game.h"
 
-char *title = (char*) "Imagine Engine";
+static char *title = (char*) "Imagine Engine";
 
 void Error::showMessageBox(char *message)
 {

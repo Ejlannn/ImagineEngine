@@ -32,6 +32,9 @@ class GraphicsDevice
 	friend class Game;
 	friend class UIText;
 
+public:
+	static void setSamplesSize(U16 samples);
+
 private:
 	static BaseShader *getBaseShader();
 	static SkyboxShader *getSkyboxShader();

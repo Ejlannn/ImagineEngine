@@ -16,7 +16,7 @@
 
 #include "uiElementsHandler.h"
 
-std::vector<UIElement*> elements;
+static std::vector<UIElement*> elements;
 
 void UIElementsHandler::addUIElement(UIElement *element)
 {

@@ -31,8 +31,8 @@
 
 #include <iostream> //TODO remove after testing
 
-static bool		running = false;
-Scene			*currentScene = NULL;
+static bool			running = false;
+static Scene		*currentScene = NULL;
 
 Game::~Game()
 {

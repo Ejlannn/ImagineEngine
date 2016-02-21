@@ -16,11 +16,11 @@
 
 #include "console.h"
 
-std::vector<CommandExecutor*>	commandExecutors;
-std::vector<std::string>		lines;
-static bool 					shown = false;
-std::string						tempCurrentLine = "";
-std::vector<std::string>		currentLineBuf;
+static std::vector<CommandExecutor*>	commandExecutors;
+static std::vector<std::string>			lines;
+static bool 							shown = false;
+static std::string						tempCurrentLine = "";
+static std::vector<std::string>			currentLineBuf;
 
 void Console::registerCommandExecutor(CommandExecutor *commandExecutor)
 {

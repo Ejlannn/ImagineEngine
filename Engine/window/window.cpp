@@ -58,11 +58,9 @@ void Window::destroy()
 	window = NULL;
 
 	delete window;
-	delete title;
+	delete &title;
 	delete &width;
 	delete &height;
-	delete &x;
-	delete &y;
 }
 
 void Window::update()

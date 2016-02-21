@@ -26,7 +26,7 @@
 
 #include <iostream>
 
-static SDL_Event event; //Handles events
+static SDL_Event event;
 
 void Event::init()
 {
