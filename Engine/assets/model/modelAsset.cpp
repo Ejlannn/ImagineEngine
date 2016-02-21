@@ -30,9 +30,6 @@ ModelAsset::ModelAsset()
 
 ModelAsset::~ModelAsset()
 {
-	delete &vaoID;
-	delete &vertexCount;
-
 	vertices.clear();
 	normalVectors.clear();
 	textureVectors.clear();

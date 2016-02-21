@@ -41,12 +41,7 @@ Color3::Color3(F32 r, F32 g, F32 b)
 	this->b = b;
 }
 
-Color3::~Color3()
-{
-	delete &r;
-	delete &g;
-	delete &b;
-}
+Color3::~Color3() {}
 
 Color3 *Color3::clone()
 {
@@ -88,13 +83,7 @@ Color4::Color4(F32 r, F32 g, F32 b, F32 a)
 	this->a = a;
 }
 
-Color4::~Color4()
-{
-	delete &r;
-	delete &g;
-	delete &b;
-	delete &a;
-}
+Color4::~Color4() {}
 
 Color4 *Color4::clone()
 {

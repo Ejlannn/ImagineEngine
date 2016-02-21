@@ -24,11 +24,7 @@ Timer::Timer()
 	elapsedTime = 0;
 }
 
-Timer::~Timer()
-{
-	delete &previousTime;
-	delete &elapsedTime;
-}
+Timer::~Timer() {}
 
 void Timer::start()
 {

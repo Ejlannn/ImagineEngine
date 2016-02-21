@@ -172,14 +172,6 @@ SkyboxAsset::~SkyboxAsset()
 {
 	for(U16 i = 0; i < 6; i++)
 	{
-		delete path[i];
-	}
-
-	delete &id;
-	delete &vaoID;
-
-	for(U16 i = 0; i < 6; i++)
-	{
 		SDL_FreeSurface(surface[i]);
 	}
 }

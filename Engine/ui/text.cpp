@@ -69,13 +69,6 @@ UIText::~UIText()
 	UIElementsHandler::removeUIElement(element);
 
 	SDL_FreeSurface(element->surface);
-
-	delete &message;
-	delete fontFile;
-	delete position;
-	delete &size;
-	delete color;
-	delete element;
 }
 
 void UIText::changeMessage(std::string newMessage)

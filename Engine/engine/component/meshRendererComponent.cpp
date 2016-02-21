@@ -22,8 +22,4 @@ MeshRendererComponent::MeshRendererComponent() : ComponentBase("MeshRendererComp
 	cullFaces = true;
 }
 
-MeshRendererComponent::~MeshRendererComponent()
-{
-	delete model;
-	delete &cullFaces;
-}
+MeshRendererComponent::~MeshRendererComponent() {}

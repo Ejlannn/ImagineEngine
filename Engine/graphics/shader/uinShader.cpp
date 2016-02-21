@@ -22,10 +22,7 @@
 UINShader::UINShader() : ShaderProgram(FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uinShader.vs"), FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uinShader.fs"))
 {}
 
-UINShader::~UINShader()
-{
-	delete &loc_color;
-}
+UINShader::~UINShader() {}
 
 void UINShader::bindAttributes()
 {

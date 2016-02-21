@@ -29,15 +29,7 @@ Scene::Scene()
 	fogGradient = 1.5f;
 }
 
-Scene::~Scene()
-{
-	delete backgroundColor;
-	delete ambientLightColor;
-	delete camera;
-	delete skybox;
-	delete &fogDensity;
-	delete &fogGradient;
-}
+Scene::~Scene() {}
 
 void Scene::addEntity(Entity *entity)
 {

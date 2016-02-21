@@ -24,31 +24,7 @@
 BaseShader::BaseShader() : ShaderProgram(FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "baseShader.vs"), FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "baseShader.fs"))
 {}
 
-BaseShader::~BaseShader()
-{
-	delete &loc_mainColor;
-	delete &loc_transformationMatrix;
-	delete &loc_projectionMatrix;
-	delete &loc_viewMatrix;
-	delete &loc_mainColor;
-	delete &loc_textured;
-	delete &loc_sampler;
-	delete &loc_bgColor;
-	delete &loc_ambientColor;
-	delete &loc_tilingX;
-	delete &loc_tilingY;
-	delete &loc_density;
-	delete &loc_gradient;
-
-	for(U16 i = 0; i < 4; i++)
-	{
-		delete &loc_lightType[i];
-		delete &loc_lightColor[i];
-		delete &loc_lightIntensity[i];
-		delete &loc_lightPosition[i];
-		delete &loc_lightDir[i];
-	}
-}
+BaseShader::~BaseShader() {}
 
 void BaseShader::bindAttributes()
 {

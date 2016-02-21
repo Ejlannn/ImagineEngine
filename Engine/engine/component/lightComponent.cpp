@@ -21,7 +21,4 @@ LightComponent::LightComponent() : ComponentBase("LightComponent")
 	light = NULL;
 }
 
-LightComponent::~LightComponent()
-{
-	delete light;
-}
+LightComponent::~LightComponent() {}

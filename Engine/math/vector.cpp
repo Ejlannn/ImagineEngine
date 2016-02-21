@@ -40,11 +40,7 @@ Vector2::Vector2(F32 x, F32 y)
 	this->y = y;
 }
 
-Vector2::~Vector2()
-{
-	delete &x;
-	delete &y;
-}
+Vector2::~Vector2() {}
 
 Vector2 *Vector2::clone()
 {
@@ -82,12 +78,7 @@ Vector3::Vector3(F32 x, F32 y, F32 z)
 	this->z = z;
 }
 
-Vector3::~Vector3()
-{
-	delete &x;
-	delete &y;
-	delete &z;
-}
+Vector3::~Vector3() {}
 
 Vector3 *Vector3::clone()
 {
@@ -146,13 +137,7 @@ Vector4::Vector4(F32 x, F32 y, F32 z, F32 w)
 	this->w = w;
 }
 
-Vector4::~Vector4()
-{
-	delete &x;
-	delete &y;
-	delete &z;
-	delete &w;
-}
+Vector4::~Vector4() {}
 
 
 Vector4 *Vector4::clone()

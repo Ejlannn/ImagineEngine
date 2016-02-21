@@ -22,11 +22,7 @@
 SkyboxShader::SkyboxShader() : ShaderProgram(FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "skyboxShader.vs"), FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "skyboxShader.fs"))
 {}
 
-SkyboxShader::~SkyboxShader()
-{
-	delete &loc_projectionMatrix;
-	delete &loc_viewMatrix;
-}
+SkyboxShader::~SkyboxShader() {}
 
 void SkyboxShader::bindAttributes()
 {

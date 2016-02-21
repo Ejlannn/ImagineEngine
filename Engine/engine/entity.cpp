@@ -66,11 +66,6 @@ Entity::Entity(std::string name, TransformComponent *transform)
 
 Entity::~Entity()
 {
-	delete &name;
-	delete &tag;
-	delete &id;
-	delete parent;
-
 	components.clear();
 	children.clear();
 }
@@ -139,9 +134,9 @@ void Entity::addChildren(Entity *entity)
 
 void Entity::removeChildren(Entity *entity)
 {
-	if(entity == NULL || entity->parent == NULL) return;
+	if(entity == NULL || entity->parent != this) return;
 
-	for(U16 i = 0; i < components.size(); i++)
+	for(U16 i = 0; i < children.size(); i++)
 	{
 		entity->parent = NULL;
 		if(children.at(i)->getID() == entity->getID()) children.erase(children.begin() + i);

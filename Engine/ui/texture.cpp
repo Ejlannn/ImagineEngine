@@ -48,7 +48,4 @@ UITexture::~UITexture()
 	UIElementsHandler::removeUIElement(element);
 
 	SDL_FreeSurface(element->surface);
-
-	delete texturePath;
-	delete position;
 }

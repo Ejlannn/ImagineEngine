@@ -34,11 +34,7 @@
 static bool			running = false;
 static Scene		*currentScene = NULL;
 
-Game::~Game()
-{
-	delete &running;
-	delete currentScene;
-}
+Game::~Game() {}
 
 S16 Game::initialize()
 {

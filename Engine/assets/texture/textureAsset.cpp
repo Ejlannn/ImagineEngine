@@ -29,9 +29,6 @@ TextureAsset::TextureAsset(FilePath *path)
 TextureAsset::~TextureAsset()
 {
 	SDL_FreeSurface(surface);
-
-	delete textureFile;
-	delete &textureID;
 }
 
 void TextureAsset::setTexture(FilePath *path)

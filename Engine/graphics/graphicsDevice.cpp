@@ -59,13 +59,7 @@ public:
 		color = new Color3(255.0f);
 	}
 
-	~Text2D()
-	{
-		delete &file;
-		delete &size;
-		delete &pos;
-		delete &color;
-	}
+	~Text2D() {}
 
 	std::string msg;
 	FilePath *file;

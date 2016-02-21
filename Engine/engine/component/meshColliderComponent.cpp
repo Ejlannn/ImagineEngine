@@ -26,10 +26,7 @@ MeshColliderComponent::MeshColliderComponent() : ComponentBase("MeshColliderComp
 	}
 }
 
-MeshColliderComponent::~MeshColliderComponent()
-{
-	delete &staticCollider;
-}
+MeshColliderComponent::~MeshColliderComponent() {}
 
 void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
 {

@@ -37,10 +37,7 @@ FilePath::FilePath(const std::string &path)
 	else this->path = path;
 }
 
-FilePath::~FilePath()
-{
-	delete &path;
-}
+FilePath::~FilePath() {}
 
 FilePath *FilePath::getFileFromGamePath(const std::string &file)
 {

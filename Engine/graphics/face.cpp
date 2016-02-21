@@ -68,13 +68,4 @@ Face::Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3, U64 vn)
 	this->vn = vn;
 }
 
-Face::~Face()
-{
-	delete &v1;
-	delete &v2;
-	delete &v3;
-	delete &vt1;
-	delete &vt2;
-	delete &vt3;
-	delete &vn;
-}
+Face::~Face() {}

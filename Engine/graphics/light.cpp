@@ -26,10 +26,4 @@ Light::Light(std::string type)
 	entity = NULL;
 }
 
-Light::~Light()
-{
-	delete color;
-	delete &intensity;
-	delete &type;
-	delete entity;
-}
+Light::~Light() {}

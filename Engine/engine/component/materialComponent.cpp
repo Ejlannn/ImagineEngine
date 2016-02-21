@@ -21,7 +21,4 @@ MaterialComponent::MaterialComponent() : ComponentBase("MaterialComponent")
 	material = new MaterialAsset();
 }
 
-MaterialComponent::~MaterialComponent()
-{
-	delete material;
-}
+MaterialComponent::~MaterialComponent() {}

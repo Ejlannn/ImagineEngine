@@ -16,10 +16,7 @@
 
 #include "script.h"
 
-Script::~Script()
-{
-	delete entity;
-}
+Script::~Script() {}
 
 Entity *Script::getEntity()
 {

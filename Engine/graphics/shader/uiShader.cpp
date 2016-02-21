@@ -22,10 +22,7 @@
 UIShader::UIShader() : ShaderProgram(FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uiShader.vs"), FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "shader" + std::string(PATH_SEPARATOR) + "uiShader.fs"))
 {}
 
-UIShader::~UIShader()
-{
-	delete &loc_projectionMatrix;
-}
+UIShader::~UIShader() {}
 
 void UIShader::bindAttributes()
 {

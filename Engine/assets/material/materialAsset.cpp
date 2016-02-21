@@ -24,13 +24,7 @@ MaterialAsset::MaterialAsset()
 	tilingY = 1;
 }
 
-MaterialAsset::~MaterialAsset()
-{
-	delete mainColor;
-	delete texture;
-	delete &tilingX;
-	delete &tilingY;
-}
+MaterialAsset::~MaterialAsset() {}
 
 Color3 *MaterialAsset::getDefaultMainColor()
 {

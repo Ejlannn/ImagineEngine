@@ -52,16 +52,7 @@ void MouseInput::update(U8 mouseButtonsState[3])
 	}
 }
 
-void MouseInput::destroy()
-{
-	for(S16 i = 1; i < 4; i++)
-	{
-		delete &buttonsState[i];
-	}
-
-	delete &x;
-	delete &y;
-}
+void MouseInput::destroy() {}
 
 S32 MouseInput::getMousePosition(MouseAxis axis)
 {

@@ -99,7 +99,6 @@ ModelAsset *ModelLoader::loadOBJModel(FilePath *objFile)
 				}
 			}
 		}
-		else continue;
 	}
 
 	modelAsset->load();

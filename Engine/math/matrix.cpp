@@ -37,13 +37,7 @@ Matrix4::Matrix4(F32 m00, F32 m01, F32 m02, F32 m03,
 	this->m30 = m30; this->m31 = m31; this->m32 = m32; this->m33 = m33;
 }
 
-Matrix4::~Matrix4()
-{
-	delete &m00; delete &m01; delete &m02; delete &m03;
-	delete &m10; delete &m11; delete &m12; delete &m13;
-	delete &m20; delete &m21; delete &m22; delete &m23;
-	delete &m30; delete &m31; delete &m32; delete &m33;
-}
+Matrix4::~Matrix4() {}
 
 Matrix4 *Matrix4::clone()
 {
