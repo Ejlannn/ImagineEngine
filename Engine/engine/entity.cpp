@@ -140,9 +140,9 @@ void Entity::removeChildren(Entity *entity)
 
 	for(U16 i = 0; i < children.size(); i++)
 	{
-		entity->parent = NULL;
 		if(children.at(i)->getID() == entity->getID())
 		{
+			entity->parent = NULL;
 			children.erase(children.begin() + i);
 			break;
 		}
