@@ -97,6 +97,13 @@ void prepare3D()
 
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
+
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
+	glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_MULTISAMPLE_ARB);
 }
 
 void GraphicsDevice::init()
