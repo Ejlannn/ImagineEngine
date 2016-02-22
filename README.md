@@ -20,6 +20,8 @@ Supported platforms: Windows, Linux, Mac OSX
 
 **Credits:**
 
+Thanks to **Vesim**, **Phoenix_PL** for reported issues and ideas.
+
 Thanks to **Ejlannn_** for testing.
 
 # License #
