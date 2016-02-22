@@ -118,7 +118,7 @@ bool Entity::hasComponent(std::string name)
 	return false;
 }
 
-void Entity::addChildren(Entity *entity)
+void Entity::addChild(Entity *entity)
 {
 	if(entity == NULL || entity->parent != NULL) return;
 
@@ -134,7 +134,7 @@ void Entity::addChildren(Entity *entity)
 	children.push_back(entity);
 }
 
-void Entity::removeChildren(Entity *entity)
+void Entity::removeChild(Entity *entity)
 {
 	if(entity == NULL || entity->parent != this) return;
 

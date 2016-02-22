@@ -43,8 +43,8 @@ public:
 	ComponentBase *getComponent(std::string name);
 	bool hasComponent(std::string name);
 
-	void addChildren(Entity *entity);
-	void removeChildren(Entity *entity);
+	void addChild(Entity *entity);
+	void removeChild(Entity *entity);
 
 	Entity *getParent();
 
