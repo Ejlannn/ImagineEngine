@@ -106,7 +106,7 @@ void ExampleGame::initializeGame()
 	//catTransform->rotation->x = 50.0f;
 
 	/* Apply Entities */
-	cubeEntity->addChildren(catEntity);
+	cubeEntity->addChild(catEntity);
 	scene1->addEntity(cameraEntity);
 	scene1->addEntity(cubeEntity);
 	//scene1->addEntity(catEntity);
