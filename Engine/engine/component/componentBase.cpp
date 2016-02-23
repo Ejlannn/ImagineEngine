@@ -19,7 +19,7 @@
 ComponentBase::ComponentBase(const std::string name)
 {
 	this->name = name;
-	entity = NULL;
+	entity = nullptr;
 }
 
 ComponentBase::~ComponentBase() {}

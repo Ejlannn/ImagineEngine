@@ -53,7 +53,7 @@ void Event::update()
 			else if(event.button.button == SDL_BUTTON_MIDDLE) buttonsState[BUTTON_MIDDLE] = 1;
 			else if(event.button.button == SDL_BUTTON_RIGHT) buttonsState[BUTTON_RIGHT] = 1;
 
-			if(currentScene == NULL) break;
+			if(currentScene == nullptr) break;
 
 			if(currentScene->entities.size() > 0)
 			{
@@ -87,7 +87,7 @@ void Event::update()
 			{
 				Scene *currentScene = Game::getCurrentScene();
 
-				if(currentScene == NULL) break;
+				if(currentScene == nullptr) break;
 
 				if(currentScene->entities.size() > 0)
 				{
@@ -110,7 +110,7 @@ void Event::update()
 			}
 			else
 			{
-				static const U8 *keys = SDL_GetKeyboardState(NULL);
+				static const U8 *keys = SDL_GetKeyboardState(nullptr);
 
 				bool big = false;
 

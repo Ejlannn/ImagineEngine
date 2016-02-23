@@ -23,8 +23,8 @@ Scene::Scene()
 {
 	backgroundColor = new Color3();
 	ambientLightColor = new Color3(1.0f);
-	camera = NULL;
-	skybox = NULL;
+	camera = nullptr;
+	skybox = nullptr;
 	fogDensity = 0.0f;
 	fogGradient = 1.5f;
 }
@@ -33,8 +33,8 @@ Scene::~Scene() {}
 
 void Scene::addEntity(Entity *entity)
 {
-	if(entity == NULL) return;
-	if(entity->parent != NULL) return;
+	if(entity == nullptr) return;
+	if(entity->parent != nullptr) return;
 
 	for(U16 i = 0; i < entities.size(); i++)
 	{
@@ -46,7 +46,7 @@ void Scene::addEntity(Entity *entity)
 
 void Scene::removeEntity(Entity *entity)
 {
-	if(entity == NULL) return;
+	if(entity == nullptr) return;
 
 	for(U16 i = 0; i < entities.size(); i++)
 	{
@@ -65,7 +65,7 @@ Entity *Scene::getEntityByName(std::string name)
 		if(entities.at(i)->name == name) return entities.at(i);
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 Entity *Scene::getEntityByID(U32 id)
@@ -75,7 +75,7 @@ Entity *Scene::getEntityByID(U32 id)
 		if(entities.at(i)->getID() == id) return entities.at(i);
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 std::vector<Entity*> Scene::getEntitiesWithName(std::string name)
@@ -115,7 +115,7 @@ void Scene::initialize()
 		{
 			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) entities.at(i)->getComponent("MeshRendererComponent");
 
-			if(meshRendererComponent->model != NULL)
+			if(meshRendererComponent->model != nullptr)
 			{
 				TransformComponent *transformComponent = (TransformComponent*) entities.at(i)->getComponent("TransformComponent");
 
@@ -137,7 +137,7 @@ void Scene::initialize()
 
 				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
 
-				if(meshColComponent->obb[0] == NULL) meshColComponent->createOOB(processedVertices);
+				if(meshColComponent->obb[0] == nullptr) meshColComponent->createOOB(processedVertices);
 			}
 		}
 
@@ -163,7 +163,7 @@ void Scene::update()
 		{
 			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) entities.at(i)->getComponent("MeshRendererComponent");
 
-			if(meshRendererComponent->model != NULL)
+			if(meshRendererComponent->model != nullptr)
 			{
 				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
 
@@ -199,7 +199,7 @@ void Scene::update()
 
 			MeshRendererComponent *meshRendererComponent1 = (MeshRendererComponent*) entities.at(i)->getComponent("MeshRendererComponent");
 
-			if(meshRendererComponent1->model != NULL && scriptComponent->scripts.size() > 0)
+			if(meshRendererComponent1->model != nullptr && scriptComponent->scripts.size() > 0)
 			{
 				for(U32 j = 0; j < entities.size(); j++)
 				{
@@ -279,7 +279,7 @@ void Scene::update()
 		{
 			LightComponent *lightComponent = (LightComponent*) entities.at(i)->getComponent("LightComponent");
 
-			if(lightComponent->light != NULL)
+			if(lightComponent->light != nullptr)
 			{
 				lightComponent->light->entity = entities.at(i);
 				LightProcessor::addLightSource(lightComponent->light);
@@ -317,7 +317,7 @@ void Scene::initializeChildren(std::vector<Entity*> children)
 		{
 			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) children.at(i)->getComponent("MeshRendererComponent");
 
-			if(meshRendererComponent->model != NULL)
+			if(meshRendererComponent->model != nullptr)
 			{
 				TransformComponent *transformComponent = (TransformComponent*) children.at(i)->getComponent("TransformComponent");
 
@@ -339,7 +339,7 @@ void Scene::initializeChildren(std::vector<Entity*> children)
 
 				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
 
-				if(meshColComponent->obb[0] == NULL) meshColComponent->createOOB(processedVertices);
+				if(meshColComponent->obb[0] == nullptr) meshColComponent->createOOB(processedVertices);
 			}
 		}
 
@@ -365,7 +365,7 @@ void Scene::updateChildren(std::vector<Entity*> children)
 		{
 			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) children.at(i)->getComponent("MeshRendererComponent");
 
-			if(meshRendererComponent->model != NULL)
+			if(meshRendererComponent->model != nullptr)
 			{
 				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
 
@@ -402,7 +402,7 @@ void Scene::updateChildren(std::vector<Entity*> children)
 
 			MeshRendererComponent *meshRendererComponent1 = (MeshRendererComponent*) children.at(i)->getComponent("MeshRendererComponent");
 
-			if(meshRendererComponent1->model != NULL && scriptComponent->scripts.size() > 0)
+			if(meshRendererComponent1->model != nullptr && scriptComponent->scripts.size() > 0)
 			{
 				for(U32 j = 0; j < entities.size(); j++)
 				{
@@ -477,7 +477,7 @@ void Scene::updateChildren(std::vector<Entity*> children)
 		{
 			LightComponent *lightComponent = (LightComponent*) children.at(i)->getComponent("LightComponent");
 
-			if(lightComponent->light != NULL) LightProcessor::addLightSource(lightComponent->light);
+			if(lightComponent->light != nullptr) LightProcessor::addLightSource(lightComponent->light);
 		}
 
 		if(children.at(i)->children.size() > 0) updateChildren(children.at(i)->children);

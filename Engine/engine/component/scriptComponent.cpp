@@ -27,7 +27,7 @@ ScriptComponent::~ScriptComponent()
 
 void ScriptComponent::addScript(Script *scriptToAdd)
 {
-	if(scriptToAdd == NULL) return;
+	if(scriptToAdd == nullptr) return;
 
 	for(U32 i = 0; i < scripts.size(); i++)
 	{
@@ -39,7 +39,7 @@ void ScriptComponent::addScript(Script *scriptToAdd)
 
 void ScriptComponent::removeScript(Script *scriptToRemove)
 {
-	if(scriptToRemove == NULL) return;
+	if(scriptToRemove == nullptr) return;
 
 	for(U32 i = 0; i < scripts.size(); i++)
 	{
@@ -53,7 +53,7 @@ void ScriptComponent::initialize()
 	{
 		scripts.at(i)->entity = entity;
 		scripts.at(i)->onInit();
-		scripts.at(i)->entity = NULL;
+		scripts.at(i)->entity = nullptr;
 	}
 }
 
@@ -63,7 +63,7 @@ void ScriptComponent::update()
 	{
 		scripts.at(i)->entity = entity;
 		scripts.at(i)->onUpdate();
-		scripts.at(i)->entity = NULL;
+		scripts.at(i)->entity = nullptr;
 	}
 }
 
@@ -73,6 +73,6 @@ void ScriptComponent::destroy()
 	{
 		scripts.at(i)->entity = entity;
 		scripts.at(i)->onDestroy();
-		scripts.at(i)->entity = NULL;
+		scripts.at(i)->entity = nullptr;
 	}
 }

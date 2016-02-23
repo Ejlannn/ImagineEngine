@@ -18,7 +18,7 @@
 
 LightComponent::LightComponent() : ComponentBase("LightComponent")
 {
-	light = NULL;
+	light = nullptr;
 }
 
 LightComponent::~LightComponent() {}

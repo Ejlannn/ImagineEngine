@@ -74,7 +74,7 @@ void ModelAsset::load()
 				else if(j == 1) currentVertexPointer = faces.at(i)->v2 - 1;
 				else if(j == 2) currentVertexPointer = faces.at(i)->v3 - 1;
 
-				Vector2 *currentTexture = NULL;
+				Vector2 *currentTexture = nullptr;
 
 				if(j == 0) currentTexture = textureVectors.at(faces.at(i)->vt1 - 1);
 				else if(j == 1) currentTexture = textureVectors.at(faces.at(i)->vt2 - 1);

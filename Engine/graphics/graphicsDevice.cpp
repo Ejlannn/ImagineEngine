@@ -33,17 +33,17 @@
 #include "shader/uiShader.h"
 #include "shader/uinShader.h"
 
-static Matrix4 *projectionMatrix = NULL;
-static Matrix4 *viewMatrix = NULL;
-static Matrix4 *projectionMatrix2DOrtho = NULL;
+static Matrix4 *projectionMatrix = nullptr;
+static Matrix4 *viewMatrix = nullptr;
+static Matrix4 *projectionMatrix2DOrtho = nullptr;
 
 static std::vector<UIElement*> elementsToRender;
 
 /* Shaders */
-static BaseShader		*baseShader = NULL;
-static SkyboxShader	*skyboxShader = NULL;
-static UIShader		*uiShader = NULL;
-static UINShader		*uinShader = NULL;
+static BaseShader		*baseShader = nullptr;
+static SkyboxShader	*skyboxShader = nullptr;
+static UIShader		*uiShader = nullptr;
+static UINShader		*uinShader = nullptr;
 
 static U16 samplesSize = 8;
 
@@ -135,9 +135,9 @@ void GraphicsDevice::render(Scene *scene)
 {
 	if(isGameRunning() == false) return;
 
-	if(scene == NULL) return;
+	if(scene == nullptr) return;
 
-	if(scene->camera == NULL || scene->camera->entity == NULL) return;
+	if(scene->camera == nullptr || scene->camera->entity == nullptr) return;
 
 	projectionMatrix = CameraComponent::createProjectionMatrix(scene->camera);
 	projectionMatrix2DOrtho = CameraComponent::create2DOrthoProjectionMatrix();
@@ -152,10 +152,10 @@ void GraphicsDevice::render(Scene *scene)
 
 	prepare3D();
 
-	if(scene->backgroundColor == NULL) clear(new Color3());
+	if(scene->backgroundColor == nullptr) clear(new Color3());
 	else clear(scene->backgroundColor);
 
-	if(scene->skybox != NULL)
+	if(scene->skybox != nullptr)
 	{
 		startSkyboxShader(scene);
 		renderSkybox(scene->skybox);
@@ -172,7 +172,7 @@ void GraphicsDevice::render(Scene *scene)
 				{
 					MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) scene->entities.at(i)->children.at(j)->getComponent("MeshRendererComponent");
 
-					if(meshRendererComponent->model != NULL)
+					if(meshRendererComponent->model != nullptr)
 					{
 						startBaseShader(scene->entities.at(i)->children.at(j), scene);
 
@@ -188,7 +188,7 @@ void GraphicsDevice::render(Scene *scene)
 		{
 			MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) scene->entities.at(i)->getComponent("MeshRendererComponent");
 
-			if(meshRendererComponent->model != NULL)
+			if(meshRendererComponent->model != nullptr)
 			{
 				startBaseShader(scene->entities.at(i), scene);
 
@@ -300,7 +300,7 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 	{
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
 
-		if(materialComponent->material != NULL && materialComponent->material->texture != NULL) textured = true;
+		if(materialComponent->material != nullptr && materialComponent->material->texture != nullptr) textured = true;
 	}
 
 	if(component->cullFaces)
@@ -579,7 +579,7 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 
 	TransformComponent *transformComponent;
 
-	if(entity->parent == NULL) transformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
+	if(entity->parent == nullptr) transformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
 	else
 	{
 		TransformComponent *childTransformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
@@ -622,10 +622,10 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 	{
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
 
-		if(materialComponent->material != NULL && materialComponent->material->mainColor != NULL) baseShader->loadColor(materialComponent->material->mainColor);
+		if(materialComponent->material != nullptr && materialComponent->material->mainColor != nullptr) baseShader->loadColor(materialComponent->material->mainColor);
 		else baseShader->loadColor(MaterialAsset::getDefaultMainColor());
 
-		if(materialComponent->material != NULL && materialComponent->material->texture != NULL)
+		if(materialComponent->material != nullptr && materialComponent->material->texture != nullptr)
 		{
 			baseShader->loadTextured(true);
 			baseShader->loadTiling(materialComponent->material->tilingX, materialComponent->material->tilingY);

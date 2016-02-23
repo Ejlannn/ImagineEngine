@@ -23,7 +23,7 @@ static char *title = (char*) "Imagine Engine";
 
 void Error::showMessageBox(char *message)
 {
-	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, message, NULL);
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, message, nullptr);
 }
 
 void Error::throwError(char *message)

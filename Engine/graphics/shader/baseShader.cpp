@@ -153,7 +153,7 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 {
 	for(U16 i = 0; i < 4; i++)
 	{
-		if(lightSources[i] == NULL)
+		if(lightSources[i] == nullptr)
 		{
 			loadInt(loc_lightType[i], 0);
 			continue;

@@ -23,7 +23,7 @@ Entity::Entity()
 	name = "Entity";
 	tag = "";
 	id = entityID;
-	parent = NULL;
+	parent = nullptr;
 	entityID++;
 
 	components.push_back(new TransformComponent());
@@ -34,10 +34,10 @@ Entity::Entity(TransformComponent *transform)
 	name = "Entity";
 	tag = "";
 	id = entityID;
-	parent = NULL;
+	parent = nullptr;
 	entityID++;
 
-	if(transform->entity == NULL) components.push_back(transform);
+	if(transform->entity == nullptr) components.push_back(transform);
 	else components.push_back(new TransformComponent);
 }
 
@@ -46,7 +46,7 @@ Entity::Entity(std::string name)
 	this->name = name;
 	tag = "";
 	id = entityID;
-	parent = NULL;
+	parent = nullptr;
 	entityID++;
 
 	components.push_back(new TransformComponent());
@@ -57,10 +57,10 @@ Entity::Entity(std::string name, TransformComponent *transform)
 	this->name = name;
 	tag = "";
 	id = entityID;
-	parent = NULL;
+	parent = nullptr;
 	entityID++;
 
-	if(transform->entity == NULL) components.push_back(transform);
+	if(transform->entity == nullptr) components.push_back(transform);
 	else components.push_back(new TransformComponent);
 }
 
@@ -72,7 +72,7 @@ Entity::~Entity()
 
 void Entity::addComponent(ComponentBase *component)
 {
-	if(component == NULL || component->entity != NULL) return;
+	if(component == nullptr || component->entity != nullptr) return;
 
 	for(U16 i = 0; i < components.size(); i++)
 	{
@@ -85,13 +85,13 @@ void Entity::addComponent(ComponentBase *component)
 
 void Entity::removeComponent(ComponentBase *component)
 {
-	if(component == NULL || component->entity == NULL || component->entity->getID() != this->getID()) return;
+	if(component == nullptr || component->entity == nullptr || component->entity->getID() != this->getID()) return;
 
 	for(U16 i = 0; i < components.size(); i++)
 	{
 		if(components.at(i)->name == component->name)
 		{
-			component->entity = NULL;
+			component->entity = nullptr;
 			components.erase(components.begin() + i);
 			break;
 		}
@@ -105,7 +105,7 @@ ComponentBase *Entity::getComponent(std::string name)
 		if(components.at(i)->name == name) return components.at(i);
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 bool Entity::hasComponent(std::string name)
@@ -120,7 +120,7 @@ bool Entity::hasComponent(std::string name)
 
 void Entity::addChild(Entity *entity)
 {
-	if(entity == NULL || entity->parent != NULL) return;
+	if(entity == nullptr || entity->parent != nullptr) return;
 
 	if(children.size() != 0)
 	{
@@ -136,13 +136,13 @@ void Entity::addChild(Entity *entity)
 
 void Entity::removeChild(Entity *entity)
 {
-	if(entity == NULL || entity->parent != this) return;
+	if(entity == nullptr || entity->parent != this) return;
 
 	for(U16 i = 0; i < children.size(); i++)
 	{
 		if(children.at(i)->getID() == entity->getID())
 		{
-			entity->parent = NULL;
+			entity->parent = nullptr;
 			children.erase(children.begin() + i);
 			break;
 		}

@@ -30,6 +30,7 @@
 #include "../../time/time.h"
 #include "../../ui/ui.h"
 #include "../../ui/console/console.h"
+#include "../../util/utils.h"
 #include "../../window/window.h"
 
 class Game
@@ -45,6 +46,8 @@ public:
 	static void setCurrentScene(Scene *scene);
 
 	static Scene *getCurrentScene();
+
+	static Logger *getLogger();
 
 private:
 	S16 initialize();

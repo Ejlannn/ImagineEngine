@@ -14,19 +14,9 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "materialAsset.h"
+#ifndef _IE_UTILS_H_
+#define _IE_UTILS_H_
 
-MaterialAsset::MaterialAsset()
-{
-	mainColor = getDefaultMainColor();
-	texture = nullptr;
-	tilingX = 1;
-	tilingY = 1;
-}
+#include "logger.h"
 
-MaterialAsset::~MaterialAsset() {}
-
-Color3 *MaterialAsset::getDefaultMainColor()
-{
-	return new Color3(0.6f);
-}
+#endif

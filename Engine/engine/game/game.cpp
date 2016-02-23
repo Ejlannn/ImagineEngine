@@ -32,9 +32,13 @@
 #include <iostream> //TODO remove after testing
 
 static bool			running = false;
-static Scene		*currentScene = NULL;
+static Scene		*currentScene = nullptr;
+static Logger *logger = nullptr;
 
-Game::~Game() {}
+Game::~Game()
+{
+	delete logger;
+}
 
 S16 Game::initialize()
 {
@@ -48,6 +52,8 @@ S16 Game::initialize()
 
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) Error::throwError((char*) "Cannot open audio");
 
+	logger = new Logger("Imagine Engine");
+
 	if(Window::create() == 1) return 3;
 
 	if(glewInit() != GLEW_OK) return 2;
@@ -60,7 +66,7 @@ S16 Game::initialize()
 
 	Window::firstUpdate();
 
-	if(currentScene != NULL) currentScene->initialize();
+	if(currentScene != nullptr) currentScene->initialize();
 
 	//Console::sendMessage("Test message");
 
@@ -150,4 +156,9 @@ void Game::setCurrentScene(Scene *scene)
 Scene *Game::getCurrentScene()
 {
 	return currentScene;
+}
+
+Logger *Game::getLogger()
+{
+	return logger;
 }

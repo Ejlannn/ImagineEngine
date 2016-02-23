@@ -22,7 +22,7 @@ MeshColliderComponent::MeshColliderComponent() : ComponentBase("MeshColliderComp
 
 	for(U16 i = 0; i < 8; i++)
 	{
-		obb[i] = NULL;
+		obb[i] = nullptr;
 	}
 }
 

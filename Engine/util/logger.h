@@ -14,19 +14,27 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "materialAsset.h"
+#ifndef _IE_LOGGER_H_
+#define _IE_LOGGER_H_
 
-MaterialAsset::MaterialAsset()
+#include <string>
+#include "../platform/types.h"
+
+class Logger
 {
-	mainColor = getDefaultMainColor();
-	texture = nullptr;
-	tilingX = 1;
-	tilingY = 1;
-}
+public:
+	Logger(const std::string &name);
+	~Logger();
 
-MaterialAsset::~MaterialAsset() {}
+	void log(const std::string &message);
+	void warning(const std::string &message);
 
-Color3 *MaterialAsset::getDefaultMainColor()
-{
-	return new Color3(0.6f);
-}
+	std::string getName() const;
+
+private:
+	std::string name;
+
+	void printLog(const std::string &log);
+};
+
+#endif

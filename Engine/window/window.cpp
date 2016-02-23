@@ -18,7 +18,7 @@
 
 #include <SDL2/SDL_render.h>
 
-static SDL_Window	*window = NULL; //Handles game window
+static SDL_Window	*window = nullptr; //Handles game window
 static char			*title = (char*) "Imagine Engine Game"; //Handles game window title
 static U16			width = 1280; //Handles game window width
 static U16			height = 720; //Handles game window height
@@ -30,11 +30,11 @@ static bool			exiting = false; //Handles game window state
 
 S16 Window::create()
 {
-	if(window != NULL) return 2;
+	if(window != nullptr) return 2;
 
 	window = SDL_CreateWindow(title, x, y, width, height, SDL_WINDOW_OPENGL);
 
-	if(window == NULL) return 1;
+	if(window == nullptr) return 1;
 
 	SDL_GL_CreateContext(window);
 
@@ -49,20 +49,20 @@ void Window::firstUpdate()
 
 void Window::destroy()
 {
-	if(window == NULL) return;
+	if(window == nullptr) return;
 
 	SDL_GL_DeleteContext(SDL_GL_GetCurrentContext());
 
 	SDL_DestroyWindow(window);
 
-	window = NULL;
+	window = nullptr;
 
 	delete window;
 }
 
 void Window::update()
 {
-	if(window == NULL) return;
+	if(window == nullptr) return;
 
 	SDL_GL_SwapWindow(window);
 }
@@ -76,7 +76,7 @@ void Window::setTitle(char *windowTitle)
 {
 	title = windowTitle;
 
-	if(window == NULL) return;
+	if(window == nullptr) return;
 
 	SDL_SetWindowTitle(window, title);
 }
@@ -85,7 +85,7 @@ void Window::setWidth(U16 windowWidth)
 {
 	width = windowWidth;
 
-	if(window == NULL) return;
+	if(window == nullptr) return;
 
 	SDL_SetWindowSize(window, width, height);
 }
@@ -94,7 +94,7 @@ void Window::setHeight(U16 windowHeight)
 {
 	height = windowHeight;
 
-	if(window == NULL) return;
+	if(window == nullptr) return;
 
 	SDL_SetWindowSize(window, width, height);
 }
@@ -103,7 +103,7 @@ void Window::setPositionX(S16 positionX)
 {
 	x = positionX;
 
-	if(window == NULL) return;
+	if(window == nullptr) return;
 
 	SDL_SetWindowPosition(window, x, y);
 }
@@ -112,7 +112,7 @@ void Window::setPositionY(S16 positionY)
 {
 	y = positionY;
 
-	if(window == NULL) return;
+	if(window == nullptr) return;
 
 	SDL_SetWindowPosition(window, x, y);
 }
@@ -122,7 +122,7 @@ void Window::setFullscreen(bool windowFullscreen)
 	fullscreen = windowFullscreen;
 
 	if(fullscreen) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-	else SDL_SetWindowFullscreen(window, NULL);
+	else SDL_SetWindowFullscreen(window, 0);
 }
 
 void Window::setVisibility(bool windowVisibility)

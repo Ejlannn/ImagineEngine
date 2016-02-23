@@ -18,7 +18,7 @@
 
 MeshRendererComponent::MeshRendererComponent() : ComponentBase("MeshRendererComponent")
 {
-	model = NULL;
+	model = nullptr;
 	cullFaces = true;
 }
 

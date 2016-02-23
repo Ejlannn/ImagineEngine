@@ -14,19 +14,33 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "materialAsset.h"
+#include "logger.h"
 
-MaterialAsset::MaterialAsset()
+#include <iostream>
+
+Logger::Logger(const std::string &name)
 {
-	mainColor = getDefaultMainColor();
-	texture = nullptr;
-	tilingX = 1;
-	tilingY = 1;
+	this->name = name;
 }
 
-MaterialAsset::~MaterialAsset() {}
+Logger::~Logger() {}
 
-Color3 *MaterialAsset::getDefaultMainColor()
+void Logger::log(const std::string &message)
 {
-	return new Color3(0.6f);
+	printLog("[" + name + "] " + message);
+}
+
+void Logger::warning(const std::string &message)
+{
+	printLog(std::string("[") + name + "] [Warning] " + message);
+}
+
+void Logger::printLog(const std::string &log)
+{
+	std::cout << log.c_str() << std::endl;
+}
+
+std::string Logger::getName() const
+{
+	return name.c_str();
 }

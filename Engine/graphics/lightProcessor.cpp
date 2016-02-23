@@ -35,10 +35,10 @@ std::vector<Light*> LightProcessor::getLightSourcesForEntity(std::vector<Vector4
 
 	Light *tempLight[4];
 
-	tempLight[0] = NULL;
-	tempLight[1] = NULL;
-	tempLight[2] = NULL;
-	tempLight[3] = NULL;
+	tempLight[0] = nullptr;
+	tempLight[1] = nullptr;
+	tempLight[2] = nullptr;
+	tempLight[3] = nullptr;
 
 	for(U16 i = 0; i < lightSources.size(); i++)
 	{
@@ -80,8 +80,8 @@ std::vector<Light*> LightProcessor::getLightSourcesForEntity(std::vector<Vector4
 
 	for(U16 i = 0; i < 4; i++)
 	{
-		if(tempLight[i] != NULL) lightSourcesForEntity.push_back(tempLight[i]);
-		else lightSourcesForEntity.push_back(NULL);
+		if(tempLight[i] != nullptr) lightSourcesForEntity.push_back(tempLight[i]);
+		else lightSourcesForEntity.push_back(nullptr);
 	}
 
 	return lightSourcesForEntity;
