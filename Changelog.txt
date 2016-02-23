@@ -1,0 +1,211 @@
+Alpha Versions:
+
+1.2.0
+-Added Logger class (logger.h inside new util folder)
+-Added default Logger (With name "Imagine Engine") to Game class with public static getter
+-Changed all deprecated NULL macros to nullptr
+-Corrected setFullscreen method in Window class (Replaced NULL with 0)
+
+1.1.4
+-Corrected Entity class methods name:
+*addChildren to addChild
+*removeChildren to removeChild
+
+1.1.3_01
+-Fixed removeChild method inside Entity class
+
+1.1.3
+-Important improvements, corrections and fixes
+
+1.1.2
+-Important improvements, corrections and fixes
+-Fixed memory leak after removing child Entity from parent Entity
+
+1.1.1
+-Some less important improvements, corrections and fixes
+
+1.1.0
+-Added MSAA (Still needs to be corrected)
+
+1.0.8
+-Error class improvements and corrections
+-FilePath class improvements and corrections
+-Some other less important improvements and corrections
+
+1.0.7
+-Error class improvements and corrections
+
+1.0.6
+-Added std::exit to prepareExit method inside Game class
+
+1.0.5
+-Some corrections for constructors
+
+1.0.4
+-Added getFileFromGamePath getter to FilePath class (Updated Example1 shows how it works)
+-Changed all constant path getters (For shader programs) to getFileFromGamePath getter
+
+1.0.3
+-Directional light is working (Still needs to be corrected)
+
+1.0.2
+-Fixed multiple light sources
+
+1.0.1
+-Changed tilingX and tilingY location from TextureAsset class to MaterialAsset class
+
+1.0.0
+-Console enchancements, improvements and corrections
+
+Pre-alpha versions:
+
+1.0.11_02-FINAL
+-Added warning comment to MeshColliderComponent class
+-Added missing "return" to getUniformLocation getter in ShaderProgram class
+
+1.0.11_01
+-Changed default window settings
+
+1.0.11
+-Added MeshColliderComponent (Incomplete)
+-Added new virtual method/methods to Script class
+-Changed default window settings
+-Some less important improvements and corrections
+
+1.0.10
+-Removed EventHandler class and moved all virtual methods to Script class
+-Added new virtual methods to Script class
+-Some improvements and corrections in Script class
+-Added destructor to Script class
+-Fixed some warnings
+
+1.0.9
+-Console enchancements
+
+1.0.8_02
+-Fixed missing texture coordinates
+-Refixed annoying error after exiting the game
+
+1.0.8_01
+-Refixed annoying error after exiting the game
+
+1.0.8
+-Improvements and corrections for:
+*ModelAsset class
+*Face struct
+*VertexArrayObject class
+*ModelLoader class
+-Fixed annoying error after exiting the game
+-Removed unused things
+-Fixed some warnings
+
+1.0.7_03
+-Added missing includes
+
+1.0.7_02
+-Added missing sendMessage method to Console class
+
+1.0.7_01
+-Fixed console input characters
+
+1.0.7
+-Added EventHandler with keyboard events
+-Added console with CommandExecutor class
+-Changed renderer order for skybox
+-Added uinShader program (uiShader without texture, projection matrix)
+-Fixed UI elements renderer
+-Removed deprecated anti-aliasing (New MSAA will be added in the future)
+
+1.0.6
+-Light enchancements
+-Added audio system (Will be improved, corrected and enchanced in the future to support 3D audio)
+
+1.0.5_01
+-Fix for PointLight
+
+1.0.5
+-Added Vector4 struct
+-Added loading method for Vector4 to ShaderProgram class
+-Finished PointLight (Will be improved, corrected and enchanced in the future)
+
+1.0.4_02
+-Added missing destructors to shader programs
+
+1.0.4_01
+-Fixed some destructors
+-Fixed scene changing while the game is running
+
+1.0.4
+-Changed text data type from S16 to U16
+-Now you can create instance of 2D text UI element or render 2D text without any instance
+-Changed renderText method name to renderSimpleText
+-Moved UIElement struct to UIElementsHandler
+-Changed Text class name to UIText
+-Added surface freeing to some assets
+-Added new UI elements:
+*Texture
+-Some other improvements and corrections
+
+1.0.3_04
+-Fixed text renderer
+
+1.0.3_03
+-Some changed with window creation
+
+1.0.3_02
+-Changed default GameWindow class settings
+-Some less important changes in CameraComponent
+
+1.0.3_01
+-Some less important bug fixes
+
+1.0.3
+-Replaced old, deprecated text rendering solution with new one (From Fixed Function Pipeline to Programmable Pipeline)
+-Added new ShaderProgram for UI Elements
+-Added load method for Vector2 in ShaderProgram class
+-Added new method to load data to VAO in VertexArrayObject class
+-Added new structs like UIElement
+-Added getter for 2D orthographic projection matrix in CameraComponent class
+-Added missing destructors
+-Fixed some warnings
+
+1.0.2_01
+-Fixed annoying error after destroying MouseInput class
+
+1.0.2
+-Changed Face class and all math classes to structs (And removed public modifiers)
+-Added destructors to:
+*Game class
+*All math structs
+*Entity class
+*Scene class
+*All component classes (Including ComponentBase class)
+*All asset classes
+*FilePath class
+*Light class
+*Face struct
+-Added/fixed/improved destroy methods to:
+*MouseInput class
+*KeyboardInput class
+*VertexArrayObject class
+*Window class
+-Fixed some warnings
+
+1.0.1_03
+-Fixed annoying error after exiting the game
+
+1.0.1_02
+-Removed getLightSourcesForEntity body (source) (We are creating more precise code)
+
+1.0.1_01
+-Added fog settings to scene
+-Fixed error after adding child Entity to parent Entity
+-Fixed Entity's children mesh scale
+
+1.0.1
+-Added missing init and update method for Scene in Game class methods
+-Added missing message box content for missing files
+-Fixed scene init after calling setCurrentScene method while game isn't running
+-Removed if statement while calling exit method
+-Fixed skyboxes
+-Added missing getMousePosition method body (source)
