@@ -32,7 +32,7 @@ void Logger::log(const std::string &message)
 
 void Logger::warning(const std::string &message)
 {
-	printLog(std::string("[") + name + "] [Warning] " + message);
+	printLog("[" + name + "] [Warning] " + message);
 }
 
 void Logger::printLog(const std::string &log)

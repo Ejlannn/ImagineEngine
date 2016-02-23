@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.2.1
+-Removed std::string() cast from warning method inside Logger class
+-Now Entity class throws warnings via default Game's logger
+
 1.2.0
 -Added Logger class (logger.h inside new util folder)
 -Added default Logger (With name "Imagine Engine") to Game class with public static getter

@@ -16,6 +16,9 @@
 
 #include "entity.h"
 
+#include <sstream>
+#include "game/game.h"
+
 static U32 entityID = 0;
 
 Entity::Entity()
@@ -72,11 +75,34 @@ Entity::~Entity()
 
 void Entity::addComponent(ComponentBase *component)
 {
-	if(component == nullptr || component->entity != nullptr) return;
+	if(component == nullptr)
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		Game::getLogger()->warning("Cannot add given component to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component is NULL");
+		return;
+	}
+
+	if(component->entity != nullptr)
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		Game::getLogger()->warning("Cannot add given component with name " + component->getName() + "to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been already added somewhere");
+		return;
+	}
 
 	for(U16 i = 0; i < components.size(); i++)
 	{
-		if(components.at(i)->name == component->name) return;
+		if(components.at(i)->name == component->name)
+		{
+			std::ostringstream id1;
+			id1 << id;
+
+			Game::getLogger()->warning("Cannot add given component with name " + component->getName() + "to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been already added to this Entity");
+			return;
+		}
 	}
 
 	component->entity = this;
@@ -85,7 +111,23 @@ void Entity::addComponent(ComponentBase *component)
 
 void Entity::removeComponent(ComponentBase *component)
 {
-	if(component == nullptr || component->entity == nullptr || component->entity->getID() != this->getID()) return;
+	if(component == nullptr)
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		Game::getLogger()->warning("Cannot remove given component from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component is NULL");
+		return;
+	}
+
+	if(component->entity == nullptr || component->entity->getID() != this->getID())
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		Game::getLogger()->warning("Cannot remove given component with name " + component->getName() + " from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been added to different Entity");
+		return;
+	}
 
 	for(U16 i = 0; i < components.size(); i++)
 	{
@@ -93,9 +135,15 @@ void Entity::removeComponent(ComponentBase *component)
 		{
 			component->entity = nullptr;
 			components.erase(components.begin() + i);
-			break;
+			return;
 		}
 	}
+
+	std::ostringstream id1;
+	id1 << id;
+
+	Game::getLogger()->warning("Cannot remove given component with name " + component->getName() + " from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component doesn't membership to this Entity");
+	return;
 }
 
 ComponentBase *Entity::getComponent(std::string name)
@@ -105,6 +153,10 @@ ComponentBase *Entity::getComponent(std::string name)
 		if(components.at(i)->name == name) return components.at(i);
 	}
 
+	std::ostringstream id1;
+	id1 << id;
+
+	Game::getLogger()->warning("Given component with name " + name + " doesn't membership to this Entity [Name: " + this->name + " ID: " + id1.str() + "]");
 	return nullptr;
 }
 
@@ -120,13 +172,42 @@ bool Entity::hasComponent(std::string name)
 
 void Entity::addChild(Entity *entity)
 {
-	if(entity == nullptr || entity->parent != nullptr) return;
+	if(entity == nullptr)
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		Game::getLogger()->warning("Cannot add child Entity to parent Entity [Name: " + name + " ID: " + id1.str() + "] - given child Entity is NULL");
+		return;
+	}
+
+	if(entity->parent != nullptr)
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		std::ostringstream id2;
+		id2 << entity->getID();
+
+		Game::getLogger()->warning("Cannot add child Entity [Name: " + entity->name + " ID: " + id2.str() + "] to parent Entity [Name: " + name + " ID: " + id1.str() + "] - given child Entity already has a parent Entity");
+		return;
+	}
 
 	if(children.size() != 0)
 	{
 		for(U16 i = 0; i < children.size(); i++)
 		{
-			if(children.at(i)->getID() == entity->getID()) return;
+			if(children.at(i)->getID() == entity->getID())
+			{
+				std::ostringstream id1;
+				id1 << id;
+
+				std::ostringstream id2;
+				id2 << entity->getID();
+
+				Game::getLogger()->warning("Cannot add child Entity [Name: " + entity->name + " ID: " + id2.str() + "] to parent Entity [Name: " + name + " ID: " + id1.str() + "] - given child Entity has been already added to this parent Entity");
+				return;
+			}
 		}
 	}
 
@@ -136,7 +217,26 @@ void Entity::addChild(Entity *entity)
 
 void Entity::removeChild(Entity *entity)
 {
-	if(entity == nullptr || entity->parent != this) return;
+	if(entity == nullptr)
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		Game::getLogger()->warning("Cannot remove child Entity from parent Entity [Name: " + name + " ID: " + id1.str() + "] - given child Entity is NULL");
+		return;
+	}
+
+	if(entity->parent != this)
+	{
+		std::ostringstream id1;
+		id1 << id;
+
+		std::ostringstream id2;
+		id2 << entity->getID();
+
+		Game::getLogger()->warning("Cannot remove child Entity [Name: " + entity->name + " ID: " + id2.str() + "] from parent Entity [Name: " + name + " ID: " + id1.str() + "] - given child Entity has different parent Entity");
+		return;
+	}
 
 	for(U16 i = 0; i < children.size(); i++)
 	{
@@ -144,9 +244,18 @@ void Entity::removeChild(Entity *entity)
 		{
 			entity->parent = nullptr;
 			children.erase(children.begin() + i);
-			break;
+			return;
 		}
 	}
+
+	std::ostringstream id1;
+	id1 << id;
+
+	std::ostringstream id2;
+	id2 << entity->getID();
+
+	Game::getLogger()->warning("Cannot remove child Entity [Name: " + entity->name + " ID: " + id2.str() + "] from parent Entity [Name: " + name + " ID: " + id1.str() + "] - given child Entity doesn't membership to this parent Entity");
+	return;
 }
 
 U32 Entity::getID()
