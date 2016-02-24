@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.2.2
+-Now Scene class throws warnings via default Game's logger
+-Changed Entity class warnings content
+
 1.2.1
 -Removed std::string() cast from warning method inside Logger class
 -Now Entity class throws warnings via default Game's logger

@@ -80,7 +80,7 @@ void Entity::addComponent(ComponentBase *component)
 		std::ostringstream id1;
 		id1 << id;
 
-		Game::getLogger()->warning("Cannot add given component to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component is NULL");
+		Game::getLogger()->warning("Cannot add component to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component is NULL");
 		return;
 	}
 
@@ -89,7 +89,7 @@ void Entity::addComponent(ComponentBase *component)
 		std::ostringstream id1;
 		id1 << id;
 
-		Game::getLogger()->warning("Cannot add given component with name " + component->getName() + "to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been already added somewhere");
+		Game::getLogger()->warning("Cannot add component with name " + component->getName() + "to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been already added somewhere");
 		return;
 	}
 
@@ -100,7 +100,7 @@ void Entity::addComponent(ComponentBase *component)
 			std::ostringstream id1;
 			id1 << id;
 
-			Game::getLogger()->warning("Cannot add given component with name " + component->getName() + "to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been already added to this Entity");
+			Game::getLogger()->warning("Cannot add component with name " + component->getName() + "to Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been already added to this Entity");
 			return;
 		}
 	}
@@ -116,7 +116,7 @@ void Entity::removeComponent(ComponentBase *component)
 		std::ostringstream id1;
 		id1 << id;
 
-		Game::getLogger()->warning("Cannot remove given component from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component is NULL");
+		Game::getLogger()->warning("Cannot remove component from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component is NULL");
 		return;
 	}
 
@@ -125,7 +125,7 @@ void Entity::removeComponent(ComponentBase *component)
 		std::ostringstream id1;
 		id1 << id;
 
-		Game::getLogger()->warning("Cannot remove given component with name " + component->getName() + " from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been added to different Entity");
+		Game::getLogger()->warning("Cannot remove component with name " + component->getName() + " from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component has been added to different Entity");
 		return;
 	}
 
@@ -142,7 +142,7 @@ void Entity::removeComponent(ComponentBase *component)
 	std::ostringstream id1;
 	id1 << id;
 
-	Game::getLogger()->warning("Cannot remove given component with name " + component->getName() + " from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component doesn't membership to this Entity");
+	Game::getLogger()->warning("Cannot remove component with name " + component->getName() + " from Entity [Name: " + name + " ID: " + id1.str() + "] - Given component doesn't membership to this Entity");
 	return;
 }
 

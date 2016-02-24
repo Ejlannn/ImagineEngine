@@ -16,7 +16,9 @@
 
 #include "scene.h"
 
+#include <sstream>
 #include "script.h"
+#include "game/game.h"
 #include "../graphics/lightProcessor.h"
 
 Scene::Scene()
@@ -33,12 +35,34 @@ Scene::~Scene() {}
 
 void Scene::addEntity(Entity *entity)
 {
-	if(entity == nullptr) return;
-	if(entity->parent != nullptr) return;
+	if(entity == nullptr)
+	{
+		std::ostringstream id1;
+		id1 << entity->getID();
+
+		Game::getLogger()->warning("Cannot add Entity to Scene - Given Entity is NULL");
+		return;
+	}
+
+	if(entity->parent != nullptr)
+	{
+		std::ostringstream id1;
+		id1 << entity->getID();
+
+		Game::getLogger()->warning("Cannot add Entity [Name: " + entity->name + " ID: " + id1.str() + "] to Scene - Given Entity has a parent");
+		return;
+	}
 
 	for(U16 i = 0; i < entities.size(); i++)
 	{
-		if(entities.at(i)->getID() == entity->getID()) return;
+		if(entities.at(i)->getID() == entity->getID())
+		{
+			std::ostringstream id1;
+			id1 << entity->getID();
+
+			Game::getLogger()->warning("Cannot add Entity [Name: " + entity->name + " ID: " + id1.str() + "] to Scene - Given Entity has been already added to this Scene");
+			return;
+		}
 	}
 
 	entities.push_back(entity);
@@ -46,16 +70,29 @@ void Scene::addEntity(Entity *entity)
 
 void Scene::removeEntity(Entity *entity)
 {
-	if(entity == nullptr) return;
+	if(entity == nullptr)
+	{
+		std::ostringstream id1;
+		id1 << entity->getID();
+
+		Game::getLogger()->warning("Cannot remove Entity from Scene - Given Entity is NULL");
+		return;
+	}
 
 	for(U16 i = 0; i < entities.size(); i++)
 	{
 		if(entities.at(i)->getID() == entity->getID())
 		{
 			entities.erase(entities.begin() + i);
-			break;
+			return;
 		}
 	}
+
+	std::ostringstream id1;
+	id1 << entity->getID();
+
+	Game::getLogger()->warning("Cannot remove Entity [Name: " + entity->name + " ID: " + id1.str() + "] from Scene - Given Entity doesn't membership to this Scene");
+	return;
 }
 
 Entity *Scene::getEntityByName(std::string name)

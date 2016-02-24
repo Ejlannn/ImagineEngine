@@ -35,19 +35,19 @@ public:
 
 	~Scene();
 
-	void addEntity(Entity *entity);
-	void removeEntity(Entity *entity);
-	Entity *getEntityByName(std::string name);
-	Entity *getEntityByID(U32 id);
-	std::vector<Entity*> getEntitiesWithName(std::string name);
-	std::vector<Entity*> getEntitiesWithTag(std::string tag);
-
 	Color3 *backgroundColor;
 	Color3 *ambientLightColor;
 	CameraComponent *camera;
 	SkyboxAsset *skybox;
 	F32 fogDensity;
 	F32 fogGradient;
+
+	void addEntity(Entity *entity);
+	void removeEntity(Entity *entity);
+	Entity *getEntityByName(std::string name);
+	Entity *getEntityByID(U32 id);
+	std::vector<Entity*> getEntitiesWithName(std::string name);
+	std::vector<Entity*> getEntitiesWithTag(std::string tag);
 
 private:
 	std::vector<Entity*> entities;
