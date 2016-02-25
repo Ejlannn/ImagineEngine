@@ -61,10 +61,10 @@ std::vector<Light*> LightProcessor::getLightSourcesForEntity(std::vector<Vector4
 
 				if(distance <= pointLight->range)
 				{
-					tempLight[4] = tempLight[3];
 					tempLight[3] = tempLight[2];
 					tempLight[2] = tempLight[1];
-					tempLight[1] = lightSources.at(i);
+					tempLight[1] = tempLight[0];
+					tempLight[0] = lightSources.at(i);
 					break;
 				}
 			}
