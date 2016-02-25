@@ -6,19 +6,15 @@ Supported platforms: Windows, Linux, Mac OSX
 
 # Dependencies #
 
--C++11
-
--OpenGL
-
--SDL2, SDL2_image, SDL2_ttf, SDL_mixer
-
--GLEW
+-C++11 <br>
+-OpenGL <br>
+-SDL2, SDL2_image, SDL2_ttf, SDL_mixer <br>
+-GLEW <br>
 
 # Preprocessor Definitions #
 
-Define 'IMAGINEENGINE_X86' for x86 arch application
-
-or 'IMAGINEENGINE_X64' for x64 arch application.
+Define `IMAGINEENGINE_X86` for x86 arch application <br>
+or `IMAGINEENGINE_X64` for x64 arch application.
 
 # Developers & Credits #
 
@@ -26,8 +22,7 @@ or 'IMAGINEENGINE_X64' for x64 arch application.
 
 **Credits:**
 
-Thanks to **Vesim**, **Phoenix_PL**, **Jaca** for reporting important issues and ideas.
-
+Thanks to **Vesim**, **Phoenix_PL**, **Jaca** for reporting important issues and ideas. <br>
 Thanks to **Ejlannn_** for testing.
 
 # License #
