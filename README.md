@@ -14,6 +14,11 @@ Supported platforms: Windows, Linux, Mac OSX
 
 -GLEW
 
+# Preprocessor Definitions #
+
+Define 'IMAGINEENGINE_X86' for x86 arch application
+or 'IMAGINEENGINE_X64' for x64 arch application.
+
 # Developers & Credits #
 
 **Lead Developer:** skprime
