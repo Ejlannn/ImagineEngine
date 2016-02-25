@@ -18,5 +18,5 @@
 
 PointLight::PointLight() : Light("PointLight")
 {
-	range = 6.0f;
+	range = 8.0f;
 }

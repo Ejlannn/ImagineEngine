@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.4.1
+-Changed PointLight class and SpotLight class default values (In constructor)
+
 1.4.0
 -Added getFile getter to FilePath class
 -Improved file system

@@ -18,6 +18,6 @@
 
 SpotLight::SpotLight() : Light("SpotLight")
 {
-	range = 6.0f;
+	range = 8.0f;
 	spotAngle = 30.0f;
 }
