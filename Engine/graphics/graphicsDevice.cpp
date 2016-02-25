@@ -16,13 +16,12 @@
 
 #include "graphicsDevice.h"
 
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
 #include <GL/glew.h>
 #include "lightProcessor.h"
 #include "vertexArrayObject.h"
 #include "../error/error.h"
 #include "../engine/game/game.h"
+#include "../platform/resourceLoader.h"
 #include "../ui/uiElementsHandler.h"
 #include "../ui/console/console.h"
 #include "../window/window.h"
@@ -41,8 +40,8 @@ static std::vector<UIElement*> elementsToRender;
 
 /* Shaders */
 static BaseShader		*baseShader = nullptr;
-static SkyboxShader	*skyboxShader = nullptr;
-static UIShader		*uiShader = nullptr;
+static SkyboxShader		*skyboxShader = nullptr;
+static UIShader			*uiShader = nullptr;
 static UINShader		*uinShader = nullptr;
 
 static U16 samplesSize = 8;
@@ -221,9 +220,7 @@ void GraphicsDevice::render(Scene *scene)
 		{
 			SDL_Color color = { (U8)textsToRender.at(i)->color->r, (U8)textsToRender.at(i)->color->g, (U8)textsToRender.at(i)->color->b };
 
-			TTF_Font *font = TTF_OpenFont(textsToRender.at(i)->file->getPath().c_str(), textsToRender.at(i)->size);
-
-			if(!font && isGameRunning() == true) Error::throwError((char*) "Cannot load font file!");
+			TTF_Font *font = ResourceLoader::loadFont(textsToRender.at(i)->file, textsToRender.at(i)->size);
 
 			SDL_Surface *fontSurface = TTF_RenderText_Blended(font, textsToRender.at(i)->msg.c_str(), color);
 
@@ -249,15 +246,13 @@ void GraphicsDevice::render(Scene *scene)
 
 		FilePath *fontPath = FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "font" + std::string(PATH_SEPARATOR) + "Consolas.ttf");
 
-		TTF_Font *font = TTF_OpenFont(fontPath->getPath().c_str(), 12);
+		TTF_Font *font = ResourceLoader::loadFont(fontPath, 12);
 
 		std::vector<std::string> consoleLines = Console::getLines();
 
 		for(U16 i = 0; i < consoleLines.size(); i++)
 		{
 			if(i > 22) break;
-
-			if(!font && isGameRunning() == true) Error::throwError((char*) "Cannot load font file!");
 
 			SDL_Surface *fontSurface = TTF_RenderText_Blended(font, consoleLines.at(consoleLines.size() - 1 - i).c_str(), color);
 

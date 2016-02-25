@@ -21,6 +21,7 @@
 #include "../platform/file.h"
 
 class UIElement;
+class SDL_Surface;
 
 class UIText
 {
@@ -45,6 +46,8 @@ private:
 	U16 size;
 	Color3 *color;
 	UIElement *element;
+
+	static SDL_Surface *getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 *color);
 
 	void recreate();
 };

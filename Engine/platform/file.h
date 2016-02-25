@@ -17,6 +17,7 @@
 #ifndef _IE_FILE_H_
 #define _IE_FILE_H_
 
+#include <fstream>
 #include <string>
 
 #if defined(WIN32) || defined(_WIN64)
@@ -32,16 +33,20 @@ public:
 
 	~FilePath();
 
+	void reopen();
+
 	static FilePath *getFileFromGamePath(const std::string &file);
 
 	static bool exist(const std::string &path);
 
 	std::string getPath() const;
+	std::ifstream &getFile();
 
 	static char* getGamePath();
 
 private:
 	std::string path;
+	std::ifstream file;
 };
 
 #endif

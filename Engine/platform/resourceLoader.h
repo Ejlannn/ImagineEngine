@@ -14,31 +14,35 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "textureAsset.h"
+#ifndef _IE_RESOURCE_LOADER_H_
+#define _IE_RESOURCE_LOADER_H_
 
-#include "../../platform/resourceLoader.h"
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
+#include "file.h"
+#include "types.h"
 
-TextureAsset::TextureAsset(FilePath *path)
+class Audio;
+class SkyboxAsset;
+class TextureAsset;
+class GraphicsDevice;
+class UITexture;
+class UIText;
+
+class ResourceLoader
 {
-	textureFile = path;
-	textureID = 0;
+	friend class Audio;
+	friend class SkyboxAsset;
+	friend class TextureAsset;
+	friend class GraphicsDevice;
+	friend class UITexture;
+	friend class UIText;
 
-	surface = ResourceLoader::loadImage(path);
-}
+	static TTF_Font *loadFont(FilePath *fontFile, U16 fontSize);
+	static SDL_Surface *loadImage(FilePath *imageFile);
+	static Mix_Music *loadMusic(FilePath *musicFile);
+	static Mix_Chunk *loadSound(FilePath *soundFile);
+};
 
-TextureAsset::~TextureAsset()
-{
-	SDL_FreeSurface(surface);
-}
-
-void TextureAsset::setTexture(FilePath *path)
-{
-	textureFile = path;
-	textureID = 0;
-
-	path->getFile().close();
-
-	surface = IMG_Load(path->getPath().c_str());
-
-	path->reopen();
-}
+#endif

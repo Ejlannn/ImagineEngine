@@ -16,9 +16,9 @@
 
 #include "skyboxAsset.h"
 
-#include <SDL2/SDL_image.h>
 #include "../../error/error.h"
 #include "../../graphics/vertexArrayObject.h"
+#include "../../platform/resourceLoader.h"
 
 S32 vertexCount = 0;
 
@@ -155,17 +155,12 @@ SkyboxAsset::SkyboxAsset(FilePath *path[6])
 
 	vaoID = VertexArrayObject::loadToVAO(positions, 3);
 
-	surface[0] = IMG_Load(path[0]->getPath().c_str());
-	surface[1] = IMG_Load(path[1]->getPath().c_str());
-	surface[2] = IMG_Load(path[2]->getPath().c_str());
-	surface[3] = IMG_Load(path[3]->getPath().c_str());
-	surface[4] = IMG_Load(path[4]->getPath().c_str());
-	surface[5] = IMG_Load(path[5]->getPath().c_str());
-
-	for(S16 i = 0; i < 6; i++)
-	{
-		if(!surface[i]) Error::throwError((char*) "Cannot load image file!");
-	}
+	surface[0] = ResourceLoader::loadImage(path[0]);
+	surface[1] = ResourceLoader::loadImage(path[1]);
+	surface[2] = ResourceLoader::loadImage(path[2]);
+	surface[3] = ResourceLoader::loadImage(path[3]);
+	surface[4] = ResourceLoader::loadImage(path[4]);
+	surface[5] = ResourceLoader::loadImage(path[5]);
 }
 
 SkyboxAsset::~SkyboxAsset()

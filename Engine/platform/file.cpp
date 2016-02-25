@@ -16,7 +16,6 @@
 
 #include "file.h"
 
-#include <fstream>
 #include <SDL2/SDL_filesystem.h>
 #include "../error/error.h"
 
@@ -34,10 +33,23 @@ FilePath::FilePath(const std::string &path)
 
 		Error::throwError(message);
 	}
-	else this->path = path;
+	else
+	{
+		file.open(path.c_str());
+		this->path = path;
+	}
 }
 
-FilePath::~FilePath() {}
+FilePath::~FilePath()
+{
+	file.close();
+}
+
+void FilePath::reopen()
+{
+	file.close();
+	file.open(path.c_str());
+}
 
 FilePath *FilePath::getFileFromGamePath(const std::string &file)
 {
@@ -61,6 +73,11 @@ bool FilePath::exist(const std::string &path)
 std::string FilePath::getPath() const
 {
 	return path.c_str();
+}
+
+std::ifstream &FilePath::getFile()
+{
+	return file;
 }
 
 char *FilePath::getGamePath()

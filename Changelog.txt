@@ -1,5 +1,12 @@
 Alpha Versions:
 
+1.4.0
+-Added getFile getter to FilePath class
+-Improved file system
+-Created one font and image loader in new ResourceLoader class
+-Changed global functions to class' methods
+-Fixed annoying error after throwing error message
+
 1.3.2
 -Corrected types.h if statement
 

@@ -16,14 +16,17 @@
 
 #include "texture.h"
 
-#include <SDL2/SDL_surface.h>
-#include <SDL2/SDL_image.h>
 #include "uiElementsHandler.h"
 #include "../error/error.h"
+#include "../platform/resourceLoader.h"
 
-SDL_Surface *getTextureSurface(FilePath *texturePath)
+SDL_Surface *UITexture::getTextureSurface(FilePath *texturePath)
 {
-	SDL_Surface *surface = IMG_Load(texturePath->getPath().c_str());
+	texturePath->getFile().close();
+
+	SDL_Surface *surface = ResourceLoader::loadImage(texturePath);
+
+	texturePath->reopen();
 
 	if(!surface) Error::throwError((char*) "Couldn't load img!");
 

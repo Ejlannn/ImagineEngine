@@ -21,6 +21,7 @@
 #include "../platform/file.h"
 
 class UIElement;
+class SDL_Surface;
 
 class UITexture
 {
@@ -33,6 +34,8 @@ private:
 	FilePath *texturePath;
 	Vector2 *position;
 	UIElement *element;
+
+	SDL_Surface *getTextureSurface(FilePath *texturePath);
 };
 
 #endif

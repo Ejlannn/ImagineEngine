@@ -24,7 +24,7 @@ ModelAsset *ModelLoader::loadOBJModel(FilePath *objFile)
 {
 	ModelAsset *modelAsset = new ModelAsset();
 
-	std::ifstream file(objFile->getPath());
+	std::ifstream &file = objFile->getFile();
 
 	std::vector<std::string*> lines;
 

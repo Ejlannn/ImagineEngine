@@ -16,8 +16,8 @@
 
 #include "audio.h"
 
-#include <SDL2/SDL_mixer.h>
 #include "../error/error.h"
+#include "../platform/resourceLoader.h"
 
 void Audio::playMusic(FilePath *musicFile)
 {
@@ -28,9 +28,7 @@ void Audio::playMusic(FilePath *musicFile, U16 loops)
 {
 	if(Mix_PlayingMusic() || Mix_PausedMusic()) return;
 
-	Mix_Music *music = Mix_LoadMUS(musicFile->getPath().c_str());
-
-	if(!music) Error::throwError("Cannot load music!");
+	Mix_Music *music = ResourceLoader::loadMusic(musicFile);
 
 	Mix_PlayMusic(music, loops);
 }
@@ -75,9 +73,7 @@ void Audio::playSoundEffect(FilePath *soundFile, U16 channel, U16 loops)
 {
 	if(Mix_Playing(channel)) return;
 
-	Mix_Chunk *soundEffect = Mix_LoadWAV(soundFile->getPath().c_str());
-
-	if(!soundEffect) Error::throwError("Cannot load sound effect!");
+	Mix_Chunk *soundEffect = ResourceLoader::loadSound(soundFile);
 
 	Mix_PlayChannel(channel, soundEffect, loops);
 }

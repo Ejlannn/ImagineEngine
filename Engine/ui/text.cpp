@@ -16,16 +16,20 @@
 
 #include "text.h"
 
-#include <SDL2/SDL_ttf.h>
 #include "uiElementsHandler.h"
 #include "../error/error.h"
 #include "../graphics/graphicsDevice.h"
+#include "../platform/resourceLoader.h"
 
-SDL_Surface *getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 *color)
+SDL_Surface *UIText::getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 *color)
 {
 	SDL_Color txtColor = { (U8)color->r, (U8)color->g, (U8)color->b };
 
-	TTF_Font *font = TTF_OpenFont(fontFile->getPath().c_str(), size);
+	fontFile->getFile().close();
+
+	TTF_Font *font = ResourceLoader::loadFont(fontFile, size);
+
+	fontFile->reopen();
 
 	if(!font) Error::throwError((char*) "Cannot load font file!");
 

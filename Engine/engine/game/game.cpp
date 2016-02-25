@@ -123,7 +123,7 @@ void Game::prepareExit()
 {
 	if(running) running = false;
 
-	currentScene->destroy();
+	if(currentScene != nullptr) currentScene->destroy();
 
 	Event::destroy();
 
