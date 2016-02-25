@@ -26,12 +26,12 @@ typedef unsigned short			U16;
 typedef signed int				S32;
 typedef unsigned int			U32;
 
-#if defined(IMAGINEENGINE_X86)
-typedef signed long long		S64;
-typedef unsigned long long		U64;
-#else
+#if defined(IMAGINEENGINE_X64)
 typedef signed long				S64;
 typedef unsigned long			U64;
+#else
+typedef signed long long		S64;
+typedef unsigned long long		U64;
 #endif
 
 typedef float					F32;

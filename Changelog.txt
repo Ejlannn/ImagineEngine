@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.3.2
+-Corrected types.h if statement
+
 1.3.1
 -Corrected getLightSources getter inside LightProcessor class (Wrong array indices)
 
