@@ -80,21 +80,13 @@ void ModelAsset::load()
 				else if(j == 1) currentTexture = textureVectors.at(faces.at(i)->vt2 - 1);
 				else if(j == 2) currentTexture = textureVectors.at(faces.at(i)->vt3 - 1);
 
-				//texts.push_back(1.0f);
-				//texts.push_back(0.0f);
-
 				textureArray[currentVertexPointer * 2] = currentTexture->x;
 				textureArray[currentVertexPointer * 2 + 1] = (1.0f - currentTexture->y);
-
-				//texts.insert(texts.begin() + (currentVertexPointer * 2) - 1, currentTexture->x);
-				//texts.insert(texts.begin() + (currentVertexPointer * 2 + 1) - 1, currentTexture->y);
 			}
 		}
 
 		for(U64 i = 0; i < faces.size() * 2 * 3; i++)
 		{
-			//if(textureArray[i] > 1.0f || textureArray[i] < 0.0f) textureArray[i] = 0.0f;
-
 			texts.push_back(textureArray[i]);
 		}
     }
@@ -110,7 +102,7 @@ void ModelAsset::load()
     {
 		for(U64 i = 0; i < faces.size(); i++)
 		{
-			for(U16 j = 0; j < 4; j++)
+			for(U16 j = 0; j < 3; j++)
 			{
 				U64 currentVertexPointer = 0;
 
@@ -118,7 +110,11 @@ void ModelAsset::load()
 				else if(j == 1) currentVertexPointer = faces.at(i)->v2 - 1;
 				else if(j == 2) currentVertexPointer = faces.at(i)->v3 - 1;
 
-				Vector3 *currentNormal = normalVectors.at(faces.at(i)->vn - 1);
+				Vector3 *currentNormal = nullptr;
+
+				if(j == 0) currentNormal = normalVectors.at(faces.at(i)->vn1 - 1);
+				else if(j == 1) currentNormal = normalVectors.at(faces.at(i)->vn2 - 1);
+				else if(j == 2) currentNormal = normalVectors.at(faces.at(i)->vn3 - 1);
 
 				normalArray[currentVertexPointer * 2] = currentNormal->x;
 				normalArray[currentVertexPointer * 2 + 1] = currentNormal->y;

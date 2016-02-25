@@ -63,6 +63,8 @@ class BaseShader : public ShaderProgram
 	void loadTiling(F32 value1, F32 value2);
 	void loadFogSettings(F32 value1, F32 value2);
 	void loadLightSources(Light *lightSources[4]);
+
+	Vector3 *getLightDirection(Vector3 *lightRotation);
 };
 
 #endif

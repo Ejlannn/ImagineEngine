@@ -616,8 +616,6 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 		processedVertices.push_back(result);
 	}
 
-	std::vector<Light*> lightSourcesForEntity = LightProcessor::getLightSourcesForEntity(processedVertices);
-
 	if(entity->hasComponent("MaterialComponent"))
 	{
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
@@ -642,6 +640,8 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 		baseShader->loadTextured(false);
 		baseShader->loadTiling(1.0f, 1.0f);
 	}
+
+	std::vector<Light*> lightSourcesForEntity = LightProcessor::getLightSourcesForEntity(processedVertices);
 
 	Light *tempLightSources[4];
 

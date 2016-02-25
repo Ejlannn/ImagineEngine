@@ -1,5 +1,12 @@
 Alpha Versions:
 
+1.3.0
+-Fixed PointLight
+-Changed global function to method inside BaseShader class
+-Fixed model's normal vector to VAO loading process
+-Removed old "commented" code that wouldn't be used in the future
+-Some improvements and corrections in baseShader
+
 1.2.2
 -Now Scene class throws warnings via default Game's logger
 -Changed Entity class warnings content

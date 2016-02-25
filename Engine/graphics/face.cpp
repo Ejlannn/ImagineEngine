@@ -26,10 +26,12 @@ Face::Face(U64 v1, U64 v2, U64 v3)
 	this->vt2 = 0.0f;
 	this->vt3 = 0.0f;
 
-	this->vn = 0.0f;
+	this->vn1 = 0.0f;
+	this->vn2 = 0.0f;
+	this->vn3 = 0.0f;
 }
 
-Face::Face(U64 v1, U64 v2, U64 v3, U64 vn)
+Face::Face(U64 v1, U64 v2, U64 v3, U64 vn1, U64 vn2, U64 vn3)
 {
 	this->v1 = v1;
 	this->v2 = v2;
@@ -39,10 +41,12 @@ Face::Face(U64 v1, U64 v2, U64 v3, U64 vn)
 	this->vt2 = 0.0f;
 	this->vt3 = 0.0f;
 
-	this->vn = vn;
+	this->vn1 = vn1;
+	this->vn2 = vn2;
+	this->vn3 = vn3;
 }
 
-Face::Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3)
+Face::Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3, U64 vn1, U64 vn2, U64 vn3)
 {
 	this->v1 = v1;
 	this->v2 = v2;
@@ -52,20 +56,9 @@ Face::Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3)
 	this->vt2 = vt2;
 	this->vt3 = vt3;
 
-	this->vn = 0.0f;
-}
-
-Face::Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3, U64 vn)
-{
-	this->v1 = v1;
-	this->v2 = v2;
-	this->v3 = v3;
-
-	this->vt1 = vt1;
-	this->vt2 = vt2;
-	this->vt3 = vt3;
-
-	this->vn = vn;
+	this->vn1 = vn1;
+	this->vn2 = vn2;
+	this->vn3 = vn3;
 }
 
 Face::~Face() {}

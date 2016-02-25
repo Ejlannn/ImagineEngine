@@ -107,13 +107,15 @@ void main(void)
 				float lightDotProd = dot(unitNormal,unitLightVector);
 				float toSubst = max(lightDotProd,0.0);
 				
-				vec3 diffuse = toSubst * lightColor[i];
+				float toSubstInv = 1.0 - toSubst;
 				
-				//toAddFinal.x = toAddFinal.x - toSubstInv;
-				//toAddFinal.y = toAddFinal.y - toSubstInv;
-				//toAddFinal.z = toAddFinal.z - toSubstInv;
+				toSubstInv = clamp(toSubstInv,0.0,0.9);
 				
-				finalLight[i] = diffuse * vec3(0.0,0.0,0.0) + toAddFinal;
+				finalLight[i] = toAddFinal;
+				
+				//finalLight[i].x = finalLight[i].x - toSubstInv;
+				//finalLight[i].y = finalLight[i].y - toSubstInv;
+				//finalLight[i].z = finalLight[i].z - toSubstInv;
 				
 				finalLight[i].x = clamp(finalLight[i].x,0.0,0.9);
 				finalLight[i].y = clamp(finalLight[i].y,0.0,0.9);

@@ -22,15 +22,14 @@
 struct Face
 {
 	Face(U64 v1, U64 v2, U64 v3);
-	Face(U64 v1, U64 v2, U64 v3, U64 vn);
-	Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3);
-	Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3, U64 vn);
+	Face(U64 v1, U64 v2, U64 v3, U64 vn1, U64 vn2, U64 vn3);
+	Face(U64 v1, U64 v2, U64 v3, U64 vt1, U64 vt2, U64 vt3, U64 vn1, U64 vn2, U64 vn3);
 
 	~Face();
 
 	U64 v1, v2, v3;
 	U64 vt1, vt2, vt3;
-	U64 vn;
+	U64 vn1, vn2, vn3;
 };
 
 #endif

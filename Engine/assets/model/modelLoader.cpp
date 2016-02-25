@@ -83,19 +83,19 @@ ModelAsset *ModelLoader::loadOBJModel(FilePath *objFile)
 				if(lines[i]->find("//") != std::string::npos)
 				{
 					U64 v1, v2, v3;
-					U64 vn;
-					sscanf(lines[i]->c_str(), "f %ld//%ld %ld//%ld %ld//%ld", &v1, &vn, &v2, &vn, &v3, &vn);
+					U64 vn1, vn2, vn3;
+					sscanf(lines[i]->c_str(), "f %ld//%ld %ld//%ld %ld//%ld", &v1, &vn1, &v2, &vn2, &v3, &vn3);
 
-					modelAsset->faces.push_back(new Face(v1, v2, v3, vn));
+					modelAsset->faces.push_back(new Face(v1, v2, v3, vn1, vn2, vn3));
 				}
 				else
 				{
 					U64 v1, v2, v3;
-					U64 vn;
+					U64 vn1, vn2, vn3;
 					U64 vt1, vt2, vt3;
-					sscanf(lines[i]->c_str(), "f %ld/%ld/%ld %ld/%ld/%ld %ld/%ld/%ld", &v1, &vt1, &vn, &v2, &vt2, &vn, &v3, &vt3, &vn);
+					sscanf(lines[i]->c_str(), "f %ld/%ld/%ld %ld/%ld/%ld %ld/%ld/%ld", &v1, &vt1, &vn1, &v2, &vt2, &vn2, &v3, &vt3, &vn3);
 
-					modelAsset->faces.push_back(new Face(v1, v2, v3, vt1, vt2, vt3, vn));
+					modelAsset->faces.push_back(new Face(v1, v2, v3, vt1, vt2, vt3, vn1, vn2, vn3));
 				}
 			}
 		}

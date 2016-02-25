@@ -138,7 +138,7 @@ void BaseShader::loadFogSettings(F32 value1, F32 value2)
 	loadFloat(loc_gradient, value2);
 }
 
-Vector3 *getLightDirection(Vector3 *lightRotation)
+Vector3 *BaseShader::getLightDirection(Vector3 *lightRotation)
 {
 	Vector3 *lightDirection = new Vector3();
 
