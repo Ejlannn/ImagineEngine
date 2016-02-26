@@ -66,13 +66,20 @@ void SpriteLayer::stop()
 
 void SpriteLayer::update()
 {
+	if(textures.size() == 1)
+	{
+		currentTexturePointer = 0;
+		timer->reset();
+		return;
+	}
+
 	if(timer->getElapsedTime() >= interval)
 	{
 		U16 changes = timer->getElapsedTime() / interval;
 
 		if(changes == 1)
 		{
-			if(currentTexturePointer + 1 > textures.size()) currentTexturePointer = 0;
+			if(currentTexturePointer + 2 > textures.size()) currentTexturePointer = 0;
 			else currentTexturePointer++;
 		}
 		else

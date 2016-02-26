@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.5.1
+-Sprite class improvements and fixes
+
 1.5.0
 -Added Sprites
 -Fixed and improved Timer class
