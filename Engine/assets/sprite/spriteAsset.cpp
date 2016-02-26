@@ -86,7 +86,7 @@ void SpriteLayer::update()
 		{
 			for(U16 i = 0; i < changes; i++)
 			{
-				if(currentTexturePointer + 1 > textures.size()) currentTexturePointer = 0;
+				if(currentTexturePointer + 2 > textures.size()) currentTexturePointer = 0;
 				else currentTexturePointer++;
 			}
 		}
@@ -150,7 +150,9 @@ void SpriteAsset::setCurrentLayer(std::string layerName)
 	{
 		if(layers.at(i)->name == layerName)
 		{
+			if(currentLayer != nullptr) currentLayer->stop();
 			currentLayer = layers.at(i);
+			currentLayer->start();
 			return;
 		}
 	}
