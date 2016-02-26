@@ -17,6 +17,7 @@
 #ifndef _IE_MATERIAL_ASSET_H_
 #define _IE_MATERIAL_ASSET_H_
 
+#include "../sprite/spriteAsset.h"
 #include "../texture/textureAsset.h"
 #include "../../math/math.h"
 #include "../../platform/types.h"
@@ -29,6 +30,7 @@ public:
 	~MaterialAsset();
 
 	Color3 *mainColor;
+	SpriteAsset *sprite;
 	TextureAsset *texture;
 	S16 tilingX, tilingY;
 

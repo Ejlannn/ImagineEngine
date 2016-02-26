@@ -29,10 +29,10 @@ public:
 	void stop();
 	void reset();
 
-	U32 getElapsedTime();
+	U64 getElapsedTime();
 
 private:
-	U32 elapsedTime;
+	U64 elapsedTime;
 	U64 previousTime;
 };
 

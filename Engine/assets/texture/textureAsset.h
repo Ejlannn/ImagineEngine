@@ -22,11 +22,13 @@
 #include "../../platform/types.h"
 
 class GraphicsDevice;
+class SpriteLayer;
 class SDL_Surface;
 
 class TextureAsset
 {
 	friend class GraphicsDevice;
+	friend class SpriteLayer;
 
 public:
 	TextureAsset(FilePath *path);

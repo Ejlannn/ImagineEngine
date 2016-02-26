@@ -322,6 +322,16 @@ void Scene::update()
 				LightProcessor::addLightSource(lightComponent->light);
 			}
 		}
+
+		if(entities.at(i)->hasComponent("MaterialComponent"))
+		{
+			MaterialComponent *materialComponent = (MaterialComponent*) entities.at(i)->getComponent("MaterialComponent");
+
+			if(materialComponent->material != nullptr && materialComponent->material->sprite != nullptr && materialComponent->material->texture == nullptr)
+			{
+				if(materialComponent->material->sprite->currentLayer != nullptr) materialComponent->material->sprite->currentLayer->update();
+			}
+		}
 	}
 }
 
@@ -515,6 +525,16 @@ void Scene::updateChildren(std::vector<Entity*> children)
 			LightComponent *lightComponent = (LightComponent*) children.at(i)->getComponent("LightComponent");
 
 			if(lightComponent->light != nullptr) LightProcessor::addLightSource(lightComponent->light);
+		}
+
+		if(children.at(i)->hasComponent("MaterialComponent"))
+		{
+			MaterialComponent *materialComponent = (MaterialComponent*) children.at(i)->getComponent("MaterialComponent");
+
+			if(materialComponent->material != nullptr && materialComponent->material->sprite != nullptr && materialComponent->material->texture == nullptr)
+			{
+				if(materialComponent->material->sprite->currentLayer != nullptr) materialComponent->material->sprite->currentLayer->update();
+			}
 		}
 
 		if(children.at(i)->children.size() > 0) updateChildren(children.at(i)->children);

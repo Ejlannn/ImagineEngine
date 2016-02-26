@@ -19,6 +19,7 @@
 MaterialAsset::MaterialAsset()
 {
 	mainColor = getDefaultMainColor();
+	sprite = nullptr;
 	texture = nullptr;
 	tilingX = 1;
 	tilingY = 1;

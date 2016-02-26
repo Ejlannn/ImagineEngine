@@ -1,5 +1,10 @@
 Alpha Versions:
 
+1.5.0
+-Added Sprites
+-Fixed and improved Timer class
+-Some less important corrections and improvements
+
 1.4.1
 -Changed PointLight class and SpotLight class default values (In constructor)
 

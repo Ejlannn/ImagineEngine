@@ -20,6 +20,7 @@
 #include "material/materialAsset.h"
 #include "model/modelLoader.h"
 #include "skybox/skyboxAsset.h"
+#include "sprite/spriteAsset.h"
 #include "texture/textureAsset.h"
 
 #endif

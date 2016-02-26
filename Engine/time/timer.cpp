@@ -35,18 +35,18 @@ void Timer::start()
 void Timer::stop()
 {
 	previousTime = 0;
-	elapsedTime = (SDL_GetTicks() - previousTime) / 1000;
+	elapsedTime = (SDL_GetTicks() - previousTime);
 }
 
 void Timer::reset()
 {
 	elapsedTime = 0;
-	previousTime = 0;
+	previousTime = SDL_GetTicks();
 }
 
-U32 Timer::getElapsedTime()
+U64 Timer::getElapsedTime()
 {
 	if(previousTime == 0) return elapsedTime;
 
-	return (U32) (SDL_GetTicks() - previousTime) / 1000;
+	return (U64) (SDL_GetTicks() - previousTime);
 }

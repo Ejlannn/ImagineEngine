@@ -296,6 +296,9 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
 
 		if(materialComponent->material != nullptr && materialComponent->material->texture != nullptr) textured = true;
+		else if(materialComponent->material != nullptr && materialComponent->material->sprite != nullptr
+				&& materialComponent->material->sprite->currentLayer != nullptr && materialComponent->material->sprite->currentLayer->textures.size() != 0)
+			textured = true;
 	}
 
 	if(component->cullFaces)
@@ -317,17 +320,20 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 	{
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
 
-		if(materialComponent->material->texture->textureID == 0) glGenTextures(1, &materialComponent->material->texture->textureID);
+		TextureAsset *texture = nullptr;
 
-		glBindTexture(GL_TEXTURE_2D, materialComponent->material->texture->textureID);
+		if(materialComponent->material->texture != nullptr) texture = materialComponent->material->texture;
+		else if(materialComponent->material->sprite != nullptr) texture = materialComponent->material->sprite->currentLayer->textures.at(materialComponent->material->sprite->currentLayer->currentTexturePointer);
 
-		if(!materialComponent->material->texture->surface) Error::throwError((char*) "Cannot load texture file!");
+		if(texture->textureID == 0) glGenTextures(1, &texture->textureID);
+
+		glBindTexture(GL_TEXTURE_2D, texture->textureID);
 
 		S32 colorMode = GL_RGB;
 
-		if(materialComponent->material->texture->surface->format->BytesPerPixel == 4) colorMode = GL_RGBA;
+		if(texture->surface->format->BytesPerPixel == 4) colorMode = GL_RGBA;
 
-		glTexImage2D(GL_TEXTURE_2D, 0, colorMode, materialComponent->material->texture->surface->w, materialComponent->material->texture->surface->h, 0, colorMode, GL_UNSIGNED_BYTE, materialComponent->material->texture->surface->pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, colorMode, texture->surface->w, texture->surface->h, 0, colorMode, GL_UNSIGNED_BYTE, texture->surface->pixels);
 
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -619,6 +625,12 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 		else baseShader->loadColor(MaterialAsset::getDefaultMainColor());
 
 		if(materialComponent->material != nullptr && materialComponent->material->texture != nullptr)
+		{
+			baseShader->loadTextured(true);
+			baseShader->loadTiling(materialComponent->material->tilingX, materialComponent->material->tilingY);
+		}
+		else if(materialComponent->material != nullptr && materialComponent->material->sprite != nullptr
+				&& materialComponent->material->sprite->currentLayer != nullptr && materialComponent->material->sprite->currentLayer->textures.size() != 0)
 		{
 			baseShader->loadTextured(true);
 			baseShader->loadTiling(materialComponent->material->tilingX, materialComponent->material->tilingY);
