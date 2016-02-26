@@ -97,7 +97,14 @@ void ExampleGame::initializeGame()
 	catEntity->addComponent(meshComponent2);
 
 	MaterialComponent *materialComponent = new MaterialComponent();
-	materialComponent->material->texture = new TextureAsset(FilePath::getFileFromGamePath("resources\\texture\\cat.png")); //Loads texture for cat
+	//materialComponent->material->texture = new TextureAsset(FilePath::getFileFromGamePath("resources\\texture\\cat.png")); //Loads texture for cat
+	materialComponent->material->sprite = new SpriteAsset();
+
+	SpriteLayer *layer1 = materialComponent->material->sprite->createLayer("testLayer1");
+	layer1->addTexture(new TextureAsset(FilePath::getFileFromGamePath("resources\\texture\\cat.png")));
+	layer1->addTexture(new TextureAsset(FilePath::getFileFromGamePath("resources\\texture\\cat2.png")));
+	materialComponent->material->sprite->setCurrentLayer("testLayer1");
+
 	catEntity->addComponent(materialComponent);
 
 	TransformComponent *catTransform = (TransformComponent*) catEntity->getComponent("TransformComponent");
