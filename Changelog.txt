@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.6.1
+-Added setCursorVisibility method to MouseInput class
+
 1.6.0
 -New (Buggy) lightning system
 

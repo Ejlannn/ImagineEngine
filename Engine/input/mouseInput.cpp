@@ -81,3 +81,9 @@ void MouseInput::setRelativeMouseMode(bool state)
 	if(state == true) SDL_SetRelativeMouseMode(SDL_TRUE);
 	else SDL_SetRelativeMouseMode(SDL_FALSE);
 }
+
+void MouseInput::setCursorVisibility(bool visibility)
+{
+	if(visibility == true) SDL_ShowCursor(1);
+	else SDL_ShowCursor(0);
+}

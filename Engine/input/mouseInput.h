@@ -45,6 +45,7 @@ public:
 	static bool isReleased(MouseButton button);
 
 	static void setRelativeMouseMode(bool state);
+	static void setCursorVisibility(bool visibility);
 
 private:
 	static void init();
