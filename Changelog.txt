@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.5.3
+-Removed console messages on init
+
 1.5.2
 -Added missing start method to setCurrentLayer method inside Sprite class
 

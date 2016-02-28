@@ -68,14 +68,6 @@ S16 Game::initialize()
 
 	if(currentScene != nullptr) currentScene->initialize();
 
-	//Console::sendMessage("Test message");
-
-	Console::sendMessage("*Imagine Engine [Pre-alpha 1.0.8]*");
-	Console::sendMessage("scene examplescn1");
-	Console::sendMessage("Loading examplescn1...");
-	Console::sendMessage("examplescn1 loaded!");
-	Console::sendMessage("campos 0.0 0.0 0.0");
-
 	return 0; //Returns 0 if everything is OK
 }
 
