@@ -83,6 +83,11 @@ void BaseShader::getAllUniformLocations()
 	loc_lightDir[1] = getUniformLocation((char*) "lightDir[1]");
 	loc_lightDir[2] = getUniformLocation((char*) "lightDir[2]");
 	loc_lightDir[3] = getUniformLocation((char*) "lightDir[3]");
+
+	loc_lightSpotAngle[0] = getUniformLocation((char*) "lightSpotAngle[0]");
+	loc_lightSpotAngle[1] = getUniformLocation((char*) "lightSpotAngle[1]");
+	loc_lightSpotAngle[2] = getUniformLocation((char*) "lightSpotAngle[2]");
+	loc_lightSpotAngle[3] = getUniformLocation((char*) "lightSpotAngle[3]");
 }
 
 void BaseShader::loadColor(Color3 *value)
@@ -173,9 +178,6 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 
 		F32 intens = lightSources[i]->intensity;
 
-		if(intens < 0.0f) intens = 0.0f;
-		if(intens > 15.0f) intens = 15.0f;
-
 		loadFloat(loc_lightIntensity[i], intens);
 
 		TransformComponent *transformComponent = (TransformComponent*) lightSources[i]->entity->getComponent("TransformComponent");
@@ -205,6 +207,7 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 			TransformComponent *transformComponent = (TransformComponent*) spotLight->entity->getComponent("TransformComponent");
 
 			loadVector3(loc_lightDir[i], getLightDirection(transformComponent->rotation));
+			loadFloat(loc_lightSpotAngle[i], spotLight->spotAngle);
 		}
 		else
 		{

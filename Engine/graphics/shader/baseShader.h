@@ -49,6 +49,7 @@ class BaseShader : public ShaderProgram
 	U32 loc_lightPosition[4];
 	U32 loc_lightRange[4];
 	U32 loc_lightDir[4];
+	U32 loc_lightSpotAngle[4];
 
 	virtual void bindAttributes();
 	virtual void getAllUniformLocations();
