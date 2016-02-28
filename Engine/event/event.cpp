@@ -117,6 +117,8 @@ void Event::update()
 				if(keys[KeyboardKey::KEY_LSHIFT] || keys[KeyboardKey::KEY_RSHIFT]) big = true;
 
 				Console::onConsoleKeyDown(KeyboardKey(event.key.keysym.scancode), big);
+
+				delete keys;
 			}
 			break;
 		}

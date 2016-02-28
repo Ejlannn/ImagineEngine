@@ -45,7 +45,7 @@ private:
 	static void render(Scene *scene);
 	static void renderEntity(Entity *entity, MeshRendererComponent *mesh);
 	static void renderSkybox(SkyboxAsset *skybox);
-	static void renderUIElement(UIElement *element);
+	static void renderUIElement(UIElement element);
 	static void renderConsole();
 	static void startBaseShader(Entity *entity, Scene *scene);
 	static void stopBaseShader();

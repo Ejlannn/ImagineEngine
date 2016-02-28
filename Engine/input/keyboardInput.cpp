@@ -23,6 +23,7 @@ static const U8 *keys; //Handles keyboard keys state
 
 void KeyboardInput::update()
 {
+	delete keys;
 	keys = SDL_GetKeyboardState(nullptr);
 }
 

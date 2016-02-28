@@ -17,6 +17,7 @@
 #ifndef _IE_TEXTURE_H_
 #define _IE_TEXTURE_H_
 
+#include "uiElementsHandler.h"
 #include "../math/math.h"
 #include "../platform/file.h"
 
@@ -33,7 +34,7 @@ public:
 private:
 	FilePath *texturePath;
 	Vector2 *position;
-	UIElement *element;
+	UIElement element;
 
 	SDL_Surface *getTextureSurface(FilePath *texturePath);
 };

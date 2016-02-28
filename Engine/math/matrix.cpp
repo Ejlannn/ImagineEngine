@@ -63,27 +63,27 @@ void Matrix4::translate(Vector3 *translation)
 	m33 += m03 * translation->x + m13 * translation->y + m23 * translation->z;
 }
 
-void Matrix4::rotate(Vector3 *rotation, F32 angle /* ANGLE IN RADIANS */)
+void Matrix4::rotate(Vector3 rotation, F32 angle)
 {
-	F32 c = cosf(angle); //COSINUS
-	F32 s = sinf(angle); //SINUS
+	F32 c = cosf(angle);
+	F32 s = sinf(angle);
 	F32 oneminusc = 1.0f - c;
-	F32 xy = rotation->x * rotation->y;
-	F32 yz = rotation->y * rotation->z;
-	F32 xz = rotation->x * rotation->z;
-	F32 xs = rotation->x * s;
-	F32 ys = rotation->y * s;
-	F32 zs = rotation->z * s;
+	F32 xy = rotation.x * rotation.y;
+	F32 yz = rotation.y * rotation.z;
+	F32 xz = rotation.x * rotation.z;
+	F32 xs = rotation.x * s;
+	F32 ys = rotation.y * s;
+	F32 zs = rotation.z * s;
 
-	F32 f00 = rotation->x * rotation->x * oneminusc + c;
+	F32 f00 = rotation.x * rotation.x * oneminusc + c;
 	F32 f01 = xy * oneminusc + zs;
 	F32 f02 = xz * oneminusc - ys;
 	F32 f10 = xy * oneminusc-zs;
-	F32 f11 = rotation->y * rotation->y * oneminusc + c;
+	F32 f11 = rotation.y * rotation.y * oneminusc + c;
 	F32 f12 = yz*oneminusc+xs;
 	F32 f20 = xz*oneminusc+ys;
 	F32 f21 = yz*oneminusc-xs;
-	F32 f22 = rotation->z * rotation->z * oneminusc + c;
+	F32 f22 = rotation.z * rotation.z * oneminusc + c;
 
 	F32 t00 = m00 * f00 + m10 * f01 + m20 * f02;
 	F32 t01 = m01 * f00 + m11 * f01 + m21 * f02;

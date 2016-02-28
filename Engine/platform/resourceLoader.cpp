@@ -35,6 +35,9 @@ TTF_Font *ResourceLoader::loadFont(FilePath *fontFile, U16 fontSize)
 		char *message = &msgTemp[0u];
 
 		Error::throwError(message);
+
+		delete line1;
+		delete message;
 	}
 
 	fontFile->reopen();
@@ -59,6 +62,9 @@ SDL_Surface *ResourceLoader::loadImage(FilePath *imageFile)
 		char *message = &msgTemp[0u];
 
 		Error::throwError(message);
+
+		delete line1;
+		delete message;
 	}
 
 	imageFile->reopen();
@@ -83,6 +89,9 @@ Mix_Music *ResourceLoader::loadMusic(FilePath *musicFile)
 		char *message = &msgTemp[0u];
 
 		Error::throwError(message);
+
+		delete line1;
+		delete message;
 	}
 
 	musicFile->reopen();
@@ -107,6 +116,9 @@ Mix_Chunk *ResourceLoader::loadSound(FilePath *soundFile)
 		char *message = &msgTemp[0u];
 
 		Error::throwError(message);
+
+		delete line1;
+		delete message;
 	}
 
 	soundFile->reopen();

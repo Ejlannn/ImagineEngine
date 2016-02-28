@@ -20,11 +20,7 @@
 #include <fstream>
 #include <string>
 
-#if defined(WIN32) || defined(_WIN64)
 #define PATH_SEPARATOR "\\"
-#else
-#define PATH_SEPARATOR "/"
-#endif
 
 class FilePath
 {

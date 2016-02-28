@@ -16,8 +16,18 @@
 
 #include "audio.h"
 
+#include <vector>
 #include "../error/error.h"
 #include "../platform/resourceLoader.h"
+
+struct UnusedChunks
+{
+	U16 channel;
+	Mix_Chunk *soundEffect;
+};
+
+static std::vector<UnusedChunks> unusedChunks;
+static Mix_Music *musicToClear = nullptr;
 
 void Audio::playMusic(FilePath *musicFile)
 {
@@ -27,6 +37,12 @@ void Audio::playMusic(FilePath *musicFile)
 void Audio::playMusic(FilePath *musicFile, U16 loops)
 {
 	if(Mix_PlayingMusic() || Mix_PausedMusic()) return;
+
+	if(musicToClear != nullptr)
+	{
+		Mix_FreeMusic(musicToClear);
+		musicToClear = nullptr;
+	}
 
 	Mix_Music *music = ResourceLoader::loadMusic(musicFile);
 
@@ -72,6 +88,15 @@ void Audio::playSoundEffect(FilePath *soundFile, U16 channel)
 void Audio::playSoundEffect(FilePath *soundFile, U16 channel, U16 loops)
 {
 	if(Mix_Playing(channel)) return;
+
+	for(U16 i = 0; i < unusedChunks.size(); i++)
+	{
+		if(unusedChunks.at(i).channel == channel)
+		{
+			Mix_FreeChunk(unusedChunks.at(i).soundEffect);
+			unusedChunks.erase(unusedChunks.begin() + i);
+		}
+	}
 
 	Mix_Chunk *soundEffect = ResourceLoader::loadSound(soundFile);
 

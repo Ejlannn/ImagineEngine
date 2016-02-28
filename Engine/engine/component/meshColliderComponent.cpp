@@ -20,16 +20,15 @@ MeshColliderComponent::MeshColliderComponent() : ComponentBase("MeshColliderComp
 {
 	staticCollider = true;
 
-	for(U16 i = 0; i < 8; i++)
-	{
-		obb[i] = nullptr;
-	}
+	for(U16 i = 0; i < 8; i++) obb[i] = nullptr;
 }
 
 MeshColliderComponent::~MeshColliderComponent() {}
 
 void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
 {
+	for(U16 i = 0; i < 8; i++) if(obb[i] != nullptr) delete obb[i];
+
 	F32 minX;
 	F32 minY;
 	F32 minZ;
@@ -58,6 +57,8 @@ void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
 		else if(currentVertex->y > maxY) maxY = currentVertex->y;
 		else if(currentVertex->z < minZ) minZ = currentVertex->z;
 		else if(currentVertex->z > maxZ) maxZ = currentVertex->z;
+
+		delete currentVertex;
 	}
 
 	obb[0] = new Vector3(minX, maxY, maxZ);
@@ -84,12 +85,23 @@ bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], std
 		if((currentOBBVertex->x >= min->x && currentOBBVertex->x <= max->x) && (currentOBBVertex->y >= min->y && currentOBBVertex->y <= max->y) && (currentOBBVertex->z >= min->z && currentOBBVertex->z <= max->z))
 		{
 			obbResult = true;
+
+			delete currentOBBVertex;
+			delete min;
+			delete max;
+
 			break;
 		}
+
+		delete currentOBBVertex;
+		delete min;
+		delete max;
 	}
 
 	if(obbResult == false) return false;
 	else return true;
+
+	/*
 
 	U32 obbSiz = 0;
 
@@ -97,6 +109,9 @@ bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], std
 	{
 		Vector3 *min = obb2[6];
 		Vector3 *max = obb2[1];
+
+		delete min;
+		delete max;
 	}
 
 	if(obbSiz == 0)
@@ -132,11 +147,27 @@ bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], std
 
 				if((currentVertex->x >= min->x && currentVertex->x <= max->x) && (currentVertex->y >= min->y && currentVertex->y <= max->y) && (currentVertex->z >= min->z && currentVertex->z <= max->z))
 				{
+					delete currentVertex;
+					delete min;
+					delete max;
+
 					return true;
 				}
+
+				delete currentVertex;
+				delete min;
+				delete max;
 			}
 		}
 	}
+
+	for(U16 i = 0; i < obbSiz; i++)
+	{
+		for(U16 j = 0; j < 8; j++)
+		{
+			delete obbs[i][j];
+		}
+	}*/
 
 	return false;
 }

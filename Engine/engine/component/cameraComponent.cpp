@@ -85,14 +85,16 @@ Matrix4 *CameraComponent::createViewMatrix(CameraComponent *camera)
 	Matrix4 *viewMatrix = new Matrix4();
 	viewMatrix->setIdentity();
 
-	viewMatrix->rotate(new Vector3(1.0f, 0.0f, 0.0f), MathUtil::degToRad(camera->pitch));
-	viewMatrix->rotate(new Vector3(0.0f, 1.0f, 0.0f), MathUtil::degToRad(camera->yaw));
+	viewMatrix->rotate(Vector3(1.0f, 0.0f, 0.0f), MathUtil::degToRad(camera->pitch));
+	viewMatrix->rotate(Vector3(0.0f, 1.0f, 0.0f), MathUtil::degToRad(camera->yaw));
 
 	TransformComponent *transformComponent = (TransformComponent*) camera->entity->getComponent("TransformComponent");
 
 	Vector3 *negativeCam = new Vector3(-transformComponent->position->x, -transformComponent->position->y, -transformComponent->position->z);
 
 	viewMatrix->translate(negativeCam);
+
+	delete negativeCam;
 
 	return viewMatrix;
 }

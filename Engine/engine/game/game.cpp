@@ -33,7 +33,7 @@
 
 static bool			running = false;
 static Scene		*currentScene = nullptr;
-static Logger *logger = nullptr;
+static Logger 		*logger = nullptr;
 
 Game::~Game()
 {

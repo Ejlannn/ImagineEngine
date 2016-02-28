@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.7.0
+-Fixed a lot of memory leaks
+-Fixes, corrections, improvements
+
 1.6.2
 -Added date and time to logs (Logger class)
 

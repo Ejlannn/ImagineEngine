@@ -175,6 +175,11 @@ void Scene::initialize()
 				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
 
 				if(meshColComponent->obb[0] == nullptr) meshColComponent->createOOB(processedVertices);
+
+				for(U64 i = 0; i < processedVertices.size(); i++)
+				{
+					delete processedVertices.at(i);
+				}
 			}
 		}
 
@@ -218,8 +223,9 @@ void Scene::update()
 								meshRendererComponent->model->vertices.at(i)->y,
 								meshRendererComponent->model->vertices.at(i)->z, 1.0);
 
-
 						Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+
+						delete vertex;
 
 						processedVertices.push_back(result);
 					}
@@ -227,6 +233,11 @@ void Scene::update()
 					MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entities.at(i)->getComponent("MeshColliderComponent");
 
 					meshColComponent->createOOB(processedVertices);
+
+					for(U64 i = 0; i < processedVertices.size(); i++)
+					{
+						delete processedVertices.at(i);
+					}
 				}
 			}
 		}
@@ -260,6 +271,7 @@ void Scene::update()
 									meshRendererComponent1->model->vertices.at(k)->y,
 									meshRendererComponent1->model->vertices.at(k)->z, 1.0);
 
+							delete vertex;
 
 							Vector4 *result = Vector4::transform(vertex, transformationMatrix1);
 
@@ -274,6 +286,7 @@ void Scene::update()
 									meshRendererComponent2->model->vertices.at(k)->y,
 									meshRendererComponent2->model->vertices.at(k)->z, 1.0);
 
+							delete vertex;
 
 							Vector4 *result = Vector4::transform(vertex, transformationMatrix2);
 
@@ -289,9 +302,22 @@ void Scene::update()
 							{
 								Collision *collision = new Collision(entities.at(j));
 								scriptComponent->scripts.at(m)->onCollision(collision);
+								delete collision;
 							}
 						}
 
+						delete transformationMatrix1;
+						delete transformationMatrix2;
+
+						for(U64 i = 0; i < processedVertices1.size(); i++)
+						{
+							delete processedVertices1.at(i);
+						}
+
+						for(U64 i = 0; i < processedVertices2.size(); i++)
+						{
+							delete processedVertices2.at(i);
+						}
 					}
 				}
 			}
@@ -378,6 +404,7 @@ void Scene::initializeChildren(std::vector<Entity*> children)
 							meshRendererComponent->model->vertices.at(i)->y,
 							meshRendererComponent->model->vertices.at(i)->z, 1.0);
 
+					delete vertex;
 
 					Vector4 *result = Vector4::transform(vertex, transformationMatrix);
 
@@ -387,6 +414,11 @@ void Scene::initializeChildren(std::vector<Entity*> children)
 				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
 
 				if(meshColComponent->obb[0] == nullptr) meshColComponent->createOOB(processedVertices);
+
+				for(U64 i = 0; i < processedVertices.size(); i++)
+				{
+					delete processedVertices.at(i);
+				}
 			}
 		}
 
@@ -430,6 +462,7 @@ void Scene::updateChildren(std::vector<Entity*> children)
 								meshRendererComponent->model->vertices.at(i)->y,
 								meshRendererComponent->model->vertices.at(i)->z, 1.0);
 
+						delete vertex;
 
 						Vector4 *result = Vector4::transform(vertex, transformationMatrix);
 
@@ -439,6 +472,11 @@ void Scene::updateChildren(std::vector<Entity*> children)
 					MeshColliderComponent *meshColComponent = (MeshColliderComponent*) children.at(i)->getComponent("MeshColliderComponent");
 
 					meshColComponent->createOOB(processedVertices);
+
+					for(U64 i = 0; i < processedVertices.size(); i++)
+					{
+						delete processedVertices.at(i);
+					}
 				}
 			}
 		}
@@ -473,6 +511,7 @@ void Scene::updateChildren(std::vector<Entity*> children)
 									meshRendererComponent1->model->vertices.at(k)->y,
 									meshRendererComponent1->model->vertices.at(k)->z, 1.0);
 
+							delete vertex;
 
 							Vector4 *result = Vector4::transform(vertex, transformationMatrix1);
 
@@ -487,6 +526,7 @@ void Scene::updateChildren(std::vector<Entity*> children)
 									meshRendererComponent2->model->vertices.at(k)->y,
 									meshRendererComponent2->model->vertices.at(k)->z, 1.0);
 
+							delete vertex;
 
 							Vector4 *result = Vector4::transform(vertex, transformationMatrix2);
 
@@ -502,9 +542,22 @@ void Scene::updateChildren(std::vector<Entity*> children)
 							{
 								Collision *collision = new Collision(entities.at(j));
 								scriptComponent->scripts.at(m)->onCollision(collision);
+								delete collision;
 							}
 						}
 
+						delete transformationMatrix1;
+						delete transformationMatrix2;
+
+						for(U64 i = 0; i < processedVertices1.size(); i++)
+						{
+							delete processedVertices1.at(i);
+						}
+
+						for(U64 i = 0; i < processedVertices2.size(); i++)
+						{
+							delete processedVertices2.at(i);
+						}
 					}
 				}
 			}

@@ -40,7 +40,7 @@ struct Matrix4
 	void setIdentity();
 
 	void translate(Vector3 *translation);
-	void rotate(Vector3 *rotation, F32 angle);
+	void rotate(Vector3 rotation, F32 angle);
 	void scale(Vector3 *scale);
 };
 

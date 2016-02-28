@@ -17,6 +17,7 @@
 #ifndef _IE_TEXT_H_
 #define _IE_TEXT_H_
 
+#include "uiElementsHandler.h"
 #include "../math/math.h"
 #include "../platform/file.h"
 
@@ -45,7 +46,7 @@ private:
 	Vector2 *position;
 	U16 size;
 	Color3 *color;
-	UIElement *element;
+	UIElement element;
 
 	static SDL_Surface *getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 *color);
 

@@ -36,7 +36,9 @@ static Matrix4 *projectionMatrix = nullptr;
 static Matrix4 *viewMatrix = nullptr;
 static Matrix4 *projectionMatrix2DOrtho = nullptr;
 
-static std::vector<UIElement*> elementsToRender;
+static std::vector<UIElement> elementsToRender;
+
+static FilePath *fontPath = FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "font" + std::string(PATH_SEPARATOR) + "Consolas.ttf");
 
 /* Shaders */
 static BaseShader		*baseShader = nullptr;
@@ -108,6 +110,11 @@ void prepare3D()
 
 void GraphicsDevice::init()
 {
+	if(baseShader != nullptr) delete baseShader;
+	if(skyboxShader != nullptr) delete skyboxShader;
+	if(uiShader != nullptr) delete uiShader;
+	if(uinShader != nullptr) delete uinShader;
+
 	baseShader = getBaseShader();
 	skyboxShader = getSkyboxShader();
 	uiShader = getUIShader();
@@ -137,6 +144,10 @@ void GraphicsDevice::render(Scene *scene)
 	if(scene == nullptr) return;
 
 	if(scene->camera == nullptr || scene->camera->entity == nullptr) return;
+
+	delete projectionMatrix;
+	delete projectionMatrix2DOrtho;
+	delete viewMatrix;
 
 	projectionMatrix = CameraComponent::createProjectionMatrix(scene->camera);
 	projectionMatrix2DOrtho = CameraComponent::create2DOrthoProjectionMatrix();
@@ -226,7 +237,7 @@ void GraphicsDevice::render(Scene *scene)
 
 			startUIShader();
 
-			renderUIElement(new UIElement(textsToRender.at(i)->pos, fontSurface));
+			renderUIElement(UIElement(textsToRender.at(i)->pos, fontSurface));
 
 			stopUIShader();
 
@@ -244,8 +255,6 @@ void GraphicsDevice::render(Scene *scene)
 
 		SDL_Color color = { 255, 255, 255 };
 
-		FilePath *fontPath = FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "font" + std::string(PATH_SEPARATOR) + "Consolas.ttf");
-
 		TTF_Font *font = ResourceLoader::loadFont(fontPath, 12);
 
 		std::vector<std::string> consoleLines = Console::getLines();
@@ -258,7 +267,7 @@ void GraphicsDevice::render(Scene *scene)
 
 			startUIShader();
 
-			renderUIElement(new UIElement(new Vector2(3.0f, (F32) (14 * (consoleLines.size() - 1 - i) + 3)), fontSurface));
+			renderUIElement(UIElement(new Vector2(3.0f, (F32) (14 * (consoleLines.size() - 1 - i) + 3)), fontSurface));
 
 			stopUIShader();
 
@@ -273,7 +282,7 @@ void GraphicsDevice::render(Scene *scene)
 
 			startUIShader();
 
-			renderUIElement(new UIElement(new Vector2(3.0f, 328.0f), fontSurface));
+			renderUIElement(UIElement(new Vector2(3.0f, 328.0f), fontSurface));
 
 			stopUIShader();
 
@@ -281,7 +290,6 @@ void GraphicsDevice::render(Scene *scene)
 
 			TTF_CloseFont(font);
 		}
-
 	}
 
 	Window::update();
@@ -402,7 +410,7 @@ void GraphicsDevice::renderSkybox(SkyboxAsset *skybox)
 	glDisable(GL_TEXTURE_2D);
 }
 
-void GraphicsDevice::renderUIElement(UIElement *element)
+void GraphicsDevice::renderUIElement(UIElement element)
 {
 	U32 texture;
 	glGenTextures(1, &texture);
@@ -416,14 +424,14 @@ void GraphicsDevice::renderUIElement(UIElement *element)
 
 	std::vector<F32> positions;
 
-	positions.push_back(element->position->x);
-	positions.push_back(element->position->y);
-	positions.push_back(element->position->x + element->surface->w);
-	positions.push_back(element->position->y);
-	positions.push_back(element->position->x + element->surface->w);
-	positions.push_back(element->position->y + element->surface->h);
-	positions.push_back(element->position->x);
-	positions.push_back(element->position->y + element->surface->h);
+	positions.push_back(element.position->x);
+	positions.push_back(element.position->y);
+	positions.push_back(element.position->x + element.surface->w);
+	positions.push_back(element.position->y);
+	positions.push_back(element.position->x + element.surface->w);
+	positions.push_back(element.position->y + element.surface->h);
+	positions.push_back(element.position->x);
+	positions.push_back(element.position->y + element.surface->h);
 
 	std::vector<F32> textureCoords;
 
@@ -443,7 +451,7 @@ void GraphicsDevice::renderUIElement(UIElement *element)
 
 	GLenum textureFormat;
 
-	switch (element->surface->format->BytesPerPixel)
+	switch (element.surface->format->BytesPerPixel)
 	{
 	case 4:
 		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
@@ -461,7 +469,7 @@ void GraphicsDevice::renderUIElement(UIElement *element)
 
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, element->surface->w, element->surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, element->surface->pixels);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, element->surface->format->BytesPerPixel, element->surface->w, element->surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, element->surface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, element.surface->format->BytesPerPixel, element.surface->w, element.surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, element.surface->pixels);
 
 	glBindVertexArray(vaoID);
 	glEnableVertexAttribArray(0);
@@ -578,9 +586,15 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 {
 	baseShader->start();
 
+	Matrix4 *transformationMatrix;
+
 	TransformComponent *transformComponent;
 
-	if(entity->parent == nullptr) transformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
+	if(entity->parent == nullptr)
+	{
+		transformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
+		transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+	}
 	else
 	{
 		TransformComponent *childTransformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
@@ -597,9 +611,14 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 				(1.0f - parentTransformComponent->scale->z) + childTransformComponent->scale->z);
 
 		transformComponent = new TransformComponent(finalPos, finalRotation, finalScale);
-	}
 
-	Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+		transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
+
+		delete transformComponent;
+		delete finalPos;
+		delete finalRotation;
+		delete finalScale;
+	}
 
 	MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) entity->getComponent("MeshRendererComponent");
 
@@ -615,6 +634,8 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 		Vector4 *result = Vector4::transform(vertex, transformationMatrix);
 
 		processedVertices.push_back(result);
+
+		delete vertex;
 	}
 
 	if(entity->hasComponent("MaterialComponent"))
@@ -661,6 +682,12 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 	baseShader->loadTransformationMatrix(transformationMatrix);
 	baseShader->loadAmbientColor(scene->ambientLightColor);
 
+	delete transformationMatrix;
+
+	for(U64 i = 0; i < processedVertices.size(); i++)
+	{
+		delete processedVertices.at(i);
+	}
 }
 
 void GraphicsDevice::stopBaseShader()
@@ -679,6 +706,8 @@ void GraphicsDevice::startSkyboxShader(Scene *scene)
 
 	skyboxShader->loadProjectionMatrix(projectionMatrix);
 	skyboxShader->loadViewMatrix(newViewMatrix);
+
+	delete newViewMatrix;
 }
 
 void GraphicsDevice::stopSkyboxShader()

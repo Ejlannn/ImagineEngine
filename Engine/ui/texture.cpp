@@ -40,7 +40,8 @@ UITexture::UITexture(FilePath *texturePath, Vector2 *position)
 
 	SDL_Surface *surface = getTextureSurface(texturePath);
 
-	element = new UIElement(position, surface);
+	element.position = position;
+	element.surface = surface;
 
 	UIElementsHandler::addUIElement(element);
 }
@@ -50,5 +51,5 @@ UITexture::~UITexture()
 {
 	UIElementsHandler::removeUIElement(element);
 
-	SDL_FreeSurface(element->surface);
+	SDL_FreeSurface(element.surface);
 }

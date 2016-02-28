@@ -32,6 +32,9 @@ FilePath::FilePath(const std::string &path)
 		char *message = &msgTemp[0u];
 
 		Error::throwError(message);
+
+		delete line1;
+		delete message;
 	}
 	else
 	{
@@ -59,6 +62,8 @@ FilePath *FilePath::getFileFromGamePath(const std::string &file)
 
 	fullPath += exePath;
 	fullPath += file;
+
+	delete exePath;
 
 	return new FilePath(fullPath.c_str());
 }

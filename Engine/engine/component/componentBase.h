@@ -32,6 +32,7 @@ public:
 	std::string getName();
 
 	Entity *getEntity();
+
 protected:
 	ComponentBase(const std::string name);
 

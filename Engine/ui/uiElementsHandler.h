@@ -36,24 +36,16 @@ class UIElement
 	friend class GraphicsDevice;
 
 private:
-	UIElement(Vector2 *pos, SDL_Surface *surf)
-	{
-		position = pos;
-		surface = surf;
-		//type = typ;
-	}
+	UIElement();
+	UIElement(Vector2 *position, SDL_Surface *surface);
 
-	~UIElement()
-	{
-		delete &position;
+public:
+	~UIElement();
 
-		SDL_FreeSurface(surface);
-
-		delete &surface;
-	}
-
+private:
 	Vector2 	*position;
 	SDL_Surface *surface;
+	U64 elementID;
 	//std::string type;
 };
 
@@ -64,10 +56,10 @@ class UIElementsHandler
 	friend class GraphicsDevice;
 
 private:
-	static void addUIElement(UIElement *element);
-	static void removeUIElement(UIElement *element);
+	static void addUIElement(UIElement element);
+	static void removeUIElement(UIElement element);
 
-	static std::vector<UIElement*> getElements();
+	static std::vector<UIElement> getElements();
 };
 
 #endif

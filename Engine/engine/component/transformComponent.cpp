@@ -50,9 +50,9 @@ Matrix4 *TransformComponent::createTransformationMatrix(Vector3 *translation, Ve
 	transformationMatrix->setIdentity();
 
 	transformationMatrix->translate(translation);
-	transformationMatrix->rotate(new Vector3(1.0f, 0.0f, 0.0f), MathUtil::degToRad(rotation->x));
-	transformationMatrix->rotate(new Vector3(0.0f, 1.0f, 0.0f), MathUtil::degToRad(rotation->y));
-	transformationMatrix->rotate(new Vector3(0.0f, 0.0f, 1.0f), MathUtil::degToRad(rotation->z));
+	transformationMatrix->rotate(Vector3(1.0f, 0.0f, 0.0f), MathUtil::degToRad(rotation->x));
+	transformationMatrix->rotate(Vector3(0.0f, 1.0f, 0.0f), MathUtil::degToRad(rotation->y));
+	transformationMatrix->rotate(Vector3(0.0f, 0.0f, 1.0f), MathUtil::degToRad(rotation->z));
 	transformationMatrix->scale(scale);
 
 	return transformationMatrix;

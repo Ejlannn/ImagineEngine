@@ -48,7 +48,8 @@ UIText::UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 s
 
 	SDL_Surface *surface = getTextSurface(message, fontFile, size, color);
 
-	element = new UIElement(position, surface);
+	element.position = position;
+	element.surface = surface;
 
 	UIElementsHandler::addUIElement(element);
 }
@@ -63,7 +64,8 @@ UIText::UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 s
 
 	SDL_Surface *surface = getTextSurface(message, fontFile, size, color);
 
-	element = new UIElement(position, surface);
+	element.position = position;
+	element.surface = surface;
 
 	UIElementsHandler::addUIElement(element);
 }
@@ -72,7 +74,7 @@ UIText::~UIText()
 {
 	UIElementsHandler::removeUIElement(element);
 
-	SDL_FreeSurface(element->surface);
+	SDL_FreeSurface(element.surface);
 }
 
 void UIText::changeMessage(std::string newMessage)
@@ -121,7 +123,8 @@ void UIText::recreate()
 
 	UIElementsHandler::removeUIElement(element);
 
-	element = new UIElement(position, surface);
+	element.position = position;
+	element.surface = surface;
 
 	UIElementsHandler::addUIElement(element);
 }

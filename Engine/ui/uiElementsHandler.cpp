@@ -16,22 +16,49 @@
 
 #include "uiElementsHandler.h"
 
-static std::vector<UIElement*> elements;
+static std::vector<UIElement> elements;
+static U64 elementCounter = 0;
 
-void UIElementsHandler::addUIElement(UIElement *element)
+UIElement::UIElement()
+{
+	position = nullptr;
+	surface = nullptr;
+
+	elementID = elementCounter;
+	elementCounter++;
+}
+
+UIElement::UIElement(Vector2 *position, SDL_Surface *surface)
+{
+	this->position = position;
+	this->surface = surface;
+
+	elementID = elementCounter;
+	elementCounter++;
+}
+
+UIElement::~UIElement() {}
+
+void UIElementsHandler::addUIElement(UIElement element)
 {
 	elements.push_back(element);
 }
 
-void UIElementsHandler::removeUIElement(UIElement *element)
+void UIElementsHandler::removeUIElement(UIElement element)
 {
 	for(U16 i = 0; i < elements.size(); i++)
 	{
-		if(elements.at(i) == element) elements.erase(elements.begin() + i);
+		if(elements.at(i).elementID == element.elementID)
+		{
+			if(elements.at(i).position != nullptr) delete elements.at(i).position;
+			if(elements.at(i).surface) SDL_FreeSurface(elements.at(i).surface);
+
+			elements.erase(elements.begin() + i);
+		}
 	}
 }
 
-std::vector<UIElement*> UIElementsHandler::getElements()
+std::vector<UIElement> UIElementsHandler::getElements()
 {
 	return elements;
 }
