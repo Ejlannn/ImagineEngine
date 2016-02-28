@@ -35,6 +35,7 @@ private:
 	std::string name;
 
 	void printLog(const std::string &log);
+	std::string getDateAndTime() const;
 };
 
 #endif

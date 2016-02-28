@@ -17,6 +17,7 @@
 #include "logger.h"
 
 #include <iostream>
+#include <ctime>
 
 Logger::Logger(const std::string &name)
 {
@@ -27,12 +28,12 @@ Logger::~Logger() {}
 
 void Logger::log(const std::string &message)
 {
-	printLog("[" + name + "] " + message);
+	printLog(getDateAndTime() + " [" + name + "] " + message);
 }
 
 void Logger::warning(const std::string &message)
 {
-	printLog("[" + name + "] [Warning] " + message);
+	printLog(getDateAndTime() + " [" + name + "]" + " [Warning] " + message);
 }
 
 void Logger::printLog(const std::string &log)
@@ -43,4 +44,16 @@ void Logger::printLog(const std::string &log)
 std::string Logger::getName() const
 {
 	return name.c_str();
+}
+
+std::string Logger::getDateAndTime() const
+{
+	time_t timeNow = time(0);
+	struct tm tStruct;
+	char buffer[80];
+	tStruct = *std::localtime(&timeNow);
+
+	strftime(buffer, sizeof(buffer), "[%Y-%m-%d %X]", &tStruct);
+
+	return buffer;
 }

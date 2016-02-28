@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.6.2
+-Added date and time to logs (Logger class)
+
 1.6.1
 -Added setCursorVisibility method to MouseInput class
 
