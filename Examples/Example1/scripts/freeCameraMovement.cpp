@@ -35,7 +35,7 @@ void FreeCameraMovement::onUpdate()
 
 	if(MouseInput::isPressed(MouseButton::BUTTON_LEFT)) if(!Audio::isSoundEffectPlaying(1)) Audio::playSoundEffect(shotSound, 1);
 
-	if(Audio::isSoundEffectPlaying(1)) UIText::renderSimpleText("Sound effect is playing", font1, 12, new Vector2(1.0f, 1.0f));
+	if(Audio::isSoundEffectPlaying(1)) UIText::renderSimpleText("Sound effect is playing", font1, 12, Vector2(1.0f, 1.0f));
 
 	if(KeyboardInput::isPressed(KeyboardKey::KEY_ESCAPE)) Game::exit(); //Exits game on ESC
 
