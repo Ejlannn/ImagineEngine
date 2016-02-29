@@ -4,11 +4,15 @@
 
 Supported platforms: Windows, Linux, Mac OS X
 
+Tested on Windows 10 x64 with OpenGL 4.4, SDL2 2.0.4, SDL_image 2.0.1, <br>
+SDL_ttf 2.0.14, SDL_mixer 2.0.1 and GLEW 1.13.0. <br>
+Compiled with GNU Compiler Collection (MinGW).
+
 # Dependencies #
 
 -C++11 <br>
 -OpenGL 4.0+ (GLSL 4.00.09+) <br>
--SDL2, SDL2_image, SDL2_ttf, SDL2_mixer <br>
+-SDL2, SDL_image (2.0.0+), SDL_ttf (2.0.0+), SDL_mixer (2.0.0+) <br>
 -GLEW <br>
 
 # Preprocessor Definitions #
