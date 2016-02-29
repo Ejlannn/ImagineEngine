@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.7.3
+-Added OpenGL version setter
+
 1.7.2
 -Removed unused iostream includes and unused cstdlib include
 -UI improvements

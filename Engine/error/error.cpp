@@ -43,7 +43,7 @@ void Error::throwErrorCode(S16 errorCode)
 		showMessageBox((char*) "Error 1: Failed to initialize SDL2 library");
 		break;
 	case 2:
-		showMessageBox((char*) "Error 2: Failed to initialize GLEW library");
+		showMessageBox((char*) "Error 2: Failed to initialize GLEW library\nMaybe too old OpenGL? You need OpenGL 4.0+");
 		break;
 	case 3:
 		showMessageBox((char*) "Error 3: Failed to create game window");
