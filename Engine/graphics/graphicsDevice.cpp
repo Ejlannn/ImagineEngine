@@ -51,7 +51,7 @@ static U16 samplesSize = 8;
 struct Text2D
 {
 public:
-	Text2D(const std::string &message, FilePath *fontFile, S16 size, Vector2 *position)
+	Text2D(const std::string &message, FilePath *fontFile, S16 size, Vector2 position)
 	{
 		msg = message;
 		file = fontFile;
@@ -65,7 +65,7 @@ public:
 	std::string msg;
 	FilePath *file;
 	S16 size;
-	Vector2 *pos;
+	Vector2 pos;
 	Color3 *color;
 };
 
@@ -246,6 +246,11 @@ void GraphicsDevice::render(Scene *scene)
 			TTF_CloseFont(font);
 		}
 
+		for(U32 i = 0; i < textsToRender.size(); i++)
+		{
+			delete textsToRender.at(i);
+		}
+
 		textsToRender.clear();
 	}
 
@@ -267,7 +272,7 @@ void GraphicsDevice::render(Scene *scene)
 
 			startUIShader();
 
-			renderUIElement(UIElement(new Vector2(3.0f, (F32) (14 * (consoleLines.size() - 1 - i) + 3)), fontSurface));
+			renderUIElement(UIElement(Vector2(3.0f, (F32) (14 * (consoleLines.size() - 1 - i) + 3)), fontSurface));
 
 			stopUIShader();
 
@@ -282,7 +287,7 @@ void GraphicsDevice::render(Scene *scene)
 
 			startUIShader();
 
-			renderUIElement(UIElement(new Vector2(3.0f, 328.0f), fontSurface));
+			renderUIElement(UIElement(Vector2(3.0f, 328.0f), fontSurface));
 
 			stopUIShader();
 
@@ -424,14 +429,14 @@ void GraphicsDevice::renderUIElement(UIElement element)
 
 	std::vector<F32> positions;
 
-	positions.push_back(element.position->x);
-	positions.push_back(element.position->y);
-	positions.push_back(element.position->x + element.surface->w);
-	positions.push_back(element.position->y);
-	positions.push_back(element.position->x + element.surface->w);
-	positions.push_back(element.position->y + element.surface->h);
-	positions.push_back(element.position->x);
-	positions.push_back(element.position->y + element.surface->h);
+	positions.push_back(element.position.x);
+	positions.push_back(element.position.y);
+	positions.push_back(element.position.x + element.surface->w);
+	positions.push_back(element.position.y);
+	positions.push_back(element.position.x + element.surface->w);
+	positions.push_back(element.position.y + element.surface->h);
+	positions.push_back(element.position.x);
+	positions.push_back(element.position.y + element.surface->h);
 
 	std::vector<F32> textureCoords;
 
@@ -739,7 +744,7 @@ void GraphicsDevice::stopUINShader()
 	uinShader->stop();
 }
 
-void GraphicsDevice::addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 *position)
+void GraphicsDevice::addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 position)
 {
 	textsToRender.push_back(new Text2D(message, fontFile, size, position));
 }

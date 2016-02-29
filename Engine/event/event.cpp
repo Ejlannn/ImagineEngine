@@ -24,8 +24,6 @@
 #include "../ui/console/console.h"
 #include "../window/window.h"
 
-#include <iostream>
-
 static SDL_Event event;
 
 void Event::init()

@@ -16,9 +16,7 @@
 
 #include "modelAsset.h"
 
-#include <iostream> //testing
 #include <cmath>
-#include <cstdlib>
 #include "../../error/error.h"
 #include "../../graphics/vertexArrayObject.h"
 

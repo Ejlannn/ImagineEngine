@@ -33,7 +33,7 @@ SDL_Surface *UITexture::getTextureSurface(FilePath *texturePath)
 	return surface;
 }
 
-UITexture::UITexture(FilePath *texturePath, Vector2 *position)
+UITexture::UITexture(FilePath *texturePath, Vector2 position)
 {
 	this->texturePath = texturePath;
 	this->position = position;

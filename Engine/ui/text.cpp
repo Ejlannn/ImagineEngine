@@ -21,9 +21,9 @@
 #include "../graphics/graphicsDevice.h"
 #include "../platform/resourceLoader.h"
 
-SDL_Surface *UIText::getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 *color)
+SDL_Surface *UIText::getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 color)
 {
-	SDL_Color txtColor = { (U8)color->r, (U8)color->g, (U8)color->b };
+	SDL_Color txtColor = { (U8)color.r, (U8)color.g, (U8)color.b };
 
 	fontFile->getFile().close();
 
@@ -38,13 +38,13 @@ SDL_Surface *UIText::getTextSurface(std::string message, FilePath *fontFile, U16
 	return fontSurface;
 }
 
-UIText::UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size)
+UIText::UIText(std::string message, FilePath *fontFile, Vector2 position, U16 size)
 {
 	this->message = message;
 	this->fontFile = fontFile;
 	this->position = position;
 	this->size = size;
-	color = new Color3(1.0f);
+	color.r = color.g = color.b = 1.0f;
 
 	SDL_Surface *surface = getTextSurface(message, fontFile, size, color);
 
@@ -54,7 +54,7 @@ UIText::UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 s
 	UIElementsHandler::addUIElement(element);
 }
 
-UIText::UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size, Color3 *color)
+UIText::UIText(std::string message, FilePath *fontFile, Vector2 position, U16 size, Color3 color)
 {
 	this->message = message;
 	this->fontFile = fontFile;
@@ -91,7 +91,7 @@ void UIText::changeFontFile(FilePath *newFontFile)
 	recreate();
 }
 
-void UIText::changePosition(Vector2 *newPosition)
+void UIText::changePosition(Vector2 newPosition)
 {
 	position = newPosition;
 
@@ -105,14 +105,14 @@ void UIText::changeSize(U16 newSize)
 	recreate();
 }
 
-void UIText::changeTextColor(Color3 *newColor)
+void UIText::changeTextColor(Color3 newColor)
 {
 	color = newColor;
 
 	recreate();
 }
 
-void UIText::renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 *position)
+void UIText::renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 position)
 {
 	GraphicsDevice::addTextToRender(message, fontFile, size, position);
 }

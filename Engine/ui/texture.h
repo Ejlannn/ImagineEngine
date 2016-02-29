@@ -27,13 +27,13 @@ class SDL_Surface;
 class UITexture
 {
 public:
-	UITexture(FilePath *texturePath, Vector2 *position);
+	UITexture(FilePath *texturePath, Vector2 position);
 
 	~UITexture();
 
 private:
 	FilePath *texturePath;
-	Vector2 *position;
+	Vector2 position;
 	UIElement element;
 
 	SDL_Surface *getTextureSurface(FilePath *texturePath);

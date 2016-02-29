@@ -37,16 +37,15 @@ class UIElement
 
 private:
 	UIElement();
-	UIElement(Vector2 *position, SDL_Surface *surface);
+	UIElement(Vector2 position, SDL_Surface *surface);
 
 public:
 	~UIElement();
 
 private:
-	Vector2 	*position;
+	Vector2 	position;
 	SDL_Surface *surface;
 	U64 elementID;
-	//std::string type;
 };
 
 class UIElementsHandler

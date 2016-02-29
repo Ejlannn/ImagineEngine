@@ -29,8 +29,6 @@
 #include "../../graphics/graphicsDevice.h"
 #include "../../graphics/vertexArrayObject.h"
 
-#include <iostream> //TODO remove after testing
-
 static bool			running = false;
 static Scene		*currentScene = nullptr;
 static Logger 		*logger = nullptr;

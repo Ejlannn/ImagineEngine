@@ -58,7 +58,7 @@ private:
 	//static void render(Scene *scene);
 	//static void renderChildren(std::vector<Entity*> children, TransformComponent *parentTransform, Scene *scene);
 	//static void renderElements(MeshRendererComponent *meshRendererComponent, bool textured);
-	static void addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 *position);
+	static void addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 position);
 };
 
 #endif

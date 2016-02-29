@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.7.2
+-Removed unused iostream includes and unused cstdlib include
+-UI improvements
+
 1.7.1
 -Scene class improvements
 -Script's virtual methods are no longer pure virtual

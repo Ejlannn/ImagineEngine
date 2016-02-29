@@ -97,10 +97,7 @@ void Scene::removeEntity(Entity *entity)
 
 Entity *Scene::getEntityByName(std::string name)
 {
-	for(U16 i = 0; i < entities.size(); i++)
-	{
-		if(entities.at(i)->name == name) return entities.at(i);
-	}
+	for(U16 i = 0; i < entities.size(); i++) if(entities.at(i)->name == name) return entities.at(i);
 
 	return nullptr;
 }
@@ -108,9 +105,7 @@ Entity *Scene::getEntityByName(std::string name)
 Entity *Scene::getEntityByID(U32 id)
 {
 	for(U16 i = 0; i < entities.size(); i++)
-	{
 		if(entities.at(i)->getID() == id) return entities.at(i);
-	}
 
 	return nullptr;
 }
@@ -119,10 +114,7 @@ std::vector<Entity*> Scene::getEntitiesWithName(std::string name)
 {
 	std::vector<Entity*> entity;
 
-	for(U16 i = 0; i < entities.size(); i++)
-	{
-		if(entities.at(i)->name == name) entity.push_back(entities.at(i));
-	}
+	for(U16 i = 0; i < entities.size(); i++) if(entities.at(i)->name == name) entity.push_back(entities.at(i));
 
 	return entity;
 }
@@ -131,10 +123,7 @@ std::vector<Entity*> Scene::getEntitiesWithTag(std::string tag)
 {
 	std::vector<Entity*> entity;
 
-	for(U16 i = 0; i < entities.size(); i++)
-	{
-		if(entities.at(i)->tag == tag) entity.push_back(entities.at(i));
-	}
+	for(U16 i = 0; i < entities.size(); i++) if(entities.at(i)->tag == tag) entity.push_back(entities.at(i));
 
 	return entity;
 }
@@ -237,10 +226,7 @@ void Scene::updateEntity(Entity *entity)
 
 				meshColComponent->createOOB(processedVertices);
 
-				for(U64 i = 0; i < processedVertices.size(); i++)
-				{
-					delete processedVertices.at(i);
-				}
+				for(U64 i = 0; i < processedVertices.size(); i++) delete processedVertices.at(i);
 			}
 		}
 	}
@@ -352,9 +338,7 @@ void Scene::updateEntity(Entity *entity)
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
 
 		if(materialComponent->material != nullptr && materialComponent->material->sprite != nullptr && materialComponent->material->texture == nullptr)
-		{
 			if(materialComponent->material->sprite->currentLayer != nullptr) materialComponent->material->sprite->currentLayer->update();
-		}
 	}
 }
 
@@ -366,9 +350,6 @@ void Scene::destroyEntity(Entity *entity)
 	{
 		ScriptComponent *scriptComponent = (ScriptComponent*) entity->getComponent("ScriptComponent");
 
-		if(scriptComponent->scripts.size() > 0)
-		{
-			scriptComponent->destroy();
-		}
+		if(scriptComponent->scripts.size() > 0) scriptComponent->destroy();
 	}
 }

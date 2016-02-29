@@ -27,28 +27,28 @@ class SDL_Surface;
 class UIText
 {
 public:
-	UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size);
-	UIText(std::string message, FilePath *fontFile, Vector2 *position, U16 size, Color3 *color);
+	UIText(std::string message, FilePath *fontFile, Vector2 position, U16 size);
+	UIText(std::string message, FilePath *fontFile, Vector2 position, U16 size, Color3 color);
 
 	~UIText();
 
 	void changeMessage(std::string newMessage);
 	void changeFontFile(FilePath *newFontFile);
-	void changePosition(Vector2 *newPosition);
+	void changePosition(Vector2 newPosition);
 	void changeSize(U16 newSize);
-	void changeTextColor(Color3 *newColor);
+	void changeTextColor(Color3 newColor);
 
-	static void renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 *position);
+	static void renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 position);
 
 private:
 	std::string message;
 	FilePath *fontFile;
-	Vector2 *position;
+	Vector2 position;
 	U16 size;
-	Color3 *color;
+	Color3 color;
 	UIElement element;
 
-	static SDL_Surface *getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 *color);
+	static SDL_Surface *getTextSurface(std::string message, FilePath *fontFile, U16 size, Color3 color);
 
 	void recreate();
 };

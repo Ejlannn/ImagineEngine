@@ -21,14 +21,13 @@ static U64 elementCounter = 0;
 
 UIElement::UIElement()
 {
-	position = nullptr;
 	surface = nullptr;
 
 	elementID = elementCounter;
 	elementCounter++;
 }
 
-UIElement::UIElement(Vector2 *position, SDL_Surface *surface)
+UIElement::UIElement(Vector2 position, SDL_Surface *surface)
 {
 	this->position = position;
 	this->surface = surface;
@@ -50,7 +49,6 @@ void UIElementsHandler::removeUIElement(UIElement element)
 	{
 		if(elements.at(i).elementID == element.elementID)
 		{
-			if(elements.at(i).position != nullptr) delete elements.at(i).position;
 			if(elements.at(i).surface) SDL_FreeSurface(elements.at(i).surface);
 
 			elements.erase(elements.begin() + i);
