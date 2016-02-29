@@ -16,9 +16,11 @@
 
 #include "freeCameraMovement.h"
 
-FreeCameraMovement::FreeCameraMovement() {}
-
-void FreeCameraMovement::onInit() {}
+void FreeCameraMovement::onInit()
+{
+	font1 = FilePath::getFileFromGamePath("resources\\font\\font1.ttf");
+	shotSound = FilePath::getFileFromGamePath("resources\\audio\\shot.wav");
+}
 
 void FreeCameraMovement::onUpdate()
 {
@@ -31,12 +33,9 @@ void FreeCameraMovement::onUpdate()
 
 	F32 speed = 0.002f;
 
-	if(MouseInput::isPressed(MouseButton::BUTTON_LEFT))
-	{
-		if(!Audio::isSoundEffectPlaying(1)) Audio::playSoundEffect(FilePath::getFileFromGamePath("resources\\audio\\shot.wav"), 1);
-	}
+	if(MouseInput::isPressed(MouseButton::BUTTON_LEFT)) if(!Audio::isSoundEffectPlaying(1)) Audio::playSoundEffect(shotSound, 1);
 
-	if(Audio::isSoundEffectPlaying(1)) UIText::renderSimpleText("Sound effect is playing!", FilePath::getFileFromGamePath("resources\\font\\font1.ttf"), 12, new Vector2(1.0f, 1.0f));
+	if(Audio::isSoundEffectPlaying(1)) UIText::renderSimpleText("Sound effect is playing", font1, 12, new Vector2(1.0f, 1.0f));
 
 	if(KeyboardInput::isPressed(KeyboardKey::KEY_ESCAPE)) Game::exit(); //Exits game on ESC
 

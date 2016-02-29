@@ -22,11 +22,12 @@
 class FreeCameraMovement : public Script
 {
 public:
-	FreeCameraMovement();
-
 	virtual void onInit();
 	virtual void onUpdate();
 	virtual void onDestroy();
+
+	FilePath *shotSound;
+	FilePath *font1;
 };
 
 #endif

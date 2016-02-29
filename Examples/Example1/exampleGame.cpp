@@ -41,6 +41,7 @@ void ExampleGame::initializeGame()
 	/* scene1 Settings */
 	scene1->backgroundColor = new Color3(0.2f, 0.2f, 0.2f);
 	scene1->ambientLightColor = new Color3(0.0f);
+
 	//scene1->fogDensity = 0.05f;
 	//scene1->fogGradient = 1.4f;
 
