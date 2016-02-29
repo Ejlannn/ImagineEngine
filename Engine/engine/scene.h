@@ -55,9 +55,9 @@ private:
 	void initialize();
 	void update();
 	void destroy();
-	void initializeChildren(std::vector<Entity*> children);
-	void updateChildren(std::vector<Entity*> children);
-	void destroyChildren(std::vector<Entity*> children);
+	void initializeEntity(Entity *entity);
+	void updateEntity(Entity *entity);
+	void destroyEntity(Entity *entity);
 };
 
 #endif

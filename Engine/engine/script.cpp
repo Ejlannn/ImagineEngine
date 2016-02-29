@@ -23,6 +23,9 @@ Entity *Script::getEntity()
 	return entity;
 }
 
+void Script::onInit() {}
+void Script::onUpdate() {}
+void Script::onDestroy() {}
 void Script::onKeyboardKeyDown(KeyboardKey key) {}
 void Script::onMouseButtonDown(MouseButton button) {}
 void Script::onCollision(Collision *collision) {}

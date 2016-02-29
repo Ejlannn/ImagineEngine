@@ -38,9 +38,9 @@ private:
 protected:
 	Entity *getEntity();
 
-	virtual void onInit() = 0;
-	virtual void onUpdate() = 0;
-	virtual void onDestroy() = 0;
+	virtual void onInit();
+	virtual void onUpdate();
+	virtual void onDestroy();
 	virtual void onKeyboardKeyDown(KeyboardKey key);
 	virtual void onMouseButtonDown(MouseButton button);
 	virtual void onCollision(Collision *collision);

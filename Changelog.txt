@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.7.1
+-Scene class improvements
+-Script's virtual methods are no longer pure virtual
+
 1.7.0
 -Fixed a lot of memory leaks
 -Fixes, corrections, improvements
