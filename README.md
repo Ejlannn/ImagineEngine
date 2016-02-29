@@ -2,13 +2,13 @@
 
 **Imagine Engine** - Open Source 3D game engine written in C++.
 
-Supported platforms: Windows, Linux, Mac OSX
+Supported platforms: Windows, Linux, Mac OS X
 
 # Dependencies #
 
 -C++11 <br>
--OpenGL <br>
--SDL2, SDL2_image, SDL2_ttf, SDL_mixer <br>
+-OpenGL 4.0+ (GLSL 4.00.09+) <br>
+-SDL2, SDL2_image, SDL2_ttf, SDL2_mixer <br>
 -GLEW <br>
 
 # Preprocessor Definitions #
