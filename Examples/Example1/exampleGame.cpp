@@ -39,8 +39,8 @@ void ExampleGame::initializeGame()
 	Scene *scene1 = new Scene();
 
 	/* scene1 Settings */
-	scene1->backgroundColor = new Color3(0.2f, 0.2f, 0.2f);
-	scene1->ambientLightColor = new Color3(0.0f);
+	scene1->backgroundColor = Color3(0.2f, 0.2f, 0.2f);
+	scene1->ambientLightColor = Color3(0.0f);
 
 	//scene1->fogDensity = 0.05f;
 	//scene1->fogGradient = 1.4f;
@@ -118,6 +118,8 @@ void ExampleGame::initializeGame()
 	scene1->addEntity(cameraEntity);
 	scene1->addEntity(cubeEntity);
 	//scene1->addEntity(catEntity);
+
+	//Window::setFullscreen(false);
 
 	/* Apply Scene */
 	setCurrentScene(scene1);
