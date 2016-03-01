@@ -29,12 +29,12 @@ public:
 
 	~MaterialAsset();
 
-	Color3 *mainColor;
+	Color3 mainColor;
 	SpriteAsset *sprite;
 	TextureAsset *texture;
 	S16 tilingX, tilingY;
 
-	static Color3 *getDefaultMainColor();
+	static Color3 getDefaultMainColor();
 };
 
 #endif

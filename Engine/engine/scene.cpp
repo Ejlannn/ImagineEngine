@@ -23,8 +23,8 @@
 
 Scene::Scene()
 {
-	backgroundColor = new Color3();
-	ambientLightColor = new Color3(1.0f);
+	backgroundColor = Color3();
+	ambientLightColor = Color3(1.0f);
 	camera = nullptr;
 	skybox = nullptr;
 	fogDensity = 0.0f;

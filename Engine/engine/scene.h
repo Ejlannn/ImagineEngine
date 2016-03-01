@@ -35,8 +35,8 @@ public:
 
 	~Scene();
 
-	Color3 *backgroundColor;
-	Color3 *ambientLightColor;
+	Color3 backgroundColor;
+	Color3 ambientLightColor;
 	CameraComponent *camera;
 	SkyboxAsset *skybox;
 	F32 fogDensity;

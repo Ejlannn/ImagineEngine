@@ -16,7 +16,7 @@
 
 #include "materialAsset.h"
 
-static Color3 *defaultColor = new Color3(0.6f);
+static Color3 defaultColor = Color3(0.6f);
 
 MaterialAsset::MaterialAsset()
 {
@@ -29,7 +29,7 @@ MaterialAsset::MaterialAsset()
 
 MaterialAsset::~MaterialAsset() {}
 
-Color3 *MaterialAsset::getDefaultMainColor()
+Color3 MaterialAsset::getDefaultMainColor()
 {
 	return defaultColor;
 }

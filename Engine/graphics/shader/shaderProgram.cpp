@@ -135,6 +135,11 @@ void ShaderProgram::loadVector2(U32 location, Vector2 *value)
 	glUniform2f(location, value->x, value->y);
 }
 
+void ShaderProgram::loadVector3(U32 location, Vector3 value)
+{
+	glUniform3f(location, value.x, value.y, value.z);
+}
+
 void ShaderProgram::loadVector3(U32 location, Vector3 *value)
 {
 	glUniform3f(location, value->x, value->y, value->z);

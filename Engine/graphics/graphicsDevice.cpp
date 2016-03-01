@@ -172,8 +172,7 @@ void GraphicsDevice::render(Scene *scene)
 
 	prepare3D();
 
-	if(scene->backgroundColor == nullptr) clear(Color3());
-	else clear(Color3(scene->backgroundColor->r, scene->backgroundColor->g, scene->backgroundColor->b));
+	clear(Color3(scene->backgroundColor.r, scene->backgroundColor.g, scene->backgroundColor.b));
 
 	if(scene->skybox != nullptr)
 	{
@@ -626,7 +625,7 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 	{
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
 
-		if(materialComponent->material != nullptr && materialComponent->material->mainColor != nullptr) baseShader->loadColor(materialComponent->material->mainColor);
+		if(materialComponent->material != nullptr) baseShader->loadColor(materialComponent->material->mainColor);
 		else baseShader->loadColor(MaterialAsset::getDefaultMainColor());
 
 		if(materialComponent->material != nullptr && materialComponent->material->texture != nullptr)

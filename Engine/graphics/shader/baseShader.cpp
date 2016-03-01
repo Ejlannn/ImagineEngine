@@ -90,11 +90,13 @@ void BaseShader::getAllUniformLocations()
 	loc_lightSpotAngle[3] = getUniformLocation((char*) "lightSpotAngle[3]");
 }
 
-void BaseShader::loadColor(Color3 *value)
+void BaseShader::loadColor(Color3 value)
 {
-	Vector3 *cl = new Vector3(value->r, value->g, value->b);
+	Vector3 *cl = new Vector3(value.r, value.g, value.b);
 
 	loadVector3(loc_mainColor, cl);
+
+	delete cl;
 }
 
 void BaseShader::loadTransformationMatrix(Matrix4 *value)
@@ -117,18 +119,20 @@ void BaseShader::loadTextured(bool value)
 	loadBoolean(loc_textured, value);
 }
 
-void BaseShader::loadBackgroundColor(Color3 *value)
+void BaseShader::loadBackgroundColor(Color3 value)
 {
-	Vector3 *cl = new Vector3(value->r, value->g, value->b);
+	Vector3 *cl = new Vector3(value.r, value.g, value.b);
 
 	loadVector3(loc_bgColor, cl);
 }
 
-void BaseShader::loadAmbientColor(Color3 *value)
+void BaseShader::loadAmbientColor(Color3 value)
 {
-	Vector3 *cl = new Vector3(value->r, value->g, value->b);
+	Vector3 *cl = new Vector3(value.r, value.g, value.b);
 
 	loadVector3(loc_ambientColor, cl);
+
+	delete cl;
 }
 
 void BaseShader::loadTiling(F32 value1, F32 value2)
@@ -143,13 +147,13 @@ void BaseShader::loadFogSettings(F32 value1, F32 value2)
 	loadFloat(loc_gradient, value2);
 }
 
-Vector3 *BaseShader::getLightDirection(Vector3 *lightRotation)
+Vector3 BaseShader::getLightDirection(Vector3 *lightRotation)
 {
-	Vector3 *lightDirection = new Vector3();
+	Vector3 lightDirection = Vector3();
 
-	lightDirection->x = cosf(lightRotation->y - 180.0f) * cosf(lightRotation->x - 180.0f);
-	lightDirection->y = sinf(lightRotation->y - 180.0f) * cosf(lightRotation->x - 180.0f);
-	lightDirection->z = sinf(lightRotation->x - 180.0f);
+	lightDirection.x = cosf(lightRotation->y - 180.0f) * cosf(lightRotation->x - 180.0f);
+	lightDirection.y = sinf(lightRotation->y - 180.0f) * cosf(lightRotation->x - 180.0f);
+	lightDirection.z = sinf(lightRotation->x - 180.0f);
 
 	return lightDirection;
 }
@@ -176,6 +180,8 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 
 		loadVector3(loc_lightColor[i], color);
 
+		delete color;
+
 		F32 intens = lightSources[i]->intensity;
 
 		loadFloat(loc_lightIntensity[i], intens);
@@ -183,7 +189,7 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 		TransformComponent *transformComponent = (TransformComponent*) lightSources[i]->entity->getComponent("TransformComponent");
 
 		if(type == 2 || type == 3) loadVector3(loc_lightPosition[i], transformComponent->position);
-		else loadVector3(loc_lightPosition[i], new Vector3());
+		else loadVector3(loc_lightPosition[i], Vector3());
 
 		if(type == 1)
 		{
@@ -197,7 +203,7 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 		{
 			PointLight *pointLight = (PointLight*) lightSources[i];
 			loadFloat(loc_lightRange[i], pointLight->range);
-			loadVector3(loc_lightDir[i], new Vector3());
+			loadVector3(loc_lightDir[i], Vector3());
 		}
 		else if(type == 3)
 		{
@@ -212,7 +218,7 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 		else
 		{
 			loadFloat(loc_lightRange[i], 0.0f);
-			loadVector3(loc_lightDir[i], new Vector3());
+			loadVector3(loc_lightDir[i], Vector3());
 		}
 	}
 }

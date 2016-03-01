@@ -54,18 +54,18 @@ class BaseShader : public ShaderProgram
 	virtual void bindAttributes();
 	virtual void getAllUniformLocations();
 
-	void loadColor(Color3 *value);
+	void loadColor(Color3 value);
 	void loadTransformationMatrix(Matrix4 *value);
 	void loadProjectionMatrix(Matrix4 *value);
 	void loadViewMatrix(Matrix4 *value);
 	void loadTextured(bool value);
-	void loadBackgroundColor(Color3 *value);
-	void loadAmbientColor(Color3 *value);
+	void loadBackgroundColor(Color3 value);
+	void loadAmbientColor(Color3 value);
 	void loadTiling(F32 value1, F32 value2);
 	void loadFogSettings(F32 value1, F32 value2);
 	void loadLightSources(Light *lightSources[4]);
 
-	Vector3 *getLightDirection(Vector3 *lightRotation);
+	Vector3 getLightDirection(Vector3 *lightRotation);
 };
 
 #endif
