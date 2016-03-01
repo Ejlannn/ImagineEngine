@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.7.6_02
+-Corrected Music and Sound effect freeing inside Audio class
+
 1.7.6_01
 -Light color is now represented as non-pointer Color3
 

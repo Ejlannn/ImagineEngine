@@ -46,6 +46,8 @@ void Audio::playMusic(FilePath *musicFile, U16 loops)
 
 	Mix_Music *music = ResourceLoader::loadMusic(musicFile);
 
+	musicToClear = music;
+
 	Mix_PlayMusic(music, loops);
 }
 
@@ -99,6 +101,13 @@ void Audio::playSoundEffect(FilePath *soundFile, U16 channel, U16 loops)
 	}
 
 	Mix_Chunk *soundEffect = ResourceLoader::loadSound(soundFile);
+
+	UnusedChunks unusedChunk;
+
+	unusedChunk.channel = channel;
+	unusedChunk.soundEffect = soundEffect;
+
+	unusedChunks.push_back(unusedChunk);
 
 	Mix_PlayChannel(channel, soundEffect, loops);
 }
