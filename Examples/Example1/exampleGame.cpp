@@ -80,7 +80,7 @@ void ExampleGame::initializeGame()
 
 	LightComponent *lightComponent = new LightComponent();
 	lightComponent->light = new PointLight();
-	lightComponent->light->color = new Color3(0.9f, 0.9f, 0.9f);
+	lightComponent->light->color = Color3(0.9f, 0.9f, 0.9f);
 	cameraEntity->addComponent(lightComponent);
 
 	//----CUBE----//
