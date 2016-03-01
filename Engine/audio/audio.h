@@ -20,8 +20,12 @@
 #include "../platform/file.h"
 #include "../platform/types.h"
 
+class Game;
+
 class Audio
 {
+	friend class Game;
+
 public:
 	static void playMusic(FilePath *musicFile);
 	static void playMusic(FilePath *musicFile, U16 loops);
@@ -35,6 +39,9 @@ public:
 	static void stopSoundEffect(U16 channel);
 	static void setChannelVolume(U16 channel, U16 volume);
 	static bool isSoundEffectPlaying(U16 channel);
+
+private:
+	static void destroy();
 };
 
 #endif

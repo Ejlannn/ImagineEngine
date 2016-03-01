@@ -132,3 +132,12 @@ bool Audio::isSoundEffectPlaying(U16 channel)
 
 	return false;
 }
+
+void Audio::destroy()
+{
+	for(U32 i = 0; i < unusedChunks.size(); i++) Mix_FreeChunk(unusedChunks.at(i).soundEffect);
+
+	unusedChunks.clear();
+
+	Mix_FreeMusic(musicToClear);
+}

@@ -119,6 +119,8 @@ void Game::prepareExit()
 
 	if(currentScene != nullptr) currentScene->destroy();
 
+	Audio::destroy();
+
 	Event::destroy();
 
 	VertexArrayObject::destroyAll();

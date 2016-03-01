@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.7.7
+-Now Music and Sound effects are deleted when Game exits
+-Removed global variable defaultColor
+
 1.7.6_02
 -Corrected Music and Sound effect freeing inside Audio class
 
