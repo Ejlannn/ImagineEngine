@@ -18,29 +18,35 @@
 
 #include <GL/glew.h>
 
-std::vector<U32> vaos;
-std::vector<U32> vbos;
+struct VAOBuffers
+{
+	VAOBuffers(U32 vao)
+	{
+		vaoID = vao;
+	}
 
-U32 createVAO()
+	U32 vaoID;
+	std::vector<U32> buffers;
+};
+
+static std::vector<VAOBuffers> vaos;
+
+U32 VertexArrayObject::createVAO()
 {
 	U32 vao;
 
 	glGenVertexArrays(1, &vao);
-
-	vaos.push_back(vao);
 
 	glBindVertexArray(vao);
 
 	return vao;
 }
 
-void storeF32(U32 attributeNumber, U16 size, std::vector<F32> data)
+U32 VertexArrayObject::storeF32(U32 attributeNumber, U16 size, std::vector<F32> data)
 {
 	U32 vbo;
 
 	glGenBuffers(1, &vbo);
-
-	vbos.push_back(vbo);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(F32), &data[0], GL_STATIC_DRAW);
@@ -48,25 +54,31 @@ void storeF32(U32 attributeNumber, U16 size, std::vector<F32> data)
 	glVertexAttribPointer(attributeNumber, size, GL_FLOAT, false, 0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	return vbo;
 }
 
-void storeIndices(std::vector<U64> data)
+U32 VertexArrayObject::storeIndices(std::vector<U64> data)
 {
 	U32 vbo;
 
 	glGenBuffers(1, &vbo);
 
-	vbos.push_back(vbo);
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.size() * sizeof(U64), &data[0], GL_STATIC_DRAW);
+
+	return vbo;
 }
 
 U32 VertexArrayObject::loadToVAO(std::vector<F32> positions, S16 dimension)
 {
 	U32 vaoID = createVAO();
 
-	storeF32(0, dimension, positions);
+	VAOBuffers vaoToAdd = VAOBuffers(vaoID);
+
+	vaoToAdd.buffers.push_back(storeF32(0, dimension, positions));
+
+	vaos.push_back(vaoToAdd);
 
 	glBindVertexArray(0);
 
@@ -77,8 +89,12 @@ U32 VertexArrayObject::loadToVAO(std::vector<F32> positions, std::vector<F32> te
 {
 	U32 vaoID = createVAO();
 
-	storeF32(0, 2, positions);
-	storeF32(1, 2, textureVectors);
+	VAOBuffers vaoToAdd = VAOBuffers(vaoID);
+
+	vaoToAdd.buffers.push_back(storeF32(0, 2, positions));
+	vaoToAdd.buffers.push_back(storeF32(1, 2, textureVectors));
+
+	vaos.push_back(vaoToAdd);
 
 	glBindVertexArray(0);
 
@@ -89,9 +105,13 @@ U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> nor
 {
 	U32 vaoID = createVAO();
 
-	storeIndices(indices);
-	storeF32(0, 3, vertices);
-	storeF32(2, 3, normals);
+	VAOBuffers vaoToAdd = VAOBuffers(vaoID);
+
+	vaoToAdd.buffers.push_back(storeIndices(indices));
+	vaoToAdd.buffers.push_back(storeF32(0, 3, vertices));
+	vaoToAdd.buffers.push_back(storeF32(2, 3, normals));
+
+	vaos.push_back(vaoToAdd);
 
 	glBindVertexArray(0);
 
@@ -102,28 +122,43 @@ U32 VertexArrayObject::loadToVAO(std::vector<F32> vertices, std::vector<F32> tex
 {
 	U32 vaoID = createVAO();
 
-	storeIndices(indices);
-	storeF32(0, 3, vertices);
-	storeF32(1, 2, textureVectors);
-	storeF32(2, 3, normals);
+	VAOBuffers vaoToAdd = VAOBuffers(vaoID);
+
+	vaoToAdd.buffers.push_back(storeIndices(indices));
+	vaoToAdd.buffers.push_back(storeF32(0, 3, vertices));
+	vaoToAdd.buffers.push_back(storeF32(1, 2, textureVectors));
+	vaoToAdd.buffers.push_back(storeF32(2, 3, normals));
+
+	vaos.push_back(vaoToAdd);
 
 	glBindVertexArray(0);
 
 	return vaoID;
 }
 
-void VertexArrayObject::destroyAll()
+void VertexArrayObject::destroy(U32 vao)
 {
-	for(U32 i = 0; i < vbos.size(); i++)
-	{
-		glDeleteBuffers(1, &vbos.at(i));
-	}
-
 	for(U32 i = 0; i < vaos.size(); i++)
 	{
-		glDeleteVertexArrays(1, &vaos.at(i));
+		if(vaos.at(i).vaoID == vao)
+		{
+			for(U32 j = 0; j < vaos.at(i).buffers.size(); j++) glDeleteBuffers(1, &vaos.at(i).buffers.at(j));
+
+			glDeleteVertexArrays(1, &vaos.at(i).vaoID);
+
+			break;
+		}
+	}
+}
+
+void VertexArrayObject::destroyAll()
+{
+	for(U32 i = 0; i < vaos.size(); i++)
+	{
+		for(U32 j = 0; j < vaos.at(i).buffers.size(); j++) glDeleteBuffers(1, &vaos.at(i).buffers.at(j));
+
+		glDeleteVertexArrays(1, &vaos.at(i).vaoID);
 	}
 
-	vbos.clear();
 	vaos.clear();
 }

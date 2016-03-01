@@ -42,6 +42,7 @@ private:
 	static UINShader *getUINShader();
 
 	static void init();
+	static void destroy();
 	static void render(Scene *scene);
 	static void renderEntity(Entity *entity, MeshRendererComponent *mesh);
 	static void renderSkybox(SkyboxAsset *skybox);

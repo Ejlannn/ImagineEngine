@@ -123,6 +123,8 @@ void Game::prepareExit()
 
 	VertexArrayObject::destroyAll();
 
+	GraphicsDevice::destroy();
+
 	Window::destroy();
 
 	IMG_Quit();

@@ -37,7 +37,11 @@ class VertexArrayObject
 	static U32 loadToVAO(std::vector<F32> positions, std::vector<F32> textureVectors);
 	static U32 loadToVAO(std::vector<F32> vertices, std::vector<F32> normals, std::vector<U64> indices);
 	static U32 loadToVAO(std::vector<F32> vertices, std::vector<F32> textureVectors, std::vector<F32> normals, std::vector<U64> indices);
+	static void destroy(U32 vao);
 	static void destroyAll();
+	static U32 createVAO();
+	static U32 storeF32(U32 attributeNumber, U16 size, std::vector<F32> data);
+	static U32 storeIndices(std::vector<U64> data);
 };
 
 #endif

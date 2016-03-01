@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.7.4
+-Next wave of fixes, corrections, improvements
+
 1.7.3
 -Added OpenGL version setter
 

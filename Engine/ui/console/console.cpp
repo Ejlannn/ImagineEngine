@@ -24,10 +24,7 @@ static std::vector<std::string>			currentLineBuf;
 
 void Console::registerCommandExecutor(CommandExecutor *commandExecutor)
 {
-	for(U16 i = 0; i < commandExecutors.size(); i++)
-	{
-		if(commandExecutors.at(i) == commandExecutor) return;
-	}
+	for(U16 i = 0; i < commandExecutors.size(); i++) if(commandExecutors.at(i) == commandExecutor) return;
 
 	commandExecutors.push_back(commandExecutor);
 }
@@ -96,10 +93,7 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 				}
 			}
 
-			for(U16 i = 0; i < commandExecutors.size(); i++)
-			{
-				commandExecutors.at(i)->onCommand(cmd, args);
-			}
+			for(U16 i = 0; i < commandExecutors.size(); i++) commandExecutors.at(i)->onCommand(cmd, args);
 		}
 		else
 		{

@@ -39,6 +39,7 @@ static Matrix4 *projectionMatrix2DOrtho = nullptr;
 static std::vector<UIElement> elementsToRender;
 
 static FilePath *fontPath = FilePath::getFileFromGamePath("bin" + std::string(PATH_SEPARATOR) + "font" + std::string(PATH_SEPARATOR) + "Consolas.ttf");
+static TTF_Font *font = nullptr;
 
 /* Shaders */
 static BaseShader		*baseShader = nullptr;
@@ -120,6 +121,8 @@ void GraphicsDevice::init()
 	uiShader = getUIShader();
 	uinShader = getUINShader();
 
+	font = ResourceLoader::loadFont(fontPath, 12);
+
 	clear();
 
 	Window::update();
@@ -135,6 +138,20 @@ void GraphicsDevice::init()
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
 
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+}
+
+void GraphicsDevice::destroy()
+{
+	delete baseShader;
+	delete skyboxShader;
+	delete uiShader;
+	delete uinShader;
+
+	delete projectionMatrix;
+	delete viewMatrix;
+	delete projectionMatrix2DOrtho;
+
+	TTF_CloseFont(font);
 }
 
 void GraphicsDevice::render(Scene *scene)
@@ -260,8 +277,6 @@ void GraphicsDevice::render(Scene *scene)
 
 		SDL_Color color = { 255, 255, 255 };
 
-		TTF_Font *font = ResourceLoader::loadFont(fontPath, 12);
-
 		std::vector<std::string> consoleLines = Console::getLines();
 
 		for(U16 i = 0; i < consoleLines.size(); i++)
@@ -277,6 +292,7 @@ void GraphicsDevice::render(Scene *scene)
 			stopUIShader();
 
 			SDL_FreeSurface(fontSurface);
+
 		}
 
 		consoleLines.clear();
@@ -292,8 +308,6 @@ void GraphicsDevice::render(Scene *scene)
 			stopUIShader();
 
 			SDL_FreeSurface(fontSurface);
-
-			TTF_CloseFont(font);
 		}
 	}
 
@@ -472,8 +486,6 @@ void GraphicsDevice::renderUIElement(UIElement element)
 		break;
 	}
 
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, element->surface->w, element->surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, element->surface->pixels);
-
 	glTexImage2D(GL_TEXTURE_2D, 0, element.surface->format->BytesPerPixel, element.surface->w, element.surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, element.surface->pixels);
 
 	glBindVertexArray(vaoID);
@@ -490,6 +502,8 @@ void GraphicsDevice::renderUIElement(UIElement element)
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteTextures(1, &texture);
+
+	VertexArrayObject::destroy(vaoID);
 }
 
 void GraphicsDevice::renderConsole()
@@ -583,6 +597,9 @@ void GraphicsDevice::renderConsole()
 	glBindVertexArray(0);
 
 	glDisable(GL_BLEND);
+
+	VertexArrayObject::destroy(vaoID);
+	VertexArrayObject::destroy(vaoID2);
 
 	stopUINShader();
 }
