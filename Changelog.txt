@@ -1,7 +1,12 @@
 Alpha Versions:
 
+1.7.8
+-Added game.h include to commandExecutor.h
+-TransformComponent variables (position, rotation, scale) are now non-pointer variables
+-Command executors are now being removed while Game is exiting
+
 1.7.7
--Now Music and Sound effects are deleted when Game exits
+-Now Music and Sound effects are deleted while Game is exiting
 -Removed global variable defaultColor
 
 1.7.6_02

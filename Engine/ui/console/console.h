@@ -21,6 +21,7 @@
 #include "../../math/math.h"
 #include "../../input/keyboardInput.h"
 
+class CommandExecutor;
 class GraphicsDevice;
 class Event;
 
@@ -41,6 +42,7 @@ private:
 	static void setVisibility(bool vis);
 	static void switchVis();
 	static void onConsoleKeyDown(KeyboardKey key, bool big);
+	static void destroy();
 };
 
 #endif

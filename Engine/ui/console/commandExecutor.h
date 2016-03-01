@@ -18,6 +18,7 @@
 #define _IE_COMMAND_EXECUTOR_H_
 
 #include <string>
+#include "../../engine/game/game.h"
 
 class Console;
 

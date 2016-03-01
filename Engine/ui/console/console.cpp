@@ -73,6 +73,13 @@ void Console::switchVis()
 	else shown = true;
 }
 
+void Console::destroy()
+{
+	for(U32 i = 0; i < commandExecutors.size(); i++) delete commandExecutors.at(i);
+
+	commandExecutors.clear();
+}
+
 void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 {
 	switch(key)
