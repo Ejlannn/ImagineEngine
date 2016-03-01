@@ -16,8 +16,11 @@
 
 #include "exampleGame.h"
 
-/* Script Includes */
+/* Scripts */
 #include "scripts/freeCameraMovement.h"
+
+/* Commands Executors */
+#include "exampleCommandExe.h"
 
 int main()
 {
@@ -33,6 +36,8 @@ void ExampleGame::initializeGame()
 	 * W, A, S, D to move camera
 	 * ESC to exit
 	 * Left mouse button to play sound effect
+	 * ~ to open console
+	 * * type "spawn" command to back to the spawn position
 	 */
 
 	/* Scenes */
@@ -119,7 +124,10 @@ void ExampleGame::initializeGame()
 	scene1->addEntity(cubeEntity);
 	//scene1->addEntity(catEntity);
 
-	//Window::setFullscreen(false);
+	Window::setFullscreen(false);
+
+	/* Register command executor */
+	Console::registerCommandExecutor(new ExampleCommandExe());
 
 	/* Apply Scene */
 	setCurrentScene(scene1);
