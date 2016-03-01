@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.7.6
+-Next wave of fixes, corrections, improvements (Mostly replacing pointer variables to non-pointer)
+
 1.7.5
 -renderSimpleText method now supports colorizing
 -Another fixes, corrections, improvements
