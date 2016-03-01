@@ -117,6 +117,11 @@ void UIText::renderSimpleText(const std::string &message, FilePath *fontFile, U1
 	GraphicsDevice::addTextToRender(message, fontFile, size, position);
 }
 
+void UIText::renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 position, Color3 color)
+{
+	GraphicsDevice::addTextToRender(message, fontFile, size, position, color);
+}
+
 void UIText::recreate()
 {
 	SDL_Surface *surface;

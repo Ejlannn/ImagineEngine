@@ -39,6 +39,7 @@ public:
 	void changeTextColor(Color3 newColor);
 
 	static void renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 position);
+	static void renderSimpleText(const std::string &message, FilePath *fontFile, U16 size, Vector2 position, Color3 color);
 
 private:
 	std::string message;

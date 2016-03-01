@@ -58,7 +58,7 @@ public:
 		file = fontFile;
 		this->size = size;
 		pos = position;
-		color = new Color3(255.0f);
+		color = Color3(255.0f);
 	}
 
 	~Text2D() {}
@@ -67,33 +67,28 @@ public:
 	FilePath *file;
 	S16 size;
 	Vector2 pos;
-	Color3 *color;
+	Color3 color;
 };
 
-static std::vector<Text2D*> textsToRender;
+static std::vector<Text2D> textsToRender;
 
 void GraphicsDevice::setSamplesSize(U16 samples)
 {
 	samplesSize = samples;
 }
 
-bool isGameRunning()
+void GraphicsDevice::clear(Color3 color)
 {
-	return Game::isRunning();
+	glClearColor(color.r, color.g, color.b, 255.0f);
 }
 
-void clear(Color3 *color)
-{
-	glClearColor(color->r, color->g, color->b, 255.0f);
-}
-
-void clear()
+void GraphicsDevice::clear()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	clear(new Color3());
+	clear(Color3());
 }
 
-void prepare3D()
+void GraphicsDevice::prepare3D()
 {
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -156,8 +151,6 @@ void GraphicsDevice::destroy()
 
 void GraphicsDevice::render(Scene *scene)
 {
-	if(isGameRunning() == false) return;
-
 	if(scene == nullptr) return;
 
 	if(scene->camera == nullptr || scene->camera->entity == nullptr) return;
@@ -179,8 +172,8 @@ void GraphicsDevice::render(Scene *scene)
 
 	prepare3D();
 
-	if(scene->backgroundColor == nullptr) clear(new Color3());
-	else clear(scene->backgroundColor);
+	if(scene->backgroundColor == nullptr) clear(Color3());
+	else clear(Color3(scene->backgroundColor->r, scene->backgroundColor->g, scene->backgroundColor->b));
 
 	if(scene->skybox != nullptr)
 	{
@@ -246,26 +239,21 @@ void GraphicsDevice::render(Scene *scene)
 	{
 		for(U32 i = 0; i < textsToRender.size(); i++)
 		{
-			SDL_Color color = { (U8)textsToRender.at(i)->color->r, (U8)textsToRender.at(i)->color->g, (U8)textsToRender.at(i)->color->b };
+			SDL_Color color = { (U8) textsToRender.at(i).color.r, (U8) textsToRender.at(i).color.g, (U8) textsToRender.at(i).color.b };
 
-			TTF_Font *font = ResourceLoader::loadFont(textsToRender.at(i)->file, textsToRender.at(i)->size);
+			TTF_Font *font = ResourceLoader::loadFont(textsToRender.at(i).file, textsToRender.at(i).size);
 
-			SDL_Surface *fontSurface = TTF_RenderText_Blended(font, textsToRender.at(i)->msg.c_str(), color);
+			SDL_Surface *fontSurface = TTF_RenderText_Blended(font, textsToRender.at(i).msg.c_str(), color);
 
 			startUIShader();
 
-			renderUIElement(UIElement(textsToRender.at(i)->pos, fontSurface));
+			renderUIElement(UIElement(textsToRender.at(i).pos, fontSurface));
 
 			stopUIShader();
 
 			SDL_FreeSurface(fontSurface);
 
 			TTF_CloseFont(font);
-		}
-
-		for(U32 i = 0; i < textsToRender.size(); i++)
-		{
-			delete textsToRender.at(i);
 		}
 
 		textsToRender.clear();
@@ -508,21 +496,10 @@ void GraphicsDevice::renderUIElement(UIElement element)
 
 void GraphicsDevice::renderConsole()
 {
-	startUINShader(new Color3(0.1f,0.1f,0.1f));
+	startUINShader(Color3(0.1f,0.1f,0.1f));
 
 	std::vector<F32> positions;
 
-
-	/*positions.push_back(0.0f);
-	positions.push_back(0.0f);
-	positions.push_back((F32)Window::getWidth());
-	positions.push_back(0.0f);
-	positions.push_back((F32)Window::getWidth());
-	positions.push_back((F32) Console::getHeight());
-	positions.push_back(0.0f);
-	positions.push_back((F32) Console::getHeight());
-*/
-
 	positions.push_back(-1.0f);
 	positions.push_back(1.0f);
 	positions.push_back(1.0f);
@@ -536,21 +513,6 @@ void GraphicsDevice::renderConsole()
 	positions.push_back(1.0f);
 	positions.push_back(1.0f);
 	positions.push_back(0.1f);
-
-	/*
-	positions.push_back(-1.0f);
-	positions.push_back(0.1f);
-	positions.push_back(1.0f);
-	positions.push_back(0.1f);
-	positions.push_back(1.0f);
-	positions.push_back(0.1f - 0.05f);
-
-	positions.push_back(-1.0f);
-	positions.push_back(0.1f - 0.05f);
-	positions.push_back(-1.0f);
-	positions.push_back(0.1f);
-	positions.push_back(1.0f);
-	positions.push_back(0.1f - 0.05f);*/
 
 	U32 vaoID = VertexArrayObject::loadToVAO(positions, 2);
 
@@ -567,7 +529,7 @@ void GraphicsDevice::renderConsole()
 
 	stopUINShader();
 
-	startUINShader(new Color3(0.05f,0.05f,0.05f));
+	startUINShader(Color3(0.05f,0.05f,0.05f));
 
 	std::vector<F32> positions2;
 
@@ -749,7 +711,7 @@ void GraphicsDevice::stopUIShader()
 	uiShader->stop();
 }
 
-void GraphicsDevice::startUINShader(Color3 *color)
+void GraphicsDevice::startUINShader(Color3 color)
 {
 	uinShader->start();
 
@@ -763,7 +725,18 @@ void GraphicsDevice::stopUINShader()
 
 void GraphicsDevice::addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 position)
 {
-	textsToRender.push_back(new Text2D(message, fontFile, size, position));
+	textsToRender.push_back(Text2D(message, fontFile, size, position));
+}
+
+void GraphicsDevice::addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 position, Color3 color)
+{
+	Text2D textToRender = Text2D(message, fontFile, size, position);
+
+	textToRender.color.r = color.r;
+	textToRender.color.g = color.g;
+	textToRender.color.b = color.b;
+
+	textsToRender.push_back(textToRender);
 }
 
 BaseShader *GraphicsDevice::getBaseShader()

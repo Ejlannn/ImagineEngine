@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.7.5
+-renderSimpleText method now supports colorizing
+-Another fixes, corrections, improvements
+
 1.7.4
 -Next wave of fixes, corrections, improvements
 

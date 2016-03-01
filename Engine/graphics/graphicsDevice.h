@@ -41,6 +41,9 @@ private:
 	static UIShader *getUIShader();
 	static UINShader *getUINShader();
 
+	static void prepare3D();
+	static void clear();
+	static void clear(Color3 color);
 	static void init();
 	static void destroy();
 	static void render(Scene *scene);
@@ -54,12 +57,10 @@ private:
 	static void stopSkyboxShader();
 	static void startUIShader();
 	static void stopUIShader();
-	static void startUINShader(Color3 *color);
+	static void startUINShader(Color3 color);
 	static void stopUINShader();
-	//static void render(Scene *scene);
-	//static void renderChildren(std::vector<Entity*> children, TransformComponent *parentTransform, Scene *scene);
-	//static void renderElements(MeshRendererComponent *meshRendererComponent, bool textured);
 	static void addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 position);
+	static void addTextToRender(const std::string &message, FilePath *fontFile, S16 size, Vector2 position, Color3 color);
 };
 
 #endif

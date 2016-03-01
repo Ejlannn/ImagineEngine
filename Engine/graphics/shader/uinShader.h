@@ -34,7 +34,7 @@ class UINShader : public ShaderProgram
 	virtual void bindAttributes();
 	virtual void getAllUniformLocations();
 
-	void loadColor(Color3 *value);
+	void loadColor(Color3 value);
 };
 
 #endif

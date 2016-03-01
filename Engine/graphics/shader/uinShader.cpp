@@ -34,9 +34,9 @@ void UINShader::getAllUniformLocations()
 	loc_color = getUniformLocation((char*) "color");
 }
 
-void UINShader::loadColor(Color3 *value)
+void UINShader::loadColor(Color3 value)
 {
-	Vector3 *toLoad = new Vector3(value->r, value->g, value->b);
+	Vector3 *toLoad = new Vector3(value.r, value.g, value.b);
 
 	loadVector3(loc_color, toLoad);
 }
