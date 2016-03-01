@@ -77,4 +77,8 @@ void FreeCameraMovement::onUpdate()
 	}
 }
 
-void FreeCameraMovement::onDestroy() {}
+void FreeCameraMovement::onDestroy()
+{
+	delete font1;
+	delete shotSound;
+}
