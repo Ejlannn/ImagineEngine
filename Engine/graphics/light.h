@@ -32,7 +32,7 @@ class Light
 	friend class BaseShader;
 
 public:
-	Color3 *color;
+	Color3 color;
 	F32 intensity;
 
 	~Light();

@@ -20,7 +20,7 @@
 
 Light::Light(std::string type)
 {
-	this->color = new Color3(1.0f);
+	this->color = Color3(1.0f);
 	this->intensity = 5.0f;
 	this->type = type;
 	entity = nullptr;

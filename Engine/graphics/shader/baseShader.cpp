@@ -176,7 +176,7 @@ void BaseShader::loadLightSources(Light *lightSources[4])
 
 		loadInt(loc_lightType[i], (S32) type);
 
-		Vector3 *color = new Vector3(lightSources[i]->color->r, lightSources[i]->color->g, lightSources[i]->color->b);
+		Vector3 *color = new Vector3(lightSources[i]->color.r, lightSources[i]->color.g, lightSources[i]->color.b);
 
 		loadVector3(loc_lightColor[i], color);
 
