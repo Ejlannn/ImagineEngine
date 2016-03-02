@@ -11,7 +11,7 @@ Compiled with GNU Compiler Collection (MinGW).
 # Dependencies #
 
 -C++11 <br>
--OpenGL 4.0+ (GLSL 4.00.09+) <br>
+-OpenGL 3.3+ (GLSL 3.30.6+) <br>
 -SDL2, SDL_image (2.0.0+), SDL_ttf (2.0.0+), SDL_mixer (2.0.0+) <br>
 -GLEW <br>
 
