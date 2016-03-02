@@ -43,13 +43,16 @@ void Error::throwErrorCode(S16 errorCode)
 		showMessageBox((char*) "Error 1: Failed to initialize SDL2 library");
 		break;
 	case 2:
-		showMessageBox((char*) "Error 2: Failed to initialize GLEW library\nMaybe too old OpenGL? You need OpenGL 4.0+");
+		showMessageBox((char*) "Error 2: Failed to initialize GLEW library\nMaybe too old OpenGL? You need OpenGL 3.3+");
 		break;
 	case 3:
 		showMessageBox((char*) "Error 3: Failed to create game window");
 		break;
 	case 4:
 		showMessageBox((char*) "Error 4: Cannot compile shader");
+		break;
+	case 5:
+		showMessageBox((char*) "Error 5: Your OpenGL version is not supported (You need OpenGL 3.3+)");
 		break;
 	default:
 		return;

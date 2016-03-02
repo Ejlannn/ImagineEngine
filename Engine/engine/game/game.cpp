@@ -52,13 +52,16 @@ S16 Game::initialize()
 
 	logger = new Logger("Imagine Engine");
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
 	if(Window::create() == 1) return 3;
 
-	if(glewInit() != GLEW_OK) return 2;
+	if(glewInit() != GLEW_OK)
+	{
+		if(!glewIsSupported("GL_VERSION_3_3")) return 5;
+		else return 2;
+	}
 
 	Event::init();
 

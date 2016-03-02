@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.7.9
+-Support for OpenGL 3.3+
+
 1.7.8
 -Added game.h include to commandExecutor.h
 -Command executors are now being removed while Game is exiting
