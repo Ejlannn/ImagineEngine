@@ -124,7 +124,7 @@ void ExampleGame::initializeGame()
 	scene1->addEntity(cubeEntity);
 	//scene1->addEntity(catEntity);
 
-	Window::setFullscreen(false);
+	//Window::setFullscreen(false);
 
 	/* Register command executor */
 	Console::registerCommandExecutor(new ExampleCommandExe());
