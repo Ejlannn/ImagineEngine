@@ -302,6 +302,7 @@ void GraphicsDevice::render(Scene *scene)
 void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *component)
 {
 	bool textured = false;
+	bool blending = false;
 
 	if(entity->hasComponent("MaterialComponent"))
 	{
@@ -311,6 +312,8 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 		else if(materialComponent->material != nullptr && materialComponent->material->sprite != nullptr
 				&& materialComponent->material->sprite->currentLayer != nullptr && materialComponent->material->sprite->currentLayer->textures.size() != 0)
 			textured = true;
+
+		if(materialComponent->material != nullptr) blending = materialComponent->material->blending;
 	}
 
 	if(component->cullFaces)
@@ -320,6 +323,12 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 	}
 
 	if(textured) glEnable(GL_TEXTURE_2D);
+
+	if(blending)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 
 	glBindVertexArray(component->model->vaoID);
 	glEnableVertexAttribArray(0);
@@ -366,6 +375,11 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisable(GL_TEXTURE_2D);
+	}
+
+	if(blending)
+	{
+		glDisable(GL_BLEND);
 	}
 
 	glDisableVertexAttribArray(0);

@@ -23,11 +23,12 @@ MaterialAsset::MaterialAsset()
 	texture = nullptr;
 	tilingX = 1;
 	tilingY = 1;
+	blending = false;
 }
 
 MaterialAsset::~MaterialAsset() {}
 
-Color3 MaterialAsset::getDefaultMainColor()
+Color4 MaterialAsset::getDefaultMainColor()
 {
-	return Color3(0.6f);
+	return Color4(0.6f, 0.6f, 0.6f, 1.0f);
 }

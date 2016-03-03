@@ -4,12 +4,12 @@ in vec3 position;
 in vec2 textureVector;
 in vec3 normalVector;
 
-out vec3 color;
+out vec4 color;
 out vec2 textureCoords;
 flat out float visibility;
 out vec4 lightToAdd[4];
 
-uniform vec3 mainColor;
+uniform vec4 mainColor;
 
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;

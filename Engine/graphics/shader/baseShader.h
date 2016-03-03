@@ -54,7 +54,7 @@ class BaseShader : public ShaderProgram
 	virtual void bindAttributes();
 	virtual void getAllUniformLocations();
 
-	void loadColor(Color3 value);
+	void loadColor(Color4 value);
 	void loadTransformationMatrix(Matrix4 *value);
 	void loadProjectionMatrix(Matrix4 *value);
 	void loadViewMatrix(Matrix4 *value);

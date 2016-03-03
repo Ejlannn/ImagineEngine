@@ -1,5 +1,10 @@
 Alpha Versions:
 
+1.8.0
+-Fixed lightning
+-Now MaterialAsset stores color in Color4 instead of Color3
+-Added blending
+
 1.7.12
 -New methods in SkyboxAsset class destructor
 

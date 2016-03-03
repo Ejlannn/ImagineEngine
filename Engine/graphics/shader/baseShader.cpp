@@ -90,11 +90,11 @@ void BaseShader::getAllUniformLocations()
 	loc_lightSpotAngle[3] = getUniformLocation((char*) "lightSpotAngle[3]");
 }
 
-void BaseShader::loadColor(Color3 value)
+void BaseShader::loadColor(Color4 value)
 {
-	Vector3 *cl = new Vector3(value.r, value.g, value.b);
+	Vector4 *cl = new Vector4(value.r, value.g, value.b, value.a);
 
-	loadVector3(loc_mainColor, cl);
+	loadVector4(loc_mainColor, cl);
 
 	delete cl;
 }
