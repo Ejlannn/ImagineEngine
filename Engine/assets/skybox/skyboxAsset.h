@@ -36,7 +36,7 @@ public:
 private:
 	FilePath *path[6];
 	U32 id;
-	U32 vaoID;
+	U32 vaoID[6];
 	SDL_Surface *surface[6];
 	S32 getVertexCount();
 };

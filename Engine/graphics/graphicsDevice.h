@@ -48,12 +48,12 @@ private:
 	static void destroy();
 	static void render(Scene *scene);
 	static void renderEntity(Entity *entity, MeshRendererComponent *mesh);
-	static void renderSkybox(SkyboxAsset *skybox);
+	static void renderSkybox(SkyboxAsset *skybox, Scene *scene);
 	static void renderUIElement(UIElement element);
 	static void renderConsole();
 	static void startBaseShader(Entity *entity, Scene *scene);
 	static void stopBaseShader();
-	static void startSkyboxShader(Scene *scene);
+	static void startSkyboxShader(Scene *scene, U16 face);
 	static void stopSkyboxShader();
 	static void startUIShader();
 	static void stopUIShader();

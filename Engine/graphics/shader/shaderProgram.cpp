@@ -120,7 +120,7 @@ void ShaderProgram::bindAttribute(U32 attribute, const std::string &name)
 	glBindAttribLocation(shaderProgramID, attribute, name.c_str());
 }
 
-void ShaderProgram::loadInt(U32 location, U32 value)
+void ShaderProgram::loadInt(U32 location, S32 value)
 {
 	glUniform1i(location, value);
 }

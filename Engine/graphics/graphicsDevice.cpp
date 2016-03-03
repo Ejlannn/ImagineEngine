@@ -176,9 +176,7 @@ void GraphicsDevice::render(Scene *scene)
 
 	if(scene->skybox != nullptr)
 	{
-		startSkyboxShader(scene);
-		renderSkybox(scene->skybox);
-		stopSkyboxShader();
+		renderSkybox(scene->skybox, scene);
 	}
 
 	for(U32 i = 0; i < scene->entities.size(); i++)
@@ -383,7 +381,7 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 	}
 }
 
-void GraphicsDevice::renderSkybox(SkyboxAsset *skybox)
+void GraphicsDevice::renderSkybox(SkyboxAsset *skybox, Scene *scene)
 {
 	if(skybox->id == 0) glGenTextures(1, &skybox->id);
 
@@ -406,11 +404,17 @@ void GraphicsDevice::renderSkybox(SkyboxAsset *skybox)
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	glBindVertexArray(skybox->vaoID);
-	glEnableVertexAttribArray(0);
-	glDrawArrays(GL_TRIANGLES, 0, skybox->getVertexCount());
-	glDisableVertexAttribArray(0);
-	glBindVertexArray(0);
+	for(U16 i = 0; i < 6; i++)
+	{
+		startSkyboxShader(scene, i + 1);
+
+		glBindVertexArray(skybox->vaoID[i]);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_TRIANGLES, 0, skybox->getVertexCount());
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
+		stopSkyboxShader();
+	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
@@ -678,7 +682,7 @@ void GraphicsDevice::stopBaseShader()
 	baseShader->stop();
 }
 
-void GraphicsDevice::startSkyboxShader(Scene *scene)
+void GraphicsDevice::startSkyboxShader(Scene *scene, U16 face)
 {
 	skyboxShader->start();
 
@@ -687,9 +691,22 @@ void GraphicsDevice::startSkyboxShader(Scene *scene)
 	newViewMatrix->m31 = 0.0f;
 	newViewMatrix->m32 = 0.0f;
 
-	skyboxShader->loadProjectionMatrix(projectionMatrix);
+	if(face == 5 || face == 6) newViewMatrix->rotate(Vector3(0.0f, 1.0f, 0.0f), MathUtil::degToRad(90.0f));
+
+	CameraComponent *cameraComponent = new CameraComponent();
+	cameraComponent->fov = scene->camera->fov;
+	cameraComponent->pitch = scene->camera->pitch;
+	cameraComponent->yaw = scene->camera->yaw;
+	cameraComponent->farPlane = 2000.0f;
+
+	Matrix4 *tempProjectionMatrix = CameraComponent::createProjectionMatrix(cameraComponent);
+
+	delete cameraComponent;
+
+	skyboxShader->loadProjectionMatrix(tempProjectionMatrix);
 	skyboxShader->loadViewMatrix(newViewMatrix);
 
+	delete tempProjectionMatrix;
 	delete newViewMatrix;
 }
 

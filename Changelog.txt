@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.7.11
+-Fixed skybox
+-Corrected loadInt method inside ShaderProgram class
+
 1.7.10
 -Fixed memory leak in Scene class
 

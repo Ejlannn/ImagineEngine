@@ -44,7 +44,7 @@ protected:
 
 	void bindAttribute(U32 attribute, const std::string &name);
 
-	void loadInt(U32 location, U32 value);
+	void loadInt(U32 location, S32 value);
 	void loadFloat(U32 location, F32 value);
 	void loadVector2(U32 location, Vector2 *value);
 	void loadVector3(U32 location, Vector3 value);
