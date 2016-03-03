@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.7.12
+-New methods in SkyboxAsset class destructor
+
 1.7.11
 -Fixed skybox
 -Corrected loadInt method inside ShaderProgram class
