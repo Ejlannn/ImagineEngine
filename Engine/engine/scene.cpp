@@ -168,10 +168,14 @@ void Scene::initializeEntity(Entity *entity)
 						meshRendererComponent->model->vertices.at(i)->z, 1.0);
 
 
+				delete vertex;
+
 				Vector4 *result = Vector4::transform(vertex, transformationMatrix);
 
 				processedVertices.push_back(result);
 			}
+
+			delete transformationMatrix;
 
 			MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entity->getComponent("MeshColliderComponent");
 
@@ -221,6 +225,8 @@ void Scene::updateEntity(Entity *entity)
 
 					processedVertices.push_back(result);
 				}
+
+				delete transformationMatrix;
 
 				MeshColliderComponent *meshColComponent = (MeshColliderComponent*) entity->getComponent("MeshColliderComponent");
 

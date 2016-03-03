@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.7.10
+-Fixed memory leak in Scene class
+
 1.7.9
 -Support for OpenGL 3.3+
 
