@@ -177,6 +177,7 @@ SkyboxAsset::~SkyboxAsset()
 {
 	for(U16 i = 0; i < 6; i++)
 	{
+		VertexArrayObject::destroy(vaoID[i]);
 		SDL_FreeSurface(surface[i]);
 	}
 }
