@@ -57,6 +57,7 @@ private:
 
 protected:
 	virtual void initializeGame() = 0;
+	virtual void destroyGame();
 };
 
 #endif

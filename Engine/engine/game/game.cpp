@@ -32,6 +32,7 @@
 static bool			running = false;
 static Scene		*currentScene = nullptr;
 static Logger 		*logger = nullptr;
+static Game			*currentGame = nullptr;
 
 Game::~Game()
 {
@@ -65,9 +66,9 @@ S16 Game::initialize()
 
 	Event::init();
 
-	GraphicsDevice::init();
-
 	initializeGame();
+
+	GraphicsDevice::init();
 
 	Window::firstUpdate();
 
@@ -89,13 +90,15 @@ void Game::update()
 
 		GraphicsDevice::render(currentScene);
 
-		if(Window::isExiting() == true) running = false;
+		if(Window::isExiting() == true) exit();
 	}
 }
 
 void Game::run()
 {
 	if(running) return;
+
+	currentGame = this;
 
 	prepareRun();
 }
@@ -121,6 +124,8 @@ void Game::prepareExit()
 	if(running) running = false;
 
 	if(currentScene != nullptr) currentScene->destroy();
+
+	if(currentGame != nullptr) currentGame->destroyGame();
 
 	Audio::destroy();
 
@@ -163,3 +168,5 @@ Logger *Game::getLogger()
 {
 	return logger;
 }
+
+void Game::destroyGame() {}
