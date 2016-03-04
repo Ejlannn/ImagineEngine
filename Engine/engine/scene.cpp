@@ -250,6 +250,8 @@ void Scene::updateEntity(Entity *entity)
 				{
 					MeshRendererComponent *meshRendererComponent2 = (MeshRendererComponent*) entities.at(j)->getComponent("MeshRendererComponent");
 
+					if(meshRendererComponent2->model == nullptr) continue;
+
 					TransformComponent *transformComponent1 = (TransformComponent*) entity->getComponent("TransformComponent");
 
 					Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent1);
@@ -258,40 +260,10 @@ void Scene::updateEntity(Entity *entity)
 
 					Matrix4 *transformationMatrix2 = TransformComponent::createTransformationMatrix(transformComponent2);
 
-					std::vector<Vector4*> processedVertices1;
-
-					for(U64 k = 0; k < meshRendererComponent1->model->vertices.size(); k++)
-					{
-						Vector4 *vertex = new Vector4(meshRendererComponent1->model->vertices.at(k)->x,
-								meshRendererComponent1->model->vertices.at(k)->y,
-								meshRendererComponent1->model->vertices.at(k)->z, 1.0);
-
-						delete vertex;
-
-						Vector4 *result = Vector4::transform(vertex, transformationMatrix1);
-
-						processedVertices1.push_back(result);
-					}
-
-					std::vector<Vector4*> processedVertices2;
-
-					for(U64 k = 0; k < meshRendererComponent2->model->vertices.size(); k++)
-					{
-						Vector4 *vertex = new Vector4(meshRendererComponent2->model->vertices.at(k)->x,
-								meshRendererComponent2->model->vertices.at(k)->y,
-								meshRendererComponent2->model->vertices.at(k)->z, 1.0);
-
-						delete vertex;
-
-						Vector4 *result = Vector4::transform(vertex, transformationMatrix2);
-
-						processedVertices2.push_back(result);
-					}
-
 					MeshColliderComponent *meshCol1 = (MeshColliderComponent*) entity->getComponent("MeshColliderComponent");
 					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entities.at(j)->getComponent("MeshColliderComponent");
 
-					if(MeshColliderComponent::areColliding(meshCol1->obb, meshCol2->obb, processedVertices1, processedVertices2))
+					if(MeshColliderComponent::areColliding(meshCol1->obb, meshCol2->obb, meshRendererComponent1->model, meshRendererComponent2->model, transformationMatrix1, transformationMatrix2))
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
@@ -303,16 +275,6 @@ void Scene::updateEntity(Entity *entity)
 
 					delete transformationMatrix1;
 					delete transformationMatrix2;
-
-					for(U64 i = 0; i < processedVertices1.size(); i++)
-					{
-						delete processedVertices1.at(i);
-					}
-
-					for(U64 i = 0; i < processedVertices2.size(); i++)
-					{
-						delete processedVertices2.at(i);
-					}
 				}
 			}
 		}

@@ -56,6 +56,8 @@ S16 Game::initialize()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
+	GraphicsDevice::preInit();
+
 	if(Window::create() == 1) return 3;
 
 	if(glewInit() != GLEW_OK)

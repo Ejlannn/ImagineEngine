@@ -72,6 +72,15 @@ void Window::shouldExit()
 	exiting = true;
 }
 
+void Window::recreateContext()
+{
+	if(window == nullptr) return;
+
+	SDL_GL_DeleteContext(SDL_GL_GetCurrentContext());
+
+	SDL_GL_CreateContext(window);
+}
+
 void Window::setTitle(char *windowTitle)
 {
 	title = windowTitle;

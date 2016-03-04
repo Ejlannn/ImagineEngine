@@ -18,6 +18,7 @@
 #define _IE_MESH_COLLIDER_COMPONENT_H_
 
 #include "componentBase.h"
+#include "transformComponent.h"
 #include "../../assets/model/modelAsset.h"
 
 class Scene;
@@ -39,9 +40,6 @@ private:
 
 class GraphicsDevice;
 
-/*
- * IMPORTANT: MeshColliderComponent is incomplete, it detects collisions only for 2 Oriented Bounding Boxes (Not detailed collision for mesh yet)
- */
 class MeshColliderComponent : public ComponentBase
 {
 	friend class Scene;
@@ -58,7 +56,7 @@ private:
 	Vector3 *obb[8];
 
 	void createOOB(std::vector<Vector4*> vertices);
-	static bool areColliding(Vector3 *obb1[8], Vector3 *obb2[8], std::vector<Vector4*> vertices1, std::vector<Vector4*> vertices2);
+	static bool areColliding(Vector3 *obb1[8], Vector3 *obb2[8], ModelAsset *model1, ModelAsset *model2, Matrix4 *transform1, Matrix4 *transform2);
 };
 
 #endif

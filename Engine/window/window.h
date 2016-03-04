@@ -56,6 +56,7 @@ private:
 	static void destroy();
 	static void update();
 	static void shouldExit();
+	static void recreateContext();
 };
 
 #endif

@@ -71,7 +71,7 @@ void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
 	obb[7] = new Vector3(maxX, minY, minZ);
 }
 
-bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], std::vector<Vector4*> vertices1, std::vector<Vector4*> vertices2)
+bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], ModelAsset *model1, ModelAsset *model2, Matrix4 *transform1, Matrix4 *transform2)
 {
 	bool obbResult = false;
 
@@ -100,74 +100,6 @@ bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], std
 
 	if(obbResult == false) return false;
 	else return true;
-
-	/*
-
-	U32 obbSiz = 0;
-
-	for(U64 i = 0; i < vertices2.size(); i++)
-	{
-		Vector3 *min = obb2[6];
-		Vector3 *max = obb2[1];
-
-		delete min;
-		delete max;
-	}
-
-	if(obbSiz == 0)
-	{
-		obbSiz = 1;
-
-	}
-
-	Vector3 *obbs[obbSiz][8];
-
-	if(obbSiz == 1)
-	{
-		obbs[0][0] = obb2[0];
-		obbs[0][1] = obb2[1];
-		obbs[0][3] = obb2[2];
-		obbs[0][2] = obb2[3];
-		obbs[0][4] = obb2[4];
-		obbs[0][5] = obb2[5];
-		obbs[0][6] = obb2[6];
-		obbs[0][7] = obb2[7];
-	}
-
-	for(U64 i = 0; i < vertices1.size(); i++)
-	{
-		for (U16 k = 0; k < obbSiz; k++)
-		{
-			for(U16 j = 0; j < 8; j++)
-			{
-				Vector3 *currentVertex = new Vector3(vertices1.at(i)->x, vertices1.at(i)->y, vertices1.at(i)->z);
-
-				Vector3 *min = obbs[k][6];
-				Vector3 *max = obbs[k][1];
-
-				if((currentVertex->x >= min->x && currentVertex->x <= max->x) && (currentVertex->y >= min->y && currentVertex->y <= max->y) && (currentVertex->z >= min->z && currentVertex->z <= max->z))
-				{
-					delete currentVertex;
-					delete min;
-					delete max;
-
-					return true;
-				}
-
-				delete currentVertex;
-				delete min;
-				delete max;
-			}
-		}
-	}
-
-	for(U16 i = 0; i < obbSiz; i++)
-	{
-		for(U16 j = 0; j < 8; j++)
-		{
-			delete obbs[i][j];
-		}
-	}*/
 
 	return false;
 }

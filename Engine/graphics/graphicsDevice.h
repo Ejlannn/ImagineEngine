@@ -44,6 +44,7 @@ private:
 	static void prepare3D();
 	static void clear();
 	static void clear(Color3 color);
+	static void preInit();
 	static void init();
 	static void destroy();
 	static void render(Scene *scene);
