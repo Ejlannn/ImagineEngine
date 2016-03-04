@@ -43,5 +43,6 @@ void main(void)
 		out_Color = out_Color + lightToAddFinal;
 	}
 	
+	out_Color.w = color.w;
 	out_Color.w = clamp(out_Color.w,0.0,1.0);
 }
