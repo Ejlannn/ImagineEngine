@@ -42,89 +42,66 @@ void ModelAsset::load()
 	std::vector<F32> texts;
 	std::vector<F32> norms;
 
+	std::vector<Vector3*> verticesConverted;
+	std::vector<Vector2*> texturesConverted;
+	std::vector<Vector3*> normalsConverted;
+
 	for(U64 i = 0; i < faces.size(); i++)
 	{
-	    indices.push_back(U64(faces.at(i)->v1 - 1));
-	    indices.push_back(U64(faces.at(i)->v2 - 1));
-	    indices.push_back(U64(faces.at(i)->v3 - 1));
+		indices.push_back(i * 3);
+		indices.push_back(i * 3 + 1);
+		indices.push_back(i * 3 + 2);
+
+		verticesConverted.push_back(vertices.at(faces.at(i)->v1 - 1));
+		verticesConverted.push_back(vertices.at(faces.at(i)->v2 - 1));
+		verticesConverted.push_back(vertices.at(faces.at(i)->v3 - 1));
+
+		if(textureVectors.size() > 0)
+		{
+			texturesConverted.push_back(textureVectors.at(faces.at(i)->vt1 - 1));
+			texturesConverted.push_back(textureVectors.at(faces.at(i)->vt2 - 1));
+			texturesConverted.push_back(textureVectors.at(faces.at(i)->vt3 - 1));
+		}
+
+		if(normalVectors.size() > 0)
+		{
+			normalsConverted.push_back(normalVectors.at(faces.at(i)->vn1 - 1));
+			normalsConverted.push_back(normalVectors.at(faces.at(i)->vn2 - 1));
+			normalsConverted.push_back(normalVectors.at(faces.at(i)->vn3 - 1));
+		}
+		else
+		{
+			//TODO: Generate
+		}
+	}
+
+	for(U64 i = 0; i < verticesConverted.size(); i++)
+	{
+		verts.push_back(verticesConverted.at(i)->x);
+		verts.push_back(verticesConverted.at(i)->y);
+		verts.push_back(verticesConverted.at(i)->z);
+	}
+
+	if(texturesConverted.size() > 0)
+	{
+		for(U64 i = 0; i < texturesConverted.size(); i++)
+		{
+			texts.push_back(texturesConverted.at(i)->x);
+			texts.push_back(1.0f - texturesConverted.at(i)->y);
+		}
+	}
+
+	if(normalsConverted.size() > 0)
+	{
+		for(U64 i = 0; i < normalsConverted.size(); i++)
+		{
+			norms.push_back(normalsConverted.at(i)->x);
+			norms.push_back(normalsConverted.at(i)->y);
+			norms.push_back(normalsConverted.at(i)->z);
+		}
 	}
 
 	vertexCount = indices.size();
-
-	for(U64 i = 0; i < vertices.size(); i++)
-	{
-	    verts.push_back(vertices.at(i)->x);
-	    verts.push_back(vertices.at(i)->y);
-	    verts.push_back(vertices.at(i)->z);
-	}
-
-	F32 textureArray[faces.size() * 2 * 3];
-
-    if(textureVectors.size() > 0)
-    {
-		for(U64 i = 0; i < faces.size(); i++)
-		{
-			for(U16 j = 0; j < 3; j++)
-			{
-				U32 currentVertexPointer = 0;
-
-				if(j == 0) currentVertexPointer = faces.at(i)->v1 - 1;
-				else if(j == 1) currentVertexPointer = faces.at(i)->v2 - 1;
-				else if(j == 2) currentVertexPointer = faces.at(i)->v3 - 1;
-
-				Vector2 *currentTexture = nullptr;
-
-				if(j == 0) currentTexture = textureVectors.at(faces.at(i)->vt1 - 1);
-				else if(j == 1) currentTexture = textureVectors.at(faces.at(i)->vt2 - 1);
-				else if(j == 2) currentTexture = textureVectors.at(faces.at(i)->vt3 - 1);
-
-				textureArray[currentVertexPointer * 2] = currentTexture->x;
-				textureArray[currentVertexPointer * 2 + 1] = (1.0f - currentTexture->y);
-			}
-		}
-
-		for(U64 i = 0; i < faces.size() * 2 * 3; i++)
-		{
-			texts.push_back(textureArray[i]);
-		}
-    }
-
-    if(normalVectors.size() == 0)
-    {
-    	//TODO: Generate normals
-    }
-
-    F32 normalArray[faces.size() * 3 * 3];
-
-    if(normalVectors.size() > 0)
-    {
-		for(U64 i = 0; i < faces.size(); i++)
-		{
-			for(U16 j = 0; j < 3; j++)
-			{
-				U64 currentVertexPointer = 0;
-
-				if(j == 0) currentVertexPointer = faces.at(i)->v1 - 1;
-				else if(j == 1) currentVertexPointer = faces.at(i)->v2 - 1;
-				else if(j == 2) currentVertexPointer = faces.at(i)->v3 - 1;
-
-				Vector3 *currentNormal = nullptr;
-
-				if(j == 0) currentNormal = normalVectors.at(faces.at(i)->vn1 - 1);
-				else if(j == 1) currentNormal = normalVectors.at(faces.at(i)->vn2 - 1);
-				else if(j == 2) currentNormal = normalVectors.at(faces.at(i)->vn3 - 1);
-
-				normalArray[currentVertexPointer * 2] = currentNormal->x;
-				normalArray[currentVertexPointer * 2 + 1] = currentNormal->y;
-				normalArray[currentVertexPointer * 2 + 2] = currentNormal->z;
-			}
-		}
-
-		for(U64 i = 0; i < faces.size() * 3 * 3; i++)
-		{
-			norms.push_back(normalArray[i]);
-		}
-    }
 
 	if(texts.size() == 0) vaoID = VertexArrayObject::loadToVAO(verts, norms, indices);
 	else vaoID = VertexArrayObject::loadToVAO(verts, texts, norms, indices);
