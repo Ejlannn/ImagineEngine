@@ -24,7 +24,7 @@ static S32 vertexCount = 0;
 
 SkyboxAsset::SkyboxAsset(FilePath *path[6])
 {
-	float size = 500.0f;
+	const F32 size = 500.0f;
 
 	this->path[0] = path[0];
 	this->path[1] = path[1];

@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.9.3_01
+-Changed data type name from float to F32 (size var inside SkyboxAsset)
+
 1.9.3
 -Added render distance
 
