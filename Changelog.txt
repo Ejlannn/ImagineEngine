@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.9.3
+-Added render distance
+
 1.9.2
 -Added getVerticesCount getter to GraphicsDevice class
 -Added new utils

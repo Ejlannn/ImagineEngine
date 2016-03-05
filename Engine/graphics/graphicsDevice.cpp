@@ -176,6 +176,9 @@ void GraphicsDevice::render(Scene *scene)
 		renderSkybox(scene->skybox, scene);
 	}
 
+	TransformComponent *cameraTransform = (TransformComponent*) scene->camera->getEntity()->getComponent("TransformComponent");
+	Vector3 *cameraPosition = cameraTransform->position;
+
 	for(U32 i = 0; i < scene->entities.size(); i++)
 	{
 		if(scene->entities.at(i)->children.size() > 0)
@@ -188,11 +191,17 @@ void GraphicsDevice::render(Scene *scene)
 
 					if(meshRendererComponent->model != nullptr)
 					{
-						startBaseShader(scene->entities.at(i)->children.at(j), scene);
+						TransformComponent *entityTransformComponent = (TransformComponent*) scene->entities.at(i)->children.at(j)->getComponent("TransformComponent");
+						Vector3 *entityPosition = entityTransformComponent->position;
 
-						renderEntity(scene->entities.at(i)->children.at(j), meshRendererComponent);
+						if(Vector3::distance(cameraPosition, entityPosition) <= scene->camera->farPlane)
+						{
+							startBaseShader(scene->entities.at(i)->children.at(j), scene);
 
-						stopBaseShader();
+							renderEntity(scene->entities.at(i)->children.at(j), meshRendererComponent);
+
+							stopBaseShader();
+						}
 					}
 				}
 			}
@@ -204,11 +213,17 @@ void GraphicsDevice::render(Scene *scene)
 
 			if(meshRendererComponent->model != nullptr)
 			{
-				startBaseShader(scene->entities.at(i), scene);
+				TransformComponent *entityTransformComponent = (TransformComponent*) scene->entities.at(i)->getComponent("TransformComponent");
+				Vector3 *entityPosition = entityTransformComponent->position;
 
-				renderEntity(scene->entities.at(i), meshRendererComponent);
+				if(Vector3::distance(cameraPosition, entityPosition) <= scene->camera->farPlane)
+				{
+					startBaseShader(scene->entities.at(i), scene);
 
-				stopBaseShader();
+					renderEntity(scene->entities.at(i), meshRendererComponent);
+
+					stopBaseShader();
+				}
 			}
 		}
 	}
