@@ -56,7 +56,24 @@ struct Vector3
 
 	Vector3 *clone();
 
+	bool isNormalized();
+
+	void normalize();
+
+	static F32 length(Vector3 *value);
+	static F32 length(Vector3 value);
+	F32 length();
+
+	static F32 lengthSquared(Vector3 *value);
+	static F32 lengthSquared(Vector3 value);
+	F32 lengthSquared();
+
 	static F32 distance(Vector3 *value1, Vector3 *value2);
+	static F32 distance(Vector3 value1, Vector3 value2);
+	static F32 distance(Vector3 *value1, Vector3 value2);
+	static F32 distance(Vector3 value1, Vector3 *value2);
+	F32 distance(Vector3 *value);
+	F32 distance(Vector3 value);
 };
 
 /******************************

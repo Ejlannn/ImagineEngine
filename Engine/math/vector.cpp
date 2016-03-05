@@ -16,6 +16,7 @@
 
 #include "vector.h"
 
+#include <algorithm>
 #include <cmath>
 #include "matrix.h"
 
@@ -85,13 +86,87 @@ Vector3 *Vector3::clone()
 	return new Vector3(x, y, z);
 }
 
+bool Vector3::isNormalized()
+{
+	return abs((x * x) + (y * y) + (z * z) - 1.0f) < 1e-6f;
+}
+
+void Vector3::normalize()
+{
+	F32 length = this->length();
+
+	if (length > 1e-6f)
+	{
+		F32 inv = 1.0f / length;
+
+		x *= inv;
+		y *= inv;
+		z *= inv;
+	}
+}
+
+F32 Vector3::length(Vector3 *value)
+{
+	return length(Vector3(value->x, value->y, value->z));
+}
+
+F32 Vector3::length(Vector3 value)
+{
+	return sqrtf((value.x * value.x) + (value.y * value.y) + (value.z * value.z));
+}
+
+F32 Vector3::length()
+{
+	return length(this);
+}
+
+F32 Vector3::lengthSquared(Vector3 *value)
+{
+	return lengthSquared(Vector3(value->x, value->y, value->z));
+}
+
+F32 Vector3::lengthSquared(Vector3 value)
+{
+	return (value.x * value.x) + (value.y * value.x) + (value.z * value.z);
+}
+
+F32 Vector3::lengthSquared()
+{
+	return lengthSquared(this);
+}
+
 F32 Vector3::distance(Vector3 *value1, Vector3 *value2)
 {
-	F32 tempX = value1->x - value2->x;
-	F32 tempY = value1->y - value2->y;
-	F32 tempZ = value1->z - value2->z;
+	return distance(Vector3(value1->x, value1->y, value1->z), Vector3(value2->x, value2->y, value2->z));
+}
+
+F32 Vector3::distance(Vector3 value1, Vector3 value2)
+{
+	F32 tempX = value1.x - value2.x;
+	F32 tempY = value1.y - value2.y;
+	F32 tempZ = value1.z - value2.z;
 
 	return sqrtf((tempX * tempX) + (tempY * tempY) + (tempZ * tempZ));
+}
+
+F32 Vector3::distance(Vector3 *value1, Vector3 value2)
+{
+	return distance(Vector3(value1->x, value1->y, value1->z), value2);
+}
+
+F32 Vector3::distance(Vector3 value1, Vector3 *value2)
+{
+	return distance(value1, Vector3(value2->x, value2->y, value2->z));
+}
+
+F32 Vector3::distance(Vector3 *value)
+{
+	return distance(this, value);
+}
+
+F32 Vector3::distance(Vector3 value)
+{
+	return distance(this, value);
 }
 
 /******************************
