@@ -17,6 +17,17 @@
 #ifndef _IE_UTILS_H_
 #define _IE_UTILS_H_
 
+#include <string>
+#include <sstream>
 #include "logger.h"
+
+template <typename T> std::string toString(const T &n)
+{
+	std::ostringstream stream;
+
+	stream << n;
+
+	return stream.str();
+}
 
 #endif

@@ -25,6 +25,7 @@
 #include "../../audio/audio.h"
 #include "../../error/error.h"
 #include "../../event/event.h"
+#include "../../graphics/graphicsDevice.h"
 #include "../../input/input.h"
 #include "../../platform/types.h"
 #include "../../time/time.h"

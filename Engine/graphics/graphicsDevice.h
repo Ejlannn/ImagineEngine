@@ -34,6 +34,7 @@ class GraphicsDevice
 
 public:
 	static void setSamplesSize(U16 samples);
+	static U64 getVerticesCount();
 
 private:
 	static BaseShader *getBaseShader();

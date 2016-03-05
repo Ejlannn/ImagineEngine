@@ -47,6 +47,8 @@ static SkyboxShader		*skyboxShader = nullptr;
 static UIShader			*uiShader = nullptr;
 static UINShader		*uinShader = nullptr;
 
+static U64 verticesCount = 0;
+
 struct Text2D
 {
 public:
@@ -155,6 +157,8 @@ void GraphicsDevice::render(Scene *scene)
 	projectionMatrix = CameraComponent::createProjectionMatrix(scene->camera);
 	projectionMatrix2DOrtho = CameraComponent::create2DOrthoProjectionMatrix();
 	viewMatrix = CameraComponent::createViewMatrix(scene->camera);
+
+	verticesCount = 0;
 
 	baseShader->start();
 	baseShader->loadProjectionMatrix(projectionMatrix);
@@ -363,6 +367,8 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 	}
 
 	glDrawElements(GL_TRIANGLES, component->model->getVertexCount(), GL_UNSIGNED_INT, 0);
+
+	verticesCount += component->model->getVertexCount();
 
 	if(textured)
 	{
@@ -780,4 +786,9 @@ UIShader *GraphicsDevice::getUIShader()
 UINShader *GraphicsDevice::getUINShader()
 {
 	return new UINShader();
+}
+
+U64 GraphicsDevice::getVerticesCount()
+{
+	return verticesCount;
 }
