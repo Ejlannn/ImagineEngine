@@ -74,6 +74,14 @@ struct Vector3
 	static F32 distance(Vector3 value1, Vector3 *value2);
 	F32 distance(Vector3 *value);
 	F32 distance(Vector3 value);
+
+	static Vector3 *add(Vector3 *value1, Vector3 *value2);
+
+	static Vector3 *subtract(Vector3 *value1, Vector3 *value2);
+
+	static F32 dot(Vector3 *value1, Vector3 *value2);
+
+	static Vector3 *cross(Vector3 *value1, Vector3 *value2);
 };
 
 /******************************
@@ -97,6 +105,8 @@ struct Vector4
 	Vector4 *clone();
 
 	static F32 distance(Vector4 *value1, Vector4 *value2);
+
+	void transform(Matrix4 *matrix);
 	static Vector4 *transform(Vector4 *vector4, Matrix4 *matrix);
 };
 

@@ -88,14 +88,14 @@ Vector3 *Vector3::clone()
 
 bool Vector3::isNormalized()
 {
-	return abs((x * x) + (y * y) + (z * z) - 1.0f) < 1e-6f;
+	return abs((x * x) + (y * y) + (z * z) - 1.0f) < F32(1e-6f);
 }
 
 void Vector3::normalize()
 {
 	F32 length = this->length();
 
-	if (length > 1e-6f)
+	if (length > F32(1e-6f))
 	{
 		F32 inv = 1.0f / length;
 
@@ -169,6 +169,28 @@ F32 Vector3::distance(Vector3 value)
 	return distance(this, value);
 }
 
+Vector3 *Vector3::add(Vector3 *value1, Vector3 *value2)
+{
+	return new Vector3(value1->x + value2->x, value1->y + value2->y, value1->z + value2->z);
+}
+
+Vector3 *Vector3::subtract(Vector3 *value1, Vector3 *value2)
+{
+	return new Vector3(value1->x - value2->x, value1->y - value2->y, value1->z - value2->z);
+}
+
+F32 Vector3::dot(Vector3 *value1, Vector3 *value2)
+{
+	return (value1->x * value2->x) + (value1->y * value2->y) + (value1->z * value2->z);
+}
+
+Vector3 *Vector3::cross(Vector3 *value1, Vector3 *value2)
+{
+	return new Vector3((value1->y * value2->z) - (value1->z * value2->y),
+			(value1->z * value2->x) - (value1->x * value2->z),
+			(value1->x * value2->y) - (value1->y * value2->x));
+}
+
 /******************************
  * Vector4
  *****************************/
@@ -238,4 +260,16 @@ Vector4 *Vector4::transform(Vector4 *vector4, Matrix4 *matrix)
 			(vector4->x * matrix->m03) + (vector4->y * matrix->m13) + (vector4->z * matrix->m23) + (vector4->w * matrix->m33));
 
 	return result;
+}
+
+void Vector4::transform(Matrix4 *matrix)
+{
+	Vector4 *result = transform(this, matrix);
+
+	x = result->x;
+	y = result->y;
+	z = result->z;
+	w = result->w;
+
+	delete result;
 }

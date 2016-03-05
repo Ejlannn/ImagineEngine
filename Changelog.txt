@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.10.0
+-Completed collision detection
+-Vector3 and Vector4 enchancements
+
 1.9.3_01
 -Changed data type name from float to F32 (size var inside SkyboxAsset)
 
