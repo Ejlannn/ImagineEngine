@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.9.2
+-Added getVerticesCount getter to GraphicsDevice class
+-Added new utils
+
 1.9.1
 -Vector3 enchancements
 
