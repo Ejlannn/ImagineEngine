@@ -50,11 +50,14 @@ public:
 
 	U32 getID();
 
+	Vector3 getPreviousPosition();
+
 private:
 	U32 id;
 	Entity *parent;
 	std::vector<ComponentBase*> components;
 	std::vector<Entity*> children;
+	Vector3 previousPosition;
 };
 
 #endif

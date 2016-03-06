@@ -29,6 +29,18 @@ Scene::Scene()
 	skybox = nullptr;
 	fogDensity = 0.0f;
 	fogGradient = 1.5f;
+	name = "Scene";
+}
+
+Scene::Scene(std::string name)
+{
+	backgroundColor = Color3();
+	ambientLightColor = Color3(1.0f);
+	camera = nullptr;
+	skybox = nullptr;
+	fogDensity = 0.0f;
+	fogGradient = 1.5f;
+	this->name = name;
 }
 
 Scene::~Scene() {}
@@ -149,6 +161,13 @@ void Scene::initializeEntity(Entity *entity)
 {
 	if(entity->children.size() > 0) for(U32 i = 0; i < entity->children.size(); i++) initializeEntity(entity->children.at(i));
 
+	if(entity->hasComponent("ScriptComponent"))
+	{
+		ScriptComponent *scriptComponent = (ScriptComponent*) entity->getComponent("ScriptComponent");
+
+		if(scriptComponent->scripts.size() > 0) scriptComponent->initialize();
+	}
+
 	if(entity->hasComponent("MeshRendererComponent") && entity->hasComponent("MeshColliderComponent"))
 	{
 		MeshRendererComponent *meshRendererComponent = (MeshRendererComponent*) entity->getComponent("MeshRendererComponent");
@@ -222,18 +241,27 @@ void Scene::initializeEntity(Entity *entity)
 		if(delRot) delete rotation;
 		if(delScale) delete scale;
 	}
-
-	if(entity->hasComponent("ScriptComponent"))
-	{
-		ScriptComponent *scriptComponent = (ScriptComponent*) entity->getComponent("ScriptComponent");
-
-		if(scriptComponent->scripts.size() > 0) scriptComponent->initialize();
-	}
 }
 
 void Scene::updateEntity(Entity *entity)
 {
 	if(entity->children.size() > 0) for(U32 i = 0; i < entity->children.size(); i++) updateEntity(entity->children.at(i));
+
+	TransformComponent *transformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
+
+	entity->previousPosition.x = transformComponent->position->x;
+	entity->previousPosition.y = transformComponent->position->y;
+	entity->previousPosition.z = transformComponent->position->z;
+
+	if(entity->hasComponent("ScriptComponent"))
+	{
+		ScriptComponent *scriptComponent = (ScriptComponent*) entity->getComponent("ScriptComponent");
+
+		if(scriptComponent->scripts.size() > 0)
+		{
+			scriptComponent->update();
+		}
+	}
 
 	if(entity->hasComponent("BoxColliderComponent"))
 	{
@@ -241,8 +269,6 @@ void Scene::updateEntity(Entity *entity)
 
 		if(boxColliderComponent->staticCollider == false)
 		{
-			TransformComponent *transformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
-
 			Vector3 *rotation = new Vector3();
 
 			bool delRot = false;
@@ -286,8 +312,6 @@ void Scene::updateEntity(Entity *entity)
 
 			if(meshColComponent->staticCollider == false)
 			{
-				TransformComponent *transformComponent = (TransformComponent*) entity->getComponent("TransformComponent");
-
 				Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
 
 				std::vector<Vector4*> processedVertices;
@@ -332,9 +356,7 @@ void Scene::updateEntity(Entity *entity)
 
 					if(meshRendererComponent2->model == nullptr) continue;
 
-					TransformComponent *transformComponent1 = (TransformComponent*) entity->getComponent("TransformComponent");
-
-					Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent1);
+					Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent);
 
 					TransformComponent *transformComponent2 = (TransformComponent*) entities.at(j)->getComponent("TransformComponent");
 
@@ -348,7 +370,13 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision collision = Collision(entities.at(j));
+							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
+									entity->previousPosition.y - transformComponent->position->y,
+									entity->previousPosition.z - transformComponent->position->z);
+
+							moveDir.normalize();
+
+							Collision collision = Collision(entities.at(j), moveDir);
 							scriptComponent->scripts.at(m)->onCollision(collision);
 						}
 					}
@@ -370,9 +398,7 @@ void Scene::updateEntity(Entity *entity)
 					delete rot;
 					delete scl;
 
-					TransformComponent *transformComponent1 = (TransformComponent*) entity->getComponent("TransformComponent");
-
-					Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent1);
+					Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent);
 
 					MeshColliderComponent *meshCol1 = (MeshColliderComponent*) entity->getComponent("MeshColliderComponent");
 
@@ -382,7 +408,13 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision collision = Collision(entities.at(j));
+							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
+									entity->previousPosition.y - transformComponent->position->y,
+									entity->previousPosition.z - transformComponent->position->z);
+
+							moveDir.normalize();
+
+							Collision collision = Collision(entities.at(j), moveDir);
 							scriptComponent->scripts.at(m)->onCollision(collision);
 						}
 					}
@@ -424,7 +456,13 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision collision = Collision(entities.at(j));
+							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
+									entity->previousPosition.y - transformComponent->position->y,
+									entity->previousPosition.z - transformComponent->position->z);
+
+							moveDir.normalize();
+
+							Collision collision = Collision(entities.at(j), moveDir);
 							scriptComponent->scripts.at(m)->onCollision(collision);
 						}
 					}
@@ -458,7 +496,13 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision collision = Collision(entities.at(j));
+							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
+									entity->previousPosition.y - transformComponent->position->y,
+									entity->previousPosition.z - transformComponent->position->z);
+
+							moveDir.normalize();
+
+							Collision collision = Collision(entities.at(j), moveDir);
 							scriptComponent->scripts.at(m)->onCollision(collision);
 						}
 					}
@@ -467,16 +511,6 @@ void Scene::updateEntity(Entity *entity)
 					delete transformationMatrix2;
 				}
 			}
-		}
-	}
-
-	if(entity->hasComponent("ScriptComponent"))
-	{
-		ScriptComponent *scriptComponent = (ScriptComponent*) entity->getComponent("ScriptComponent");
-
-		if(scriptComponent->scripts.size() > 0)
-		{
-			scriptComponent->update();
 		}
 	}
 

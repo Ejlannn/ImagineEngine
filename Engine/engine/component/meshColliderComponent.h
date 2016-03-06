@@ -29,14 +29,13 @@ class Collision
 
 public:
 	Entity *getCollider();
+	Vector3 getMoveDirection();
 
 private:
-	Collision(Entity *entity)
-	{
-		collider = entity;
-	}
+	Collision(Entity *entity, Vector3 direction);
 
 	Entity *collider;
+	Vector3 moveDirection;
 };
 
 class GraphicsDevice;

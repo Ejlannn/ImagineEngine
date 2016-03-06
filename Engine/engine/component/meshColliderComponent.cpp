@@ -20,6 +20,12 @@
 #include <cfloat>
 #include <cmath>
 
+Collision::Collision(Entity *entity, Vector3 direction)
+{
+	collider = entity;
+	moveDirection = direction;
+}
+
 MeshColliderComponent::MeshColliderComponent() : ComponentBase("MeshColliderComponent")
 {
 	staticCollider = true;

@@ -270,3 +270,8 @@ Entity *Entity::getParent()
 {
 	return parent;
 }
+
+Vector3 Entity::getPreviousPosition()
+{
+	return previousPosition;
+}

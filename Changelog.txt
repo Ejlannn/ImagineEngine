@@ -1,5 +1,10 @@
 Alpha Versions:
 
+1.11.2
+-Added scene naming
+-Changed methods order in Scene
+-Some other improvements and enchancements
+
 1.11.1
 -Collision improvements
 

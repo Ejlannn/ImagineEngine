@@ -18,10 +18,10 @@
 #define _IE_BOX_COLLIDER_COMPONENT_H_
 
 #include "componentBase.h"
+#include "meshColliderComponent.h"
 #include "../../assets/model/modelAsset.h"
 
 class Scene;
-class MeshColliderComponent;
 
 class BoxColliderComponent : public ComponentBase
 {

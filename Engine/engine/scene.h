@@ -32,6 +32,7 @@ class Scene
 
 public:
 	Scene();
+	Scene(std::string name);
 
 	~Scene();
 
@@ -41,6 +42,7 @@ public:
 	SkyboxAsset *skybox;
 	F32 fogDensity;
 	F32 fogGradient;
+	std::string name;
 
 	void addEntity(Entity *entity);
 	void removeEntity(Entity *entity);
