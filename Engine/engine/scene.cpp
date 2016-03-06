@@ -210,36 +210,7 @@ void Scene::initializeEntity(Entity *entity)
 
 		BoxColliderComponent *boxColliderComponent = (BoxColliderComponent*) entity->getComponent("BoxColliderComponent");
 
-		Vector3 *rotation = new Vector3();
-
-		bool delRot = false;
-
-		if(boxColliderComponent->rotate)
-		{
-			delete rotation;
-			rotation = transformComponent->rotation;
-		}
-		else delRot = true;
-
-		Vector3 *scale = new Vector3(1.0f);
-
-		bool delScale;
-
-		if(boxColliderComponent->scale)
-		{
-			delete scale;
-			scale = transformComponent->scale;
-		}
-		else delScale = true;
-
-		Matrix4 *transformationMat = TransformComponent::createTransformationMatrix(transformComponent->position, rotation, scale);
-
-		boxColliderComponent->create(transformationMat);
-
-		delete transformationMat;
-
-		if(delRot) delete rotation;
-		if(delScale) delete scale;
+		boxColliderComponent->create(transformComponent->position);
 	}
 }
 
@@ -269,36 +240,7 @@ void Scene::updateEntity(Entity *entity)
 
 		if(boxColliderComponent->staticCollider == false)
 		{
-			Vector3 *rotation = new Vector3();
-
-			bool delRot = false;
-
-			if(boxColliderComponent->rotate)
-			{
-				delete rotation;
-				rotation = transformComponent->rotation;
-			}
-			else delRot = true;
-
-			Vector3 *scale = new Vector3(1.0f);
-
-			bool delScale;
-
-			if(boxColliderComponent->scale)
-			{
-				delete scale;
-				scale = transformComponent->scale;
-			}
-			else delScale = true;
-
-			Matrix4 *transformationMat = TransformComponent::createTransformationMatrix(transformComponent->position, rotation, scale);
-
-			boxColliderComponent->create(transformationMat);
-
-			delete transformationMat;
-
-			if(delRot) delete rotation;
-			if(delScale) delete scale;
+			boxColliderComponent->create(transformComponent->position);
 		}
 	}
 

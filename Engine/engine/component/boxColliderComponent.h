@@ -32,16 +32,16 @@ public:
 	BoxColliderComponent();
 	BoxColliderComponent(F32 size);
 
+	~BoxColliderComponent();
+
 	F32 size;
-	bool rotate;
-	bool scale;
 	bool staticCollider;
 
 private:
 	Vector3 *obb[8];
 	ModelAsset *modelAsset;
 
-	void create(Matrix4 *transformationMatrix);
+	void create(Vector3 *position);
 };
 
 #endif

@@ -32,7 +32,10 @@ MeshColliderComponent::MeshColliderComponent() : ComponentBase("MeshColliderComp
 	for(U16 i = 0; i < 8; i++) obb[i] = nullptr;
 }
 
-MeshColliderComponent::~MeshColliderComponent() {}
+MeshColliderComponent::~MeshColliderComponent()
+{
+	for(U16 i = 0; i < 8; i++) if(obb[i] != nullptr) delete obb[i];
+}
 
 void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
 {
