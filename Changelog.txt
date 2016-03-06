@@ -1,5 +1,12 @@
 Alpha Versions:
 
+1.11.2_05
+-Math improvements and enchancements
+-Fixed colliders
+
+1.11.2_04
+-Removed unused includes
+
 1.11.2_03
 -Fixed colliders
 

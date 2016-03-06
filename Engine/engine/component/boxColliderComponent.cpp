@@ -16,8 +16,6 @@
 
 #include "boxColliderComponent.h"
 
-#include <iostream>
-
 BoxColliderComponent::BoxColliderComponent() : ComponentBase("BoxColliderComponent")
 {
 	size = 1.0f;

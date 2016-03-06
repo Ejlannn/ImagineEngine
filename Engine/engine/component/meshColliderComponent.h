@@ -56,7 +56,7 @@ public:
 private:
 	Vector3 *obb[8];
 
-	void createOOB(std::vector<Vector4*> vertices);
+	void createOOB(std::vector<Vector4> vertices);
 	static bool areColliding(Vector3 *obb1[8], Vector3 *obb2[8], ModelAsset *model1, ModelAsset *model2, Matrix4 *transform1, Matrix4 *transform2);
 	static bool computeIntervals(F32 vv0, F32 vv1, F32 vv2,
 			F32 d0, F32 d1, F32 d2, F32 d0d1, F32 d0d2,

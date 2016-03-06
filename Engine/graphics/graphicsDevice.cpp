@@ -646,7 +646,7 @@ void GraphicsDevice::startBaseShader(Entity *entity, Scene *scene)
 				meshRendererComponent->model->vertices.at(i)->z, 1.0);
 
 
-		Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+		Vector4 *result = Vector4::transformToPointer(vertex, transformationMatrix);
 
 		processedVertices.push_back(result);
 

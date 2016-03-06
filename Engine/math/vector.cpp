@@ -260,9 +260,16 @@ F32 Vector4::distance(Vector4 *value1, Vector4 *value2)
 	return sqrtf((tempX * tempX) + (tempY * tempY) + (tempZ * tempZ) + (tempW * tempW));
 }
 
-Vector4 *Vector4::transform(Vector4 *vector4, Matrix4 *matrix)
+Vector4 *Vector4::transformToPointer(Vector4 *vector4, Matrix4 *matrix)
 {
-	Vector4 *result = new Vector4((vector4->x * matrix->m00) + (vector4->y * matrix->m10) + (vector4->z * matrix->m20) + (vector4->w * matrix->m30),
+	Vector4 result = transform(vector4, matrix);
+
+	return new Vector4(result.x, result.y, result.z, result.w);
+}
+
+Vector4 Vector4::transform(Vector4 *vector4, Matrix4 *matrix)
+{
+	Vector4 result = Vector4((vector4->x * matrix->m00) + (vector4->y * matrix->m10) + (vector4->z * matrix->m20) + (vector4->w * matrix->m30),
 			(vector4->x * matrix->m01) + (vector4->y * matrix->m11) + (vector4->z * matrix->m21) + (vector4->w * matrix->m31),
 			(vector4->x * matrix->m02) + (vector4->y * matrix->m12) + (vector4->z * matrix->m22) + (vector4->w * matrix->m32),
 			(vector4->x * matrix->m03) + (vector4->y * matrix->m13) + (vector4->z * matrix->m23) + (vector4->w * matrix->m33));
@@ -272,7 +279,7 @@ Vector4 *Vector4::transform(Vector4 *vector4, Matrix4 *matrix)
 
 void Vector4::transform(Matrix4 *matrix)
 {
-	Vector4 *result = transform(this, matrix);
+	Vector4 *result = transformToPointer(this, matrix);
 
 	x = result->x;
 	y = result->y;

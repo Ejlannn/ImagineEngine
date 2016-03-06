@@ -21,6 +21,8 @@
 #include "game/game.h"
 #include "../graphics/lightProcessor.h"
 
+#include <iostream>
+
 Scene::Scene()
 {
 	backgroundColor = Color3();
@@ -178,7 +180,7 @@ void Scene::initializeEntity(Entity *entity)
 
 			Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
 
-			std::vector<Vector4*> processedVertices;
+			std::vector<Vector4> processedVertices;
 
 			for(U64 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
 			{
@@ -189,7 +191,7 @@ void Scene::initializeEntity(Entity *entity)
 
 				delete vertex;
 
-				Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+				Vector4 result = Vector4::transform(vertex, transformationMatrix);
 
 				processedVertices.push_back(result);
 			}
@@ -200,7 +202,7 @@ void Scene::initializeEntity(Entity *entity)
 
 			if(meshColComponent->obb[0] == nullptr) meshColComponent->createOOB(processedVertices);
 
-			for(U64 i = 0; i < processedVertices.size(); i++) delete processedVertices.at(i);
+			processedVertices.clear();
 		}
 	}
 
@@ -223,6 +225,21 @@ void Scene::updateEntity(Entity *entity)
 	entity->previousPosition.x = transformComponent->position->x;
 	entity->previousPosition.y = transformComponent->position->y;
 	entity->previousPosition.z = transformComponent->position->z;
+
+	std::vector<Entity*> entitiesToCheck;
+
+	for(U64 j = 0; j < entities.size(); j++)
+	{
+		entitiesToCheck.push_back(entities.at(j));
+
+		if(entities.at(j)->children.size() > 0)
+		{
+			for(U64 m = 0; m < entities.at(j)->children.size(); m++)
+			{
+				entitiesToCheck.push_back(entities.at(j)->children.at(m));
+			}
+		}
+	}
 
 	if(entity->hasComponent("ScriptComponent"))
 	{
@@ -256,7 +273,7 @@ void Scene::updateEntity(Entity *entity)
 			{
 				Matrix4 *transformationMatrix = TransformComponent::createTransformationMatrix(transformComponent);
 
-				std::vector<Vector4*> processedVertices;
+				std::vector<Vector4> processedVertices;
 
 				for(U64 i = 0; i < meshRendererComponent->model->vertices.size(); i++)
 				{
@@ -264,7 +281,7 @@ void Scene::updateEntity(Entity *entity)
 							meshRendererComponent->model->vertices.at(i)->y,
 							meshRendererComponent->model->vertices.at(i)->z, 1.0);
 
-					Vector4 *result = Vector4::transform(vertex, transformationMatrix);
+					Vector4 result = Vector4::transform(vertex, transformationMatrix);
 
 					delete vertex;
 
@@ -277,7 +294,7 @@ void Scene::updateEntity(Entity *entity)
 
 				meshColComponent->createOOB(processedVertices);
 
-				for(U64 i = 0; i < processedVertices.size(); i++) delete processedVertices.at(i);
+				processedVertices.clear();
 			}
 		}
 	}
@@ -290,38 +307,39 @@ void Scene::updateEntity(Entity *entity)
 
 		if(meshRendererComponent1->model != nullptr && scriptComponent->scripts.size() > 0)
 		{
-			for(U32 j = 0; j < entities.size(); j++)
+			for(U32 j = 0; j < entitiesToCheck.size(); j++)
 			{
-				if(entities.at(j)->hasComponent("MeshRendererComponent") && entities.at(j)->hasComponent("MeshColliderComponent") && entities.at(j)->getID() != entity->getID())
+				if(entitiesToCheck.at(j)->hasComponent("MeshRendererComponent") && entitiesToCheck.at(j)->hasComponent("MeshColliderComponent") && entitiesToCheck.at(j)->getID() != entity->getID())
 				{
-					MeshRendererComponent *meshRendererComponent2 = (MeshRendererComponent*) entities.at(j)->getComponent("MeshRendererComponent");
+					MeshRendererComponent *meshRendererComponent2 = (MeshRendererComponent*) entitiesToCheck.at(j)->getComponent("MeshRendererComponent");
 
 					if(meshRendererComponent2->model == nullptr) continue;
 
 					Matrix4 *transformationMatrix1 = TransformComponent::createTransformationMatrix(transformComponent);
 
-					TransformComponent *transformComponent2 = (TransformComponent*) entities.at(j)->getComponent("TransformComponent");
+					TransformComponent *transformComponent2 = (TransformComponent*) entitiesToCheck.at(j)->getComponent("TransformComponent");
 
 					Matrix4 *transformationMatrix2 = TransformComponent::createTransformationMatrix(transformComponent2);
 
 					MeshColliderComponent *meshCol1 = (MeshColliderComponent*) entity->getComponent("MeshColliderComponent");
-					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entities.at(j)->getComponent("MeshColliderComponent");
+					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entitiesToCheck.at(j)->getComponent("MeshColliderComponent");
 
 					if(MeshColliderComponent::areColliding(meshCol1->obb, meshCol2->obb, meshRendererComponent1->model, meshRendererComponent2->model,
 							transformationMatrix1, transformationMatrix2))
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
+							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j)));
 						}
 					}
 
 					delete transformationMatrix1;
 					delete transformationMatrix2;
 				}
-				else if(entities.at(j)->hasComponent("BoxColliderComponent") && entities.at(j)->getID() != entity->getID())
+
+				if(entitiesToCheck.at(j)->hasComponent("BoxColliderComponent") && entitiesToCheck.at(j)->getID() != entity->getID())
 				{
-					BoxColliderComponent *boxColliderComponent2 = (BoxColliderComponent*) entities.at(j)->getComponent("BoxColliderComponent");
+					BoxColliderComponent *boxColliderComponent2 = (BoxColliderComponent*) entitiesToCheck.at(j)->getComponent("BoxColliderComponent");
 
 					Vector3 *pos = new Vector3();
 					Vector3 *rot = new Vector3();
@@ -343,7 +361,7 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
+							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j)));
 						}
 					}
 
@@ -362,11 +380,11 @@ void Scene::updateEntity(Entity *entity)
 		{
 			BoxColliderComponent *boxColliderComponent1 = (BoxColliderComponent*) entity->getComponent("BoxColliderComponent");
 
-			for(U32 j = 0; j < entities.size(); j++)
+			for(U32 j = 0; j < entitiesToCheck.size(); j++)
 			{
-				if(entities.at(j)->hasComponent("BoxColliderComponent") && entities.at(j)->getID() != entity->getID())
+				if(entitiesToCheck.at(j)->hasComponent("BoxColliderComponent") && entitiesToCheck.at(j)->getID() != entity->getID())
 				{
-					BoxColliderComponent *boxColliderComponent2 = (BoxColliderComponent*) entities.at(j)->getComponent("BoxColliderComponent");
+					BoxColliderComponent *boxColliderComponent2 = (BoxColliderComponent*) entitiesToCheck.at(j)->getComponent("BoxColliderComponent");
 
 					Vector3 *pos = new Vector3();
 					Vector3 *rot = new Vector3();
@@ -384,15 +402,16 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
+							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j)));
 						}
 					}
 
 					delete transformMat;
 				}
-				else if(entities.at(j)->hasComponent("MeshRendererComponent") && entities.at(j)->hasComponent("MeshColliderComponent") && entities.at(j)->getID() != entity->getID())
+
+				if(entitiesToCheck.at(j)->hasComponent("MeshRendererComponent") && entitiesToCheck.at(j)->hasComponent("MeshColliderComponent") && entitiesToCheck.at(j)->getID() != entity->getID())
 				{
-					MeshRendererComponent *meshRendererComponent2 = (MeshRendererComponent*) entities.at(j)->getComponent("MeshRendererComponent");
+					MeshRendererComponent *meshRendererComponent2 = (MeshRendererComponent*) entitiesToCheck.at(j)->getComponent("MeshRendererComponent");
 
 					if(meshRendererComponent2->model == nullptr) continue;
 
@@ -406,18 +425,18 @@ void Scene::updateEntity(Entity *entity)
 					delete rot;
 					delete scl;
 
-					TransformComponent *transformComponent2 = (TransformComponent*) entities.at(j)->getComponent("TransformComponent");
+					TransformComponent *transformComponent2 = (TransformComponent*) entitiesToCheck.at(j)->getComponent("TransformComponent");
 
 					Matrix4 *transformationMatrix2 = TransformComponent::createTransformationMatrix(transformComponent2);
 
-					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entities.at(j)->getComponent("MeshColliderComponent");
+					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entitiesToCheck.at(j)->getComponent("MeshColliderComponent");
 
 					if(MeshColliderComponent::areColliding(boxColliderComponent1->obb, meshCol2->obb, boxColliderComponent1->modelAsset, meshRendererComponent2->model,
 							transformMat, transformationMatrix2))
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
+							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j)));
 						}
 					}
 

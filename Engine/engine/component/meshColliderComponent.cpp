@@ -37,7 +37,7 @@ MeshColliderComponent::~MeshColliderComponent()
 	for(U16 i = 0; i < 8; i++) if(obb[i] != nullptr) delete obb[i];
 }
 
-void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
+void MeshColliderComponent::createOOB(std::vector<Vector4> vertices)
 {
 	for(U16 i = 0; i < 8; i++) if(obb[i] != nullptr) delete obb[i];
 
@@ -52,17 +52,17 @@ void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
 	{
 		if(i == 0)
 		{
-			minX = vertices.at(i)->x;
-			minY = vertices.at(i)->y;
-			minZ = vertices.at(i)->z;
-			maxX = vertices.at(i)->x;
-			maxY = vertices.at(i)->y;
-			maxZ = vertices.at(i)->z;
+			minX = vertices.at(i).x;
+			minY = vertices.at(i).y;
+			minZ = vertices.at(i).z;
+			maxX = vertices.at(i).x;
+			maxY = vertices.at(i).y;
+			maxZ = vertices.at(i).z;
 
 			continue;
 		}
 
-		Vector3 *currentVertex = new Vector3(vertices.at(i)->x, vertices.at(i)->y, vertices.at(i)->z);
+		Vector3 *currentVertex = new Vector3(vertices.at(i).x, vertices.at(i).y, vertices.at(i).z);
 
 		if(currentVertex->x < minX) minX = currentVertex->x;
 		else if(currentVertex->x > maxX) maxX = currentVertex->x;

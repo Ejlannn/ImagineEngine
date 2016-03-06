@@ -108,7 +108,8 @@ struct Vector4
 	static F32 distance(Vector4 *value1, Vector4 *value2);
 
 	void transform(Matrix4 *matrix);
-	static Vector4 *transform(Vector4 *vector4, Matrix4 *matrix);
+	static Vector4 *transformToPointer(Vector4 *vector4, Matrix4 *matrix);
+	static Vector4 transform(Vector4 *vector4, Matrix4 *matrix);
 };
 
 #endif
