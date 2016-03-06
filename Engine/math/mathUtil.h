@@ -26,6 +26,7 @@ class MathUtil
 public:
 	static F32 degToRad(F32 angle);
 	static F32 radToDeg(F32 rad);
+	static F32 clamp(F32 value, F32 min, F32 max);
 };
 
 #endif

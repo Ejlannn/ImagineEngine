@@ -26,6 +26,7 @@ class Scene;
 class Collision
 {
 	friend class Scene;
+
 public:
 	Entity *getCollider();
 
@@ -39,11 +40,13 @@ private:
 };
 
 class GraphicsDevice;
+class BoxColliderComponent;
 
 class MeshColliderComponent : public ComponentBase
 {
 	friend class Scene;
 	friend class GraphicsDevice;
+	friend class BoxColliderComponent;
 
 public:
 	MeshColliderComponent();

@@ -17,6 +17,7 @@
 #ifndef _IE_COMPONENTS_H_
 #define _IE_COMPONENTS_H_
 
+#include "boxColliderComponent.h"
 #include "cameraComponent.h"
 #include "lightComponent.h"
 #include "materialComponent.h"

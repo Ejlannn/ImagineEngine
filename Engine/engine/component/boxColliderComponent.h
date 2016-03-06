@@ -14,24 +14,34 @@
 //You should have received a copy of the GNU General Public License
 //along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "mathUtil.h"
+#ifndef _IE_BOX_COLLIDER_COMPONENT_H_
+#define _IE_BOX_COLLIDER_COMPONENT_H_
 
-F32 MathUtil::degToRad(F32 deg)
+#include "componentBase.h"
+#include "../../assets/model/modelAsset.h"
+
+class Scene;
+class MeshColliderComponent;
+
+class BoxColliderComponent : public ComponentBase
 {
-	return deg * (PI / 180.0f);
-}
+	friend class Scene;
+	friend class MeshColliderComponent;
 
-F32 MathUtil::radToDeg(F32 rad)
-{
-	return rad * (180.0f / PI);
-}
+public:
+	BoxColliderComponent();
+	BoxColliderComponent(F32 size);
 
-F32 MathUtil::clamp(F32 value, F32 min, F32 max)
-{
-	F32 valueToReturn = value;
+	F32 size;
+	bool rotate;
+	bool scale;
+	bool staticCollider;
 
-	if(valueToReturn < min) valueToReturn = min;
-	else if(valueToReturn > max) valueToReturn = max;
+private:
+	Vector3 *obb[8];
+	ModelAsset *modelAsset;
 
-	return valueToReturn;
-}
+	void create(Matrix4 *transformationMatrix);
+};
+
+#endif

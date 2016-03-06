@@ -226,6 +226,14 @@ Vector4::Vector4(Vector3 *vector3, F32 w)
 	this->w = w;
 }
 
+Vector4::Vector4(Vector3 vector3, F32 w)
+{
+	x = vector3.x;
+	y = vector3.y;
+	z = vector3.z;
+	this->w = w;
+}
+
 Vector4::Vector4(F32 x, F32 y, F32 z, F32 w)
 {
 	this->x = x;

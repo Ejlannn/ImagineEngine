@@ -93,6 +93,9 @@ void Entity::addComponent(ComponentBase *component)
 		return;
 	}
 
+	if(component->name == "MeshColliderComponent") if(hasComponent("BoxColliderComponent")) return;
+	if(component->name == "BoxColliderComponent") if(hasComponent("MeshColliderComponent")) return;
+
 	for(U16 i = 0; i < components.size(); i++)
 	{
 		if(components.at(i)->name == component->name)

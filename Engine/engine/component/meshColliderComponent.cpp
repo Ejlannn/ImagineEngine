@@ -50,6 +50,7 @@ void MeshColliderComponent::createOOB(std::vector<Vector4*> vertices)
 			maxX = vertices.at(i)->x;
 			maxY = vertices.at(i)->y;
 			maxZ = vertices.at(i)->z;
+
 			continue;
 		}
 

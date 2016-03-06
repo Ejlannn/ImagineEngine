@@ -93,6 +93,7 @@ struct Vector4
 	Vector4(F32 value);
 	Vector4(Vector2 *vector2, F32 z, F32 w);
 	Vector4(Vector3 *vector3, F32 w);
+	Vector4(Vector3 vector3, F32 w);
 	Vector4(F32 x, F32 y, F32 z, F32 w);
 
 	~Vector4();

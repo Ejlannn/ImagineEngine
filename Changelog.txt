@@ -1,5 +1,10 @@
 Alpha Versions:
 
+1.11.0
+-Math enchancements
+-ModelAsset improvements
+-Added BoxColliderComponent
+
 1.10.0
 -Completed collision detection
 -Vector3 and Vector4 enchancements

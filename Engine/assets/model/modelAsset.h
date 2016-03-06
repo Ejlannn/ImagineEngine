@@ -24,6 +24,7 @@ class ModelLoader;
 class GraphicsDevice;
 class MeshColliderComponent;
 class Scene;
+class BoxColliderComponent;
 
 class ModelAsset
 {
@@ -31,6 +32,7 @@ class ModelAsset
 	friend class GraphicsDevice;
 	friend class MeshColliderComponent;
 	friend class Scene;
+	friend class BoxColliderComponent;
 
 public:
 	~ModelAsset();

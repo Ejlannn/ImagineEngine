@@ -28,6 +28,26 @@ ModelAsset::ModelAsset()
 
 ModelAsset::~ModelAsset()
 {
+	for(U64 i = 0; i < vertices.size(); i++)
+	{
+		delete vertices.at(i);
+	}
+
+	for(U64 i = 0; i < normalVectors.size(); i++)
+	{
+		delete normalVectors.at(i);
+	}
+
+	for(U64 i = 0; i < textureVectors.size(); i++)
+	{
+		delete textureVectors.at(i);
+	}
+
+	for(U64 i = 0; i < faces.size(); i++)
+	{
+		delete faces.at(i);
+	}
+
 	vertices.clear();
 	normalVectors.clear();
 	textureVectors.clear();
