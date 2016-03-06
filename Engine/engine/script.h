@@ -43,7 +43,7 @@ protected:
 	virtual void onDestroy();
 	virtual void onKeyboardKeyDown(KeyboardKey key);
 	virtual void onMouseButtonDown(MouseButton button);
-	virtual void onCollision(Collision *collision);
+	virtual void onCollision(Collision collision);
 };
 
 #endif

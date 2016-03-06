@@ -28,4 +28,4 @@ void Script::onUpdate() {}
 void Script::onDestroy() {}
 void Script::onKeyboardKeyDown(KeyboardKey key) {}
 void Script::onMouseButtonDown(MouseButton button) {}
-void Script::onCollision(Collision *collision) {}
+void Script::onCollision(Collision collision) {}

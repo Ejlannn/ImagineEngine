@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.11.1
+-Collision improvements
+
 1.11.0
 -Math enchancements
 -ModelAsset improvements

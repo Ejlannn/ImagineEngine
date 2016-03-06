@@ -348,9 +348,8 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision *collision = new Collision(entities.at(j));
+							Collision collision = Collision(entities.at(j));
 							scriptComponent->scripts.at(m)->onCollision(collision);
-							delete collision;
 						}
 					}
 
@@ -383,9 +382,8 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision *collision = new Collision(entities.at(j));
+							Collision collision = Collision(entities.at(j));
 							scriptComponent->scripts.at(m)->onCollision(collision);
-							delete collision;
 						}
 					}
 
@@ -426,9 +424,8 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision *collision = new Collision(entities.at(j));
+							Collision collision = Collision(entities.at(j));
 							scriptComponent->scripts.at(m)->onCollision(collision);
-							delete collision;
 						}
 					}
 
@@ -461,9 +458,8 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Collision *collision = new Collision(entities.at(j));
+							Collision collision = Collision(entities.at(j));
 							scriptComponent->scripts.at(m)->onCollision(collision);
-							delete collision;
 						}
 					}
 
