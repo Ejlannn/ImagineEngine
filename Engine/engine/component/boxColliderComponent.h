@@ -31,15 +31,19 @@ class BoxColliderComponent : public ComponentBase
 public:
 	BoxColliderComponent();
 	BoxColliderComponent(F32 size);
+	BoxColliderComponent(F32 width, F32 height, F32 depth);
 
 	~BoxColliderComponent();
 
-	F32 size;
+	F32 width;
+	F32 height;
+	F32 depth;
 	bool staticCollider;
 
 private:
 	Vector3 *obb[8];
 	ModelAsset *modelAsset;
+	BoxCollisionFace face;
 
 	void create(Vector3 *position);
 };

@@ -18,18 +18,20 @@
 
 BoxColliderComponent::BoxColliderComponent() : ComponentBase("BoxColliderComponent")
 {
-	size = 1.0f;
+	width = height = depth = 1.0f;
 	staticCollider = true;
 	modelAsset = new ModelAsset();
+	face = BoxCollisionFace::UNKNOWN;
 
 	for(U16 i = 0; i < 8; i++) obb[i] = nullptr;
 }
 
 BoxColliderComponent::BoxColliderComponent(F32 size) : ComponentBase("BoxColliderComponent")
 {
-	this->size = size;
+	width = height = depth = size;
 	staticCollider = true;
 	modelAsset = new ModelAsset();
+	face = BoxCollisionFace::UNKNOWN;
 
 	for(U16 i = 0; i < 8; i++) obb[i] = nullptr;
 }
@@ -47,29 +49,33 @@ void BoxColliderComponent::create(Vector3 *position)
 
 	delete modelAsset;
 
-	if(size < 0.0f) size = 1.0f;
+	if(width < 0.0f) width = 1.0f;
+	if(height < 0.0f) width = 1.0f;
+	if(depth < 0.0f) width = 1.0f;
 
-	F32 sizeDiv = size / 2.0f;
+	F32 widthDiv = width / 2.0f;
+	F32 heightDiv = height / 2.0f;
+	F32 depthDiv = depth / 2.0f;
 
-	obb[0] = new Vector3(-sizeDiv + position->x, sizeDiv + position->y, sizeDiv + position->z);
-	obb[1] = new Vector3(sizeDiv + position->x, sizeDiv + position->y, sizeDiv + position->z);
-	obb[2] = new Vector3(-sizeDiv + position->x, sizeDiv + position->y, -sizeDiv + position->z);
-	obb[3] = new Vector3(sizeDiv + position->x, sizeDiv + position->y, -sizeDiv + position->z);
-	obb[4] = new Vector3(-sizeDiv + position->x, -sizeDiv + position->y, sizeDiv + position->z);
-	obb[5] = new Vector3(sizeDiv + position->x, -sizeDiv + position->y, sizeDiv + position->z);
-	obb[6] = new Vector3(-sizeDiv + position->x, -sizeDiv + position->y, -sizeDiv + position->z);
-	obb[7] = new Vector3(sizeDiv + position->x, -sizeDiv + position->y, -sizeDiv + position->z);
+	obb[0] = new Vector3(-widthDiv + position->x, heightDiv + position->y, depthDiv + position->z);
+	obb[1] = new Vector3(widthDiv + position->x, heightDiv + position->y, depthDiv + position->z);
+	obb[2] = new Vector3(-widthDiv + position->x, heightDiv + position->y, -depthDiv + position->z);
+	obb[3] = new Vector3(widthDiv + position->x, heightDiv + position->y, -depthDiv + position->z);
+	obb[4] = new Vector3(-widthDiv + position->x, -heightDiv + position->y, depthDiv + position->z);
+	obb[5] = new Vector3(widthDiv + position->x, -heightDiv + position->y, depthDiv + position->z);
+	obb[6] = new Vector3(-widthDiv + position->x, -heightDiv + position->y, -depthDiv + position->z);
+	obb[7] = new Vector3(widthDiv + position->x, -heightDiv + position->y, -depthDiv + position->z);
 
 	modelAsset = new ModelAsset();
 
-	modelAsset->vertices.push_back(new Vector3(-sizeDiv + position->x, -sizeDiv + position->y, sizeDiv + position->z));
-	modelAsset->vertices.push_back(new Vector3(sizeDiv + position->x, -sizeDiv + position->y, sizeDiv + position->z));
-	modelAsset->vertices.push_back(new Vector3(-sizeDiv + position->x, sizeDiv + position->y, sizeDiv + position->z));
-	modelAsset->vertices.push_back(new Vector3(sizeDiv + position->x, sizeDiv + position->y, sizeDiv + position->z));
-	modelAsset->vertices.push_back(new Vector3(-sizeDiv + position->x, sizeDiv + position->y, -sizeDiv + position->z));
-	modelAsset->vertices.push_back(new Vector3(sizeDiv + position->x, sizeDiv + position->y, -sizeDiv + position->z));
-	modelAsset->vertices.push_back(new Vector3(-sizeDiv + position->x, -sizeDiv + position->y, -sizeDiv + position->z));
-	modelAsset->vertices.push_back(new Vector3(sizeDiv + position->x, -sizeDiv + position->y, -sizeDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(-widthDiv + position->x, -heightDiv + position->y, depthDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(widthDiv + position->x, -heightDiv + position->y, depthDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(-widthDiv + position->x, heightDiv + position->y, depthDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(widthDiv + position->x, heightDiv + position->y, depthDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(-widthDiv + position->x, heightDiv + position->y, -depthDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(widthDiv + position->x, heightDiv + position->y, -depthDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(-widthDiv + position->x, -heightDiv + position->y, -depthDiv + position->z));
+	modelAsset->vertices.push_back(new Vector3(widthDiv + position->x, -heightDiv + position->y, -depthDiv + position->z));
 
 	modelAsset->faces.push_back(new Face(1, 2, 3));
 	modelAsset->faces.push_back(new Face(3, 2, 4));

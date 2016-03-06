@@ -23,18 +23,32 @@
 
 class Scene;
 
+enum BoxCollisionFace
+{
+	FRONT,
+	BACK,
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+	UNKNOWN
+};
+
 class Collision
 {
 	friend class Scene;
 
 public:
 	Entity *getCollider();
-	Vector3 getMoveDirection();
+	BoxCollisionFace getCollidingFace();
+
 
 private:
 	Collision(Entity *entity);
+	Collision(Entity *entity, BoxCollisionFace face);
 
 	Entity *collider;
+	BoxCollisionFace face;
 };
 
 class GraphicsDevice;
@@ -57,7 +71,7 @@ private:
 	Vector3 *obb[8];
 
 	void createOOB(std::vector<Vector4> vertices);
-	static bool areColliding(Vector3 *obb1[8], Vector3 *obb2[8], ModelAsset *model1, ModelAsset *model2, Matrix4 *transform1, Matrix4 *transform2);
+	static bool areColliding(Vector3 *obb1[8], Vector3 *obb2[8], ModelAsset *model1, ModelAsset *model2, Matrix4 *transform1, Matrix4 *transform2, BoxColliderComponent *boxCollider);
 	static bool computeIntervals(F32 vv0, F32 vv1, F32 vv2,
 			F32 d0, F32 d1, F32 d2, F32 d0d1, F32 d0d2,
 			F32 &a, F32 &b, F32 &c, F32 &x0, F32 &x1);

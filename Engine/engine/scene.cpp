@@ -325,7 +325,7 @@ void Scene::updateEntity(Entity *entity)
 					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entitiesToCheck.at(j)->getComponent("MeshColliderComponent");
 
 					if(MeshColliderComponent::areColliding(meshCol1->obb, meshCol2->obb, meshRendererComponent1->model, meshRendererComponent2->model,
-							transformationMatrix1, transformationMatrix2))
+							transformationMatrix1, transformationMatrix2, nullptr));
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
@@ -357,7 +357,7 @@ void Scene::updateEntity(Entity *entity)
 
 					if(MeshColliderComponent::areColliding(meshCol1->obb, boxColliderComponent2->obb,
 							meshRendererComponent1->model, boxColliderComponent2->modelAsset,
-							transformationMatrix1, transformMat))
+							transformationMatrix1, transformMat, nullptr))
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
@@ -398,11 +398,11 @@ void Scene::updateEntity(Entity *entity)
 
 					if(MeshColliderComponent::areColliding(boxColliderComponent1->obb, boxColliderComponent2->obb,
 							boxColliderComponent1->modelAsset, boxColliderComponent2->modelAsset,
-							transformMat, transformMat))
+							transformMat, transformMat, boxColliderComponent1))
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j)));
+							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j), boxColliderComponent1->face));
 						}
 					}
 
@@ -432,11 +432,11 @@ void Scene::updateEntity(Entity *entity)
 					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entitiesToCheck.at(j)->getComponent("MeshColliderComponent");
 
 					if(MeshColliderComponent::areColliding(boxColliderComponent1->obb, meshCol2->obb, boxColliderComponent1->modelAsset, meshRendererComponent2->model,
-							transformMat, transformationMatrix2))
+							transformMat, transformationMatrix2, boxColliderComponent1))
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j)));
+							scriptComponent->scripts.at(m)->onCollision(Collision(entitiesToCheck.at(j), boxColliderComponent1->face));
 						}
 					}
 

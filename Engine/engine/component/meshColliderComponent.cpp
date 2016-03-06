@@ -19,10 +19,23 @@
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
+#include "boxColliderComponent.h"
 
 Collision::Collision(Entity *entity)
 {
 	collider = entity;
+	face = BoxCollisionFace::UNKNOWN;
+}
+
+Collision::Collision(Entity *entity, BoxCollisionFace face)
+{
+	collider = entity;
+	this->face = face;
+}
+
+BoxCollisionFace Collision::getCollidingFace()
+{
+	return face;
 }
 
 MeshColliderComponent::MeshColliderComponent() : ComponentBase("MeshColliderComponent")
@@ -84,7 +97,7 @@ void MeshColliderComponent::createOOB(std::vector<Vector4> vertices)
 	obb[7] = new Vector3(maxX, minY, minZ);
 }
 
-bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], ModelAsset *model1, ModelAsset *model2, Matrix4 *transform1, Matrix4 *transform2)
+bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], ModelAsset *model1, ModelAsset *model2, Matrix4 *transform1, Matrix4 *transform2, BoxColliderComponent *boxCollider)
 {
 	bool obbResult = false;
 
@@ -353,7 +366,21 @@ bool MeshColliderComponent::areColliding(Vector3 *obb1[8], Vector3 *obb2[8], Mod
 				isect2->y = c;
 			}
 
-			if(!(isect1->y < isect2->x || isect2->y < isect1->x) == true) return true;
+			if(!(isect1->y < isect2->x || isect2->y < isect1->x) == true)
+			{
+				if(boxCollider != nullptr)
+				{
+					if(i <= 5 && i >= 0) boxCollider->face = BoxCollisionFace::FRONT;
+					else if(i <= 11 && i >= 6) boxCollider->face = BoxCollisionFace::UP;
+					else if(i <= 17 && i >= 12) boxCollider->face = BoxCollisionFace::BACK;
+					else if(i <= 23 && i >= 18) boxCollider->face = BoxCollisionFace::DOWN;
+					else if(i <= 29 && i >= 24) boxCollider->face = BoxCollisionFace::RIGHT;
+					else if(i <= 35 && i >= 30) boxCollider->face = BoxCollisionFace::LEFT;
+					else boxCollider->face = BoxCollisionFace::UNKNOWN;
+				}
+
+				return true;
+			}
 
 			delete e1;
 			delete e2;
@@ -620,7 +647,7 @@ bool MeshColliderComponent::edgeTest(Vector3 *v0, Vector3 *v1, Vector3 *u0, Vect
 		{
 			if(el >= 0 && el <= f) return true;
 		}
-		else if(el <= 0 && el >= f) return true;
+		else if(el <= 0 && el >= f)	 return true;
 	}
 
 	return false;
