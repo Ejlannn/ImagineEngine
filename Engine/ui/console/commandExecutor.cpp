@@ -16,4 +16,6 @@
 
 #include "commandExecutor.h"
 
+CommandExecutor::~CommandExecutor() {}
+
 void CommandExecutor::onCommand(std::string command, std::string args[]) {}

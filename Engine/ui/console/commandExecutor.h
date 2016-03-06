@@ -26,6 +26,9 @@ class CommandExecutor
 {
 	friend class Console;
 
+public:
+	virtual ~CommandExecutor();
+
 protected:
 	virtual void onCommand(std::string command, std::string args[]);
 };

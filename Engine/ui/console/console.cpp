@@ -300,6 +300,8 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 			if(big) tempCurrentLine += ":";
 			else tempCurrentLine += ";";
 			break;
+		default:
+			break;
 		}
 	}
 }
