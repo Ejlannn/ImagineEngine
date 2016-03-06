@@ -20,10 +20,9 @@
 #include <cfloat>
 #include <cmath>
 
-Collision::Collision(Entity *entity, Vector3 direction)
+Collision::Collision(Entity *entity)
 {
 	collider = entity;
-	moveDirection = direction;
 }
 
 MeshColliderComponent::MeshColliderComponent() : ComponentBase("MeshColliderComponent")

@@ -51,6 +51,7 @@ public:
 	U32 getID();
 
 	Vector3 getPreviousPosition();
+	Vector3 getMovingDirection();
 
 private:
 	U32 id;

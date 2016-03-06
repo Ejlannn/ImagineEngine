@@ -370,14 +370,7 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
-									entity->previousPosition.y - transformComponent->position->y,
-									entity->previousPosition.z - transformComponent->position->z);
-
-							moveDir.normalize();
-
-							Collision collision = Collision(entities.at(j), moveDir);
-							scriptComponent->scripts.at(m)->onCollision(collision);
+							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
 						}
 					}
 
@@ -408,14 +401,7 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
-									entity->previousPosition.y - transformComponent->position->y,
-									entity->previousPosition.z - transformComponent->position->z);
-
-							moveDir.normalize();
-
-							Collision collision = Collision(entities.at(j), moveDir);
-							scriptComponent->scripts.at(m)->onCollision(collision);
+							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
 						}
 					}
 
@@ -456,14 +442,7 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
-									entity->previousPosition.y - transformComponent->position->y,
-									entity->previousPosition.z - transformComponent->position->z);
-
-							moveDir.normalize();
-
-							Collision collision = Collision(entities.at(j), moveDir);
-							scriptComponent->scripts.at(m)->onCollision(collision);
+							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
 						}
 					}
 
@@ -496,14 +475,7 @@ void Scene::updateEntity(Entity *entity)
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
-							Vector3 moveDir = Vector3(entity->previousPosition.x - transformComponent->position->x,
-									entity->previousPosition.y - transformComponent->position->y,
-									entity->previousPosition.z - transformComponent->position->z);
-
-							moveDir.normalize();
-
-							Collision collision = Collision(entities.at(j), moveDir);
-							scriptComponent->scripts.at(m)->onCollision(collision);
+							scriptComponent->scripts.at(m)->onCollision(Collision(entities.at(j)));
 						}
 					}
 

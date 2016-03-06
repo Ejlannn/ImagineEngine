@@ -275,3 +275,16 @@ Vector3 Entity::getPreviousPosition()
 {
 	return previousPosition;
 }
+
+Vector3 Entity::getMovingDirection()
+{
+	TransformComponent *transformComponent = (TransformComponent*) getComponent("TransformComponent");
+
+	Vector3 moveDir = Vector3(previousPosition.x - transformComponent->position->x,
+			previousPosition.y - transformComponent->position->y,
+			previousPosition.z - transformComponent->position->z);
+
+	moveDir.normalize();
+
+	return moveDir;
+}

@@ -1,5 +1,8 @@
 Alpha Versions:
 
+1.11.2_02
+-Removed moving direction from Collision (Now you can get it from entity)
+
 1.11.2_01
 -Fixed some warnings
 

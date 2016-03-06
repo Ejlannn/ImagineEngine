@@ -32,10 +32,9 @@ public:
 	Vector3 getMoveDirection();
 
 private:
-	Collision(Entity *entity, Vector3 direction);
+	Collision(Entity *entity);
 
 	Entity *collider;
-	Vector3 moveDirection;
 };
 
 class GraphicsDevice;
