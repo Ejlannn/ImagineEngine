@@ -16,7 +16,7 @@
 
 #include "exampleCommandExe.h"
 
-void ExampleCommandExe::onCommand(std::string command, std::string args[])
+void ExampleCommandExe::onCommand(std::string command, std::vector<std::string> args)
 {
 	if(command == "spawn")
 	{
