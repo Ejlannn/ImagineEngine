@@ -1,5 +1,9 @@
 Alpha Versions:
 
+1.11.6
+-Scene class enchancements
+-Added missing method call in Scene class
+
 1.11.5
 -Fixed command executor
 

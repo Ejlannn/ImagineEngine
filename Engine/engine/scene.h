@@ -46,6 +46,7 @@ public:
 
 	void addEntity(Entity *entity);
 	void removeEntity(Entity *entity);
+	void removeEntitiesWithName(std::string name);
 	Entity *getEntityByName(std::string name);
 	Entity *getEntityByID(U32 id);
 	std::vector<Entity*> getEntitiesWithName(std::string name);
