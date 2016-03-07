@@ -36,7 +36,7 @@ void Logger::warning(const std::string &message)
 	printLog(getDateAndTime() + " [" + name + "]" + " [Warning] " + message);
 }
 
-void Logger::printLog(const std::string &log)
+void Logger::printLog(const std::string &log) const
 {
 	std::cout << log.c_str() << std::endl;
 }

@@ -349,7 +349,7 @@ void Scene::updateEntity(Entity *entity)
 					MeshColliderComponent *meshCol2 = (MeshColliderComponent*) entitiesToCheck.at(j)->getComponent("MeshColliderComponent");
 
 					if(MeshColliderComponent::areColliding(meshCol1->obb, meshCol2->obb, meshRendererComponent1->model, meshRendererComponent2->model,
-							transformationMatrix1, transformationMatrix2, nullptr));
+							transformationMatrix1, transformationMatrix2, nullptr))
 					{
 						for(U16 m = 0; m < scriptComponent->scripts.size(); m++)
 						{
