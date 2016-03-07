@@ -89,25 +89,30 @@ void Console::onConsoleKeyDown(KeyboardKey key, bool big)
 		if(currentLineBuf.size() > 0)
 		{
 			std::string cmd;
-			std::string args[currentLineBuf.size()];
+			std::vector<std::string> args;
 
 			for(U16 j = 0; j < currentLineBuf.size(); j++)
 			{
 				if(j == 0) cmd = currentLineBuf.at(j);
 				else
 				{
-					args[j] = currentLineBuf.at(j);
+					args.push_back(currentLineBuf.at(j));
 				}
 			}
 
+			if(tempCurrentLine != "") args.push_back(tempCurrentLine);
+
 			for(U16 i = 0; i < commandExecutors.size(); i++) commandExecutors.at(i)->onCommand(cmd, args);
+
+			args.clear();
 		}
 		else
 		{
 			for(U16 i = 0; i < commandExecutors.size(); i++)
 			{
-				std::string args[0];
+				std::vector<std::string> args;
 				commandExecutors.at(i)->onCommand(tempCurrentLine, args);
+				args.clear();
 			}
 		}
 		tempCurrentLine = "";

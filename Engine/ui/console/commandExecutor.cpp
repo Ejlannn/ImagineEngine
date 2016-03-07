@@ -18,4 +18,4 @@
 
 CommandExecutor::~CommandExecutor() {}
 
-void CommandExecutor::onCommand(std::string command, std::string args[]) {}
+void CommandExecutor::onCommand(std::string command, std::vector<std::string> args) {}

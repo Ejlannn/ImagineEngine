@@ -30,7 +30,7 @@ public:
 	virtual ~CommandExecutor();
 
 protected:
-	virtual void onCommand(std::string command, std::string args[]);
+	virtual void onCommand(std::string command, std::vector<std::string> args);
 };
 
 #endif
