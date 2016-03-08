@@ -43,7 +43,7 @@ S16 Game::initialize()
 {
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0) return 1;
 
-	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
+	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF);
 
 	TTF_Init();
 
