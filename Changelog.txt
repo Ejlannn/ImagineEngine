@@ -1,7 +1,7 @@
 Alpha Versions:
 
 1.11.6_01
--Fixed and improvements
+-Fixes and improvements
 
 1.11.6
 -Scene class enchancements
