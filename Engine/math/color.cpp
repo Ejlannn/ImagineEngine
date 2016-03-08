@@ -48,6 +48,24 @@ Color3 *Color3::clone()
 	return new Color3(r, g, b);
 }
 
+Color3 Color3::getFromHEX(U32 hexColor)
+{
+	Color3 color = Color3(((hexColor >> 16) & 0xFF) / 250.0f,
+			((hexColor >> 8) & 0xFF) / 250.0f,
+			((hexColor) & 0xFF) / 250.0f);
+
+	return color;
+}
+
+void Color3::setFromHEX(U32 hexColor)
+{
+	Color3 color = getFromHEX(hexColor);
+
+	r = color.r;
+	g = color.g;
+	b = color.b;
+}
+
 /******************************
  * Color4
  *****************************/

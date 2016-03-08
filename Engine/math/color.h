@@ -35,6 +35,9 @@ struct Color3
 	F32 b;
 
 	Color3 *clone();
+
+	static Color3 getFromHEX(U32 hexColor);
+	void setFromHEX(U32 hexColor);
 };
 
 /******************************
