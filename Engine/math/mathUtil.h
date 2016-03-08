@@ -27,6 +27,11 @@ public:
 	static F32 degToRad(F32 angle);
 	static F32 radToDeg(F32 rad);
 	static F32 clamp(F32 value, F32 min, F32 max);
+	static void clamp(F32 &value, F32 min, F32 max);
+	static F32 min(F32 value, F32 min);
+	static void min(F32 &value, F32 min);
+	static F32 max(F32 value, F32 max);
+	static void max(F32 &value, F32 max);
 };
 
 #endif

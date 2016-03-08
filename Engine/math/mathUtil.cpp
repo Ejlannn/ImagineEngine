@@ -35,3 +35,37 @@ F32 MathUtil::clamp(F32 value, F32 min, F32 max)
 
 	return valueToReturn;
 }
+
+void MathUtil::clamp(F32 &value, F32 min, F32 max)
+{
+	if(value < min) value = min;
+	else if(value > max) value = max;
+}
+
+F32 MathUtil::min(F32 value, F32 min)
+{
+	F32 valueToReturn = value;
+
+	if(valueToReturn < min) valueToReturn = min;
+
+	return valueToReturn;
+}
+
+void MathUtil::min(F32 &value, F32 min)
+{
+	if(value < min) value = min;
+}
+
+F32 MathUtil::max(F32 value, F32 max)
+{
+	F32 valueToReturn = value;
+
+	if(valueToReturn > max) valueToReturn = max;
+
+	return valueToReturn;
+}
+
+void MathUtil::max(F32 &value, F32 max)
+{
+	if(value > max) value = max;
+}
