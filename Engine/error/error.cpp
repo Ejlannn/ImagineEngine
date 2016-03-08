@@ -54,6 +54,9 @@ void Error::throwErrorCode(S16 errorCode)
 	case 5:
 		showMessageBox((char*) "Error 5: Your OpenGL version is not supported (You need OpenGL 3.3+)");
 		break;
+	case 6:
+		showMessageBox((char*) "Error 6: Cannot open Audio");
+		break;
 	default:
 		return;
 	}
