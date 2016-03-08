@@ -1,5 +1,10 @@
 Alpha Versions:
 
+1.11.7
+-Removed commented code and added glDisable for texture inside GraphicsDevice class
+-Math enchancements
+-Added support for Tagged Image File Format (TIF/TIFF)
+
 1.11.6_01
 -Fixes and improvements
 
