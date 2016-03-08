@@ -1,5 +1,10 @@
 Alpha Versions:
 
+1.11.8
+-Added new error code
+-Scene enchancements
+-Color3 enchancements
+
 1.11.7
 -Removed commented code and added glDisable for texture inside GraphicsDevice class
 -Math enchancements
