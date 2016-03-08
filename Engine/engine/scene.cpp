@@ -115,7 +115,31 @@ void Scene::removeEntity(Entity *entity)
 	Game::getLogger()->warning("Cannot remove Entity [Name: " + entity->name + " ID: " + id1.str() + "] from Scene - Given Entity doesn't membership to this Scene");
 }
 
-void Scene::removeEntitiesWithName(std::string name)
+void Scene::removeEntity(U32 id)
+{
+	for(U16 i = 0; i < entities.size(); i++)
+		{
+			if(entities.at(i)->getID() == id)
+			{
+				if(entities.at(i)->hasComponent("ScriptComponent"))
+				{
+					ScriptComponent *scriptComponent = (ScriptComponent*) entities.at(i)->getComponent("ScriptComponent");
+
+					if(scriptComponent->scripts.size() > 0) for(U16 j = 0; j < scriptComponent->scripts.size(); j++) scriptComponent->scripts.at(j)->onDestroy();
+				}
+
+				entities.erase(entities.begin() + i);
+				return;
+			}
+		}
+
+		std::ostringstream id1;
+		id1 << id;
+
+		Game::getLogger()->warning("Cannot remove Entity [ID: " + id1.str() + "] from Scene - Given Entity doesn't membership to this Scene");
+}
+
+void Scene::removeEntities(std::string name)
 {
 	for(U16 i = 0; i < entities.size(); i++)
 	{
