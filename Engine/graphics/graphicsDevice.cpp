@@ -96,19 +96,13 @@ void GraphicsDevice::prepare3D()
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
-
 	glEnable(GL_MULTISAMPLE);
-	//glEnable(GL_MULTISAMPLE_ARB);
 }
 
 void GraphicsDevice::preInit()
 {
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
-
-	//SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 }
 
 void GraphicsDevice::init()
@@ -347,8 +341,6 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 	if(textured) glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	//glDrawElements(GL_TRIANGLES, component->model->getVertexCount(), GL_UNSIGNED_INT, 0);
-
 	if(textured)
 	{
 		MaterialComponent *materialComponent = (MaterialComponent*) entity->getComponent("MaterialComponent");
@@ -385,8 +377,6 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 		glActiveTexture(GL_TEXTURE0);
 
 		glUniform1i(baseShader->loc_sampler, 0);
-
-		//SDL_FreeSurface(surface);
 	}
 
 	glDrawElements(GL_TRIANGLES, component->model->getVertexCount(), GL_UNSIGNED_INT, 0);
@@ -399,22 +389,16 @@ void GraphicsDevice::renderEntity(Entity *entity, MeshRendererComponent *compone
 		glDisable(GL_TEXTURE_2D);
 	}
 
-	if(blending)
-	{
-		glDisable(GL_BLEND);
-	}
+	if(blending) glDisable(GL_BLEND);
 
 	glDisableVertexAttribArray(0);
 	if(textured) glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
 	glBindVertexArray(0);
 
-	//if(textured) glDisable(GL_TEXTURE_2D);
+	if(textured) glDisable(GL_TEXTURE_2D);
 
-	if(component->cullFaces)
-	{
-		glDisable(GL_CULL_FACE);
-	}
+	if(component->cullFaces) glDisable(GL_CULL_FACE);
 }
 
 void GraphicsDevice::renderSkybox(SkyboxAsset *skybox, Scene *scene)
